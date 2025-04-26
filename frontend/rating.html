@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiara Form</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../frontend/css/rating.css" />
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <a href="index.html" class="logo-circle">
+      <img src="assets/logo.png" alt="Your Logo">
+    </a>
+  </div>
+
+  <!-- Mobile Menu Toggle -->
+  <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
+  <!-- Main Navigation -->
+  <nav class="nav-links" id="nav-links">
+    <a href="#">Home</a>
+    <a href="create.html">Form</a>
+    <a href="#">How It Works</a>
+    <a href="#">About</a>
+    <a href="#">Demo</a>
+  </nav>
+
+
+  <!-- Contact + Social -->
+  <div class="right-contact">
+    <div class="social-icon">🌐</div>
+    <span class="contact-text">+254 745 738 345</span>
+  </div>
+</header>
+
+<main class="main-form">
+
+  <section class="intro">
+    <h1>Build Your Wheel</h1>
+    <p>Rate your activities based on what you love, what you do well, if the world needs it, and if it can be profitable. Let's discover your passion!</p>
+  </section>
+
+  <div class="progress-bar">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <section class="activity-card">
+    <h2>Activity 1: <span id="activity-name">Jogging</span></h2>
+
+    <div class="rating-category">
+      <div class="icon-label">
+        <i class="fas fa-heart"></i>
+        <span>What you love</span>
+      </div>
+      <div class="boxes" aria-label="Rate what you love">
+        <!-- 10 boxes -->
+      </div>
+    </div>
+
+    <div class="rating-category">
+      <div class="icon-label">
+        <i class="fas fa-brain"></i>
+        <span>What you do well</span>
+      </div>
+      <div class="boxes" aria-label="Rate what you do well">
+      </div>
+    </div>
+
+    <div class="rating-category">
+      <div class="icon-label">
+        <i class="fas fa-dollar-sign"></i>
+        <span>Will the world pay for it</span>
+      </div>
+      <div class="boxes" aria-label="Rate monetization potential">
+      </div>
+    </div>
+
+    <div class="rating-category">
+      <div class="icon-label">
+        <i class="fas fa-globe"></i>
+        <span>What the world needs</span>
+      </div>
+      <div class="boxes" aria-label="Rate world need">
+      </div>
+    </div>
+
+    <div class="next-activity">
+      <button class="next-btn" id="next-btn">Next Activity</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer-cta">
+  <button class="cta-button" id="finish-btn">
+    GET YOUR WHEEL <span class="arrow">→</span>
+  </button>
+  <p class="hint">Ready to discover your true passion!</p>
+</footer>
+
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const ratingGroups = document.querySelectorAll('.boxes');
+    const savedRatings = []; // To store selected ratings
+
+    ratingGroups.forEach((group, groupIndex) => {
+      for (let i = 1; i <= 10; i++) {
+        const boxWrapper = document.createElement('div');
+        boxWrapper.classList.add('box-wrapper');
+
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = i;
+        box.setAttribute('data-value', i);
+        box.setAttribute('tabindex', '0');
+
+        const description = document.createElement('div');
+        description.classList.add('description');
+        if (i === 1) {
+          description.textContent = 'Least Likely';
+        } else if (i === 10) {
+          description.textContent = 'Most Likely';
+        }
+
+        box.addEventListener('click', () => {
+          const boxes = group.querySelectorAll('.box');
+          const selectedValue = parseInt(box.dataset.value);
+
+          // CORRECT LOGIC: Activate boxes <= clicked value
+          boxes.forEach(b => {
+            const bValue = parseInt(b.dataset.value);
+            if (bValue <= selectedValue) {
+              b.classList.add('active');
+            } else {
+              b.classList.remove('active');
+            }
+          });
+
+          // Save the rating
+          savedRatings[groupIndex] = selectedValue;
+          console.log('Saved Ratings:', savedRatings);
+        });
+
+        boxWrapper.appendChild(box);
+        boxWrapper.appendChild(description);
+        group.appendChild(boxWrapper);
+      }
+    });
+
+    // Menu toggle
+    const menuBtn = document.getElementById("menu-toggle");
+    const nav = document.getElementById("nav-links");
+    menuBtn.addEventListener("click", () => {
+      nav.classList.toggle("show");
+    });
+
+    // Next button
+    let progress = 10;
+    document.getElementById('next-btn').addEventListener('click', () => {
+      progress += 10;
+      document.getElementById('progress').style.width = `${progress}%`;
+      alert('Move to next activity!');
+    });
+
+    // Finish button
+    document.getElementById('finish-btn').addEventListener('click', () => {
+      alert('Final Ratings Submitted: ' + JSON.stringify(savedRatings));
+    });
+  });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiara Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../frontend/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <a href="index.html" class="logo-circle">
+      <img src="assets/logo.png" alt="Your Logo">
+    </a>
+  </div>
+
+  <!-- Mobile Menu Toggle -->
+  <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
+  <!-- Main Navigation -->
+  <nav class="nav-links" id="nav-links">
+    <a href="#">Home</a>
+    <a href="create.html">Form</a>
+    <a href="#">How It Works</a>
+    <a href="#">About</a>
+    <a href="#">Demo</a>
+    <a href="#" class="btn primary nav-cta">Start Now</a>
+  </nav>
+
+
+  <!-- Contact + Social -->
+  <div class="right-contact">
+    <div class="social-icon">🌐</div>
+    <span class="contact-text">+254 745 738 345</span>
+  </div>
+</header>
+
+<main class="form-section">
+  <h2 class="form-title"><u>The Form</u></h2>
+  <p class="form-subtext">Fill in the form with activities that you enjoy or want to explore, then rate them from 1–10 to generate your personalized Kiara Wheel!</p>
+
+  <form class="kiara-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <select id="age" required>
+          <option value="">Select age</option>
+          <option value="18-24">18–24</option>
+          <option value="25-34">25–34</option>
+          <option value="35-44">35–44</option>
+          <option value="45+">45+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+          <option value="">Select gender</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="activity-label">Activities (Up to 15)</div>
+    <div class="activity-grid" id="activity-grid">
+      <input type="text" placeholder="Activity 1" />
+      <input type="text" placeholder="Activity 2" />
+      <input type="text" placeholder="Activity 3" />
+      <input type="text" placeholder="Activity 4" />
+      <input type="text" placeholder="Activity 5" />
+    </div>
+
+    <button type="button" class="add-activity-btn" id="add-activity">Add More +</button>
+
+    <button type="button" class="submit-btn" onclick="window.location.href='rating.html'">
+      PROCEED <i class="fas fa-arrow-right"></i>
+    </button>
+  </form>
+</main>
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-contact">
+      <div class="contact-block">
+        <strong>Contact Us</strong>
+        <p><a href="tel:+254745783345"><i class="fas fa-phone"></i> +254 745 783 345</a></p>
+        <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+    </div>
+
+    <div class="footer-social">
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Power Circles. All rights reserved.</p>
+    <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
+  </div>
+</footer>
+
+</body>
+
+<script>
+  const activityGrid = document.getElementById('activity-grid');
+  const addBtn = document.getElementById('add-activity');
+  let activityCount = 5;
+
+  addBtn.addEventListener('click', () => {
+    if (activityCount < 15) {
+      activityCount++;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = `Activity ${activityCount}`;
+      activityGrid.appendChild(input);
+    } else {
+      alert("You can only add up to 15 activities.");
+    }
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.getElementById("menu-toggle");
+    const nav = document.getElementById("nav-links");
+
+    menuBtn.addEventListener("click", () => {
+      nav.classList.toggle("show");
+    });
+  });
+</script>
+</html>
