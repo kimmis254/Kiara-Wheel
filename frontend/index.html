@@ -24,12 +24,11 @@
 
   <!-- Main Navigation -->
   <nav class="nav-links" id="nav-links">
-    <a href="#">Home</a>
+    <a href="index.html">Home</a>
     <a href="create.html">Form</a>
-    <a href="#">How It Works</a>
+    <a href="#how-it-works">How It Works</a>
     <a href="#">About</a>
-    <a href="#">Demo</a>
-    <a href="#" class="btn primary nav-cta">Start Now</a>
+    <a href="create.html" class="btn primary nav-cta">Start Now</a>
   </nav>
 
 
@@ -44,7 +43,7 @@
 <main class="hero">
   <div class="spin-image-container">
     <div class="spin-image">
-      <img src="assets/discover-icon.svg" alt="Discover Passion" class="spin-icon" />
+      <img src="assets/kiara%20whell.png" alt="Discover Passion" class="spin-icon" />
     </div>
     <div class="hero-bg-pattern"></div>
   </div>
@@ -76,8 +75,8 @@
 
   <div class="steps-grid">
     <div class="step">
-      <div class="step-icon">
-        <img src="assets/icon-input.svg" alt="Enter Details" />
+      <div class="step-icon glow-blue">
+        <i class="fas fa-pencil-alt"></i>
       </div>
       <div class="desc-card">
         <strong>1. Enter Info</strong><br />
@@ -86,8 +85,8 @@
     </div>
 
     <div class="step">
-      <div class="step-icon">
-        <img src="assets/icon-rate.svg" alt="Rate Items" />
+      <div class="step-icon glow-green">
+        <i class="fas fa-star"></i>
       </div>
       <div class="desc-card">
         <strong>2. Rate It</strong><br />
@@ -96,8 +95,8 @@
     </div>
 
     <div class="step">
-      <div class="step-icon">
-        <img src="assets/icon-wheel.svg" alt="Generate Wheel" />
+      <div class="step-icon glow-purple">
+        <i class="fas fa-chart-pie"></i>
       </div>
       <div class="desc-card">
         <strong>3. See Results</strong><br />
@@ -106,8 +105,8 @@
     </div>
 
     <div class="step">
-      <div class="step-icon">
-        <img src="assets/icon-save.svg" alt="Save or Send" />
+      <div class="step-icon glow-orange">
+        <i class="fas fa-envelope"></i>
       </div>
       <div class="desc-card">
         <strong>4. Save or Share</strong><br />
@@ -118,37 +117,45 @@
 </section>
 
 
-<section id="why-use-this" class="carousel-section">
+
+
+<section id="why-use-this" class="carousel-section" role="region" aria-label="Why Use This Carousel">
   <h2 class="section-title">Why Use This?</h2>
 
   <div class="carousel-container">
-    <button class="carousel-btn left" id="prevBtn" aria-label="Previous Slide">&#8592;</button>
 
-    <div class="carousel-wrapper" id="carousel">
-      <div class="carousel-slide">
-        <img src="assets/insight.jpg" class="carousel-image" alt="Gain clarity about your goals" />
+
+
+    <div class="carousel-wrapper" id="carousel" aria-live="polite">
+
+      <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="Gain Clarity">
+        <img src="assets/pic1kiara.jpg" class="carousel-image" alt="Visualizing passions and understanding goals" loading="lazy" />
         <div class="carousel-caption">
           <h3>Gain Clarity</h3>
           <p>Visualize your passions and understand what drives you.</p>
         </div>
       </div>
-      <div class="carousel-slide">
-        <img src="assets/personalized.jpg" class="carousel-image" alt="Discover personalized career paths" />
+
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Tailored For You">
+        <img src="assets/slide1.jpg" class="carousel-image" alt="Personalized career paths based on your interests" loading="lazy" />
         <div class="carousel-caption">
           <h3>Tailored For You</h3>
           <p>Get a customized Kiara Wheel based on your unique interests.</p>
         </div>
       </div>
-      <div class="carousel-slide">
-        <img src="assets/goal.jpg" class="carousel-image" alt="Achieve goals faster with direction" />
+
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Take Action">
+        <img src="assets/pic3kiara.jpg" class="carousel-image" alt="Achieve goals faster with clear direction" loading="lazy" />
         <div class="carousel-caption">
           <h3>Take Action</h3>
           <p>Set clear goals and move confidently toward your purpose.</p>
         </div>
       </div>
+
     </div>
 
-    <button class="carousel-btn right" id="nextBtn" aria-label="Next Slide">&#8594;</button>
+
+
   </div>
 
   <div class="carousel-indicators" id="carousel-dots">
@@ -157,23 +164,34 @@
     <span class="dot" data-slide="2"></span>
   </div>
 
-  <p class="tagline">Discover your passion. Shape your future.</p>
+  <p class="tagline">🌟 Discover your passion. Shape your future.</p>
 </section>
+
+<!-- FontAwesome Icons -->
+<script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
+
 
 
 <section id="what-to-expect" class="expect-section">
   <h2 class="section-title">What To Expect</h2>
 
   <div class="expect-content">
-    <!-- Visual Slideshow -->
-    <div class="slideshow-box">
-      <button class="arrow-btn" id="expect-prev">&#8592;</button>
-      <div class="slideshow" id="expect-slideshow">
-        <img src="assets/result1.jpg" alt="Personalized Kiara Wheel" />
+    <!-- Slideshow -->
+    <div class="slideshow-box" id="expect-slideshow">
+      <div class="slide active">
+        <img src="assets/slide1.jpg" alt="Visualize Your Strengths" loading="lazy" />
+        <div class="caption">Visualize Your Strengths</div>
       </div>
-      <button class="arrow-btn" id="expect-next">&#8594;</button>
+      <div class="slide">
+        <img src="assets/slide2.jpg" alt="Discover Your Path" loading="lazy" />
+        <div class="caption">Discover Your Path</div>
+      </div>
+      <div class="slide">
+        <img src="assets/slide3.jpg" alt="Unlock Your Potential" loading="lazy" />
+        <div class="caption">Unlock Your Potential</div>
+      </div>
 
-      <!-- Dots Navigation -->
+      <!-- Dots -->
       <div class="slide-dots" id="expect-dots">
         <span class="dot active" data-index="0"></span>
         <span class="dot" data-index="1"></span>
@@ -181,53 +199,65 @@
       </div>
     </div>
 
-    <!-- Textual Context -->
+    <!-- Text -->
     <div class="text-box">
       <p class="highlight-text">
-        Discover your personal insights in a beautifully visual format. Uncover your strengths, align your passion, and find the path that fits you best.
+        🌟 Discover insights visually. Align passions. Map your future!
       </p>
-      <h3 class="expect-heading">Unlock Your Insights</h3>
-      <a href="create.html" class="btn primary">Go to Form</a>
-
-      <!-- Optional Social Proof -->
-      <p class="social-proof">⭐ Trusted by over 10,000 people to map their purpose.</p>
+      <h3 class="expect-heading">Explore Your Personalized Wheel</h3>
+      <a href="create.html" class="btn primary expect-btn">Create Your Wheel Now</a>
+      <p class="social-proof">⭐ Trusted by over <strong>10,000+</strong> purpose-driven individuals.</p>
     </div>
   </div>
 </section>
+
 
 <!-- Testimonials Section -->
 <section id="testimonial-section" class="testimonial-section">
   <h2 class="testimonial-title">What People Are Saying</h2>
 
-  <div class="testimonial-slideshow" id="testimonial-slideshow">
-    <div class="testimonial-arrow" id="testimonial-prev" aria-label="Previous">&#8592;</div>
-
-    <div class="testimonial-slide" id="testimonial-slide">
-      <!-- Content inserted by JS -->
+  <div class="testimonial-grid" id="testimonial-grid">
+    <div class="testimonial-card">
+      <img src="assets/man.png" alt="Jane Doe" class="testimonial-avatar">
+      <blockquote>❝The Kiara Wheel helped me finally understand my passions and find a direction I'm excited about!❞</blockquote>
+      <p class="testimonial-author">Jane Doe, Entrepreneur</p>
     </div>
-
-    <div class="testimonial-arrow" id="testimonial-next" aria-label="Next">&#8594;</div>
+    <div class="testimonial-card">
+      <img src="assets/man.png" alt="John Smith" class="testimonial-avatar">
+      <blockquote>❝Incredibly insightful! It's like having a personalized roadmap to my ideal future.❞</blockquote>
+      <p class="testimonial-author">John Smith, Student</p>
+    </div>
+    <div class="testimonial-card">
+      <img src="assets/man.png" alt="Emily Johnson" class="testimonial-avatar">
+      <blockquote>❝A truly eye-opening experience that helped me align my strengths and dreams!❞</blockquote>
+      <p class="testimonial-author">Emily Johnson, Career Coach</p>
+    </div>
   </div>
 
-  <div class="testimonial-dots" id="testimonial-dots"></div>
+  <div class="testimonial-navigation">
+    <button id="testimonial-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+    <button id="testimonial-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+  </div>
 </section>
+
+<!-- Footer Section -->
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-contact">
-      <div class="contact-block">
-        <strong>Contact Us</strong>
-        <p><a href="tel:+254745783345"><i class="fas fa-phone"></i> +254 745 783 345</a></p>
-        <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
-      </div>
+      <h3>Contact Us</h3>
+      <p><a href="tel:+254745783345"><i class="fas fa-phone"></i> +254 745 783 345</a></p>
+      <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
     </div>
 
     <div class="footer-links">
+      <h3>Quick Links</h3>
       <a href="#">About Us</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms & Conditions</a>
     </div>
 
     <div class="footer-social">
+      <h3>Follow Us</h3>
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
       <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -240,47 +270,69 @@
   </div>
 </footer>
 
+
 </body>
+<!-- FontAwesome (make sure it's included) -->
+<script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const wrapper = document.getElementById("carousel");
-    const dots = document.querySelectorAll(".dot");
-    const slides = wrapper.querySelectorAll(".carousel-slide");
-    const prev = document.getElementById("prevBtn");
-    const next = document.getElementById("nextBtn");
-    let index = 0;
-    let interval;
+  const slides = document.querySelectorAll('#expect-slideshow .slide');
+  const dots = document.querySelectorAll('#expect-dots .dot');
+  let current = 0;
+  let interval;
 
-    const showSlide = (i) => {
-      index = (i + slides.length) % slides.length;
-      wrapper.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach(dot => dot.classList.remove("active"));
-      dots[index].classList.add("active");
-    };
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+    current = index;
+  }
 
-    const nextSlide = () => showSlide(index + 1);
-    const prevSlide = () => showSlide(index - 1);
+  function nextSlide() {
+    let next = (current + 1) % slides.length;
+    showSlide(next);
+  }
 
-    // Auto play every 6s
-    const startAuto = () => interval = setInterval(nextSlide, 6000);
-    const stopAuto = () => clearInterval(interval);
-
-    // Init
-    showSlide(0);
-    startAuto();
-
-    // Manual navigation
-    next.addEventListener("click", () => { stopAuto(); nextSlide(); startAuto(); });
-    prev.addEventListener("click", () => { stopAuto(); prevSlide(); startAuto(); });
-    dots.forEach(dot => {
-      dot.addEventListener("click", () => {
-        stopAuto();
-        showSlide(+dot.dataset.slide);
-        startAuto();
-      });
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      let index = parseInt(dot.getAttribute('data-index'));
+      showSlide(index);
     });
   });
+
+  function startAutoSlide() {
+    interval = setInterval(nextSlide, 4000); // 4 seconds
+  }
+
+  startAutoSlide();
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dots = document.querySelectorAll(".dot");
+    let currentIndex = 0;
+    const intervalTime = 2500; // change slide every 4 seconds
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+        dots[i].classList.toggle("active", i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    // Start automatic sliding
+    setInterval(nextSlide, intervalTime);
+  });
+</script>
+
+
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -402,6 +454,67 @@
     renderSlide();
     interval = setInterval(nextSlide, 6000);
   });
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('#expect-dots .dot');
+  let currentSlide = 0;
+  let slideInterval;
+
+  // Show specific slide
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+  }
+
+  // Auto play slides
+  function startAutoPlay() {
+    slideInterval = setInterval(() => {
+      showSlide((currentSlide + 1) % slides.length);
+    }, 4000); // Change every 4s
+  }
+
+  // Pause slideshow
+  function pauseAutoPlay() {
+    clearInterval(slideInterval);
+  }
+
+  // Start initially
+  startAutoPlay();
+
+  // Dots click
+  dots.forEach(dot => {
+    dot.addEventListener('click', e => {
+      showSlide(parseInt(dot.dataset.index));
+    });
+  });
+
+  // Swipe Gestures for Mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const slideshowBox = document.getElementById('expect-slideshow');
+
+  slideshowBox.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  slideshowBox.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+      // Swipe left
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    if (touchEndX > touchStartX + 50) {
+      // Swipe right
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    }
+  }
 </script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();

@@ -5,38 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Results - Kiara Wheel</title>
 
-  <!-- Chart.js for the wheel -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="../frontend/css/results.css" />
 </head>
 
 <body>
-
 <header class="navbar">
   <div class="logo">
-    <a href="index.html" class="logo-circle">
-      <img src="assets/logo.png" alt="Your Logo">
-    </a>
+    <a href="index.html" class="logo-circle"><img src="assets/logo.png" alt="Logo"></a>
   </div>
-
-  <!-- Mobile Menu Toggle -->
   <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-
-  <!-- Main Navigation -->
   <nav class="nav-links" id="nav-links">
-    <a href="#">Home</a>
+    <a href="index.html">Home</a>
     <a href="create.html">Form</a>
-    <a href="#">How It Works</a>
+    <a href="index.html#how-it-works">How It Works</a>
     <a href="#">About</a>
-    <a href="#">Demo</a>
   </nav>
-
-
-  <!-- Contact + Social -->
   <div class="right-contact">
     <div class="social-icon">🌐</div>
     <span class="contact-text">+254 745 738 345</span>
@@ -44,42 +30,29 @@
 </header>
 
 <main class="results-page">
-
   <div class="results-card">
-
     <h1>Your Kiara Wheel!</h1>
     <p>This is your result based on the input you provided!</p>
 
     <div class="results-content">
-
-      <!-- Wheel Chart and Activities Display -->
       <div class="chart-container">
         <canvas id="kiaraWheel"></canvas>
         <div class="bliss-center" id="blissText">BLISS</div>
       </div>
-
       <div class="details-container" id="activitiesDisplay">
-        <p>Click a section to view activities.</p>
+        <p>Click a section to view your categorized activities.</p>
       </div>
-
     </div>
 
-    <!-- Buttons -->
     <div class="action-buttons">
       <a href="index.html" class="btn btn-home">Return to Home</a>
       <a href="create.html" class="btn btn-create">Create Another Wheel</a>
       <button class="btn btn-download" id="downloadBtn">Download Wheel</button>
       <button class="btn btn-email" id="emailBtn">Email My Results</button>
     </div>
-
   </div>
-
 </main>
 
-
-
-
-<!-- Footer -->
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-contact">
@@ -89,96 +62,112 @@
         <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
       </div>
     </div>
-
     <div class="footer-links">
       <a href="#">About Us</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms & Conditions</a>
     </div>
-
     <div class="footer-social">
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>&copy; <span id="year"></span> Power Circles. All rights reserved.</p>
-    <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
+    <a href="#" class="back-to-top">&#8679;</a>
   </div>
 </footer>
 
 <script>
+  let wheelChart, resultData;
+
   const ctx = document.getElementById('kiaraWheel').getContext('2d');
 
-  const kiaraWheel = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['PASSION', 'CAREER', 'CHARITY', 'VOLUNTEER'],
-      datasets: [
-        {
-          label: 'Outer Wheel',
-          data: [20, 30, 10, 40],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-          borderWidth: 2,
-          cutout: '45%', /* Much thicker partitions (thicker donut ring) */
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              const label = context.label || '';
-              const value = context.raw;
-              return `${label}: ${value}%`;
+  async function loadResults() {
+    const sessionId = new URLSearchParams(window.location.search).get('sessionId');
+    if (!sessionId) return alert("Missing session ID");
+
+    const res = await fetch(`http://localhost:5000/api/result/${sessionId}`);
+    if (!res.ok) return alert('Failed to load wheel data');
+
+    resultData = await res.json();
+    const labels = Object.keys(resultData.distribution);
+    const data = Object.values(resultData.distribution);
+    const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'];
+
+    wheelChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Wheel',
+          data,
+          backgroundColor: colors,
+          cutout: '45%',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.label}: ${ctx.raw}%`
             }
+          },
+          datalabels: {
+            color: '#fff',
+            font: { weight: 'bold', size: 16 },
+            formatter: (val, ctx) => `${ctx.chart.data.labels[ctx.dataIndex]}\n${val}%`
           }
         },
-        datalabels: {
-          color: 'white',
-          font: {
-            weight: 'bold',
-            size: 18, // Bigger font for inside sectors
-          },
-          formatter: (value, context) => {
-            if (context.datasetIndex === 0) {
-              return context.chart.data.labels[context.dataIndex] + '\n' + value + '%';
-            }
-            return '';
+        onClick: (e) => {
+          const points = wheelChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+          if (points.length) {
+            const category = labels[points[0].index];
+            showActivities(category);
           }
         }
       },
-      onClick: (e) => {
-        const points = kiaraWheel.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-        if (points.length) {
-          const index = points[0].index;
-          const category = kiaraWheel.data.labels[index];
-          showActivitiesNextToWheel(category);
-        }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
-
-  // Dummy activities
-  const activities = {
-    PASSION: ["Running", "Painting", "Writing"],
-    CAREER: ["Programming", "Teaching", "Engineering"],
-    CHARITY: ["Fundraising", "Volunteering", "Helping the Elderly"],
-    VOLUNTEER: ["Animal Shelter", "Plant Trees", "Beach Cleanups"]
-  };
-
-  function showActivitiesNextToWheel(category) {
-    const display = document.getElementById('activitiesDisplay');
-    display.innerHTML = `<h3>${category} Activities</h3>` +
-      activities[category].map(item => `<p>- ${item}</p>`).join('');
+      plugins: [ChartDataLabels]
+    });
   }
 
+  function showActivities(category) {
+    const display = document.getElementById('activitiesDisplay');
+    const activities = resultData.categories[category] || [];
+    display.innerHTML = `<h3>${category} Activities</h3>` +
+      activities.map(a => `<p>- ${a.name}</p>`).join('');
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'kiara-wheel.png';
+    link.href = document.getElementById('kiaraWheel').toDataURL('image/png');
+    link.click();
+  });
+
+  document.getElementById('emailBtn').addEventListener('click', async () => {
+    const userEmail = prompt('Please enter your email address:');
+    if (!userEmail || !userEmail.includes('@')) return alert('Invalid email address.');
+    const image = document.getElementById('kiaraWheel').toDataURL('image/png');
+
+    emailjs.send('service_8s4413i', 'template_qtxo6zf', {
+      to_email: userEmail,
+      user_name: resultData?.name || 'Dear User',
+      message: "Here's your personalized Kiara Wheel!",
+      kiara_wheel_base64: image
+    })
+      .then(() => alert('Wheel sent to your email!'))
+      .catch(() => alert('Sending failed. Try again.'));
+  });
+
+  document.getElementById("menu-toggle").addEventListener("click", () => {
+    document.getElementById("nav-links").classList.toggle("show");
+  });
+
+  window.onload = loadResults;
 </script>
 
 </body>

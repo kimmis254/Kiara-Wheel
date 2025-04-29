@@ -17,21 +17,13 @@
     </a>
   </div>
 
-  <!-- Mobile Menu Toggle -->
   <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-
-  <!-- Main Navigation -->
   <nav class="nav-links" id="nav-links">
-    <a href="#">Home</a>
+    <a href="index.html">Home</a>
     <a href="create.html">Form</a>
-    <a href="#">How It Works</a>
+    <a href="index.html#how-it-works">How It Works</a>
     <a href="#">About</a>
-    <a href="#">Demo</a>
-    <a href="#" class="btn primary nav-cta">Start Now</a>
   </nav>
-
-
-  <!-- Contact + Social -->
   <div class="right-contact">
     <div class="social-icon">🌐</div>
     <span class="contact-text">+254 745 738 345</span>
@@ -40,7 +32,7 @@
 
 <main class="form-section">
   <h2 class="form-title"><u>The Form</u></h2>
-  <p class="form-subtext">Fill in the form with activities that you enjoy or want to explore, then rate them from 1–10 to generate your personalized Kiara Wheel!</p>
+  <p class="form-subtext">Enter your details and activities to build your personalized Kiara Wheel.</p>
 
   <form class="kiara-form">
     <div class="form-row">
@@ -71,22 +63,18 @@
       </div>
     </div>
 
-    <div class="activity-label">Activities (Up to 15)</div>
+    <div class="activity-label">Your Activities (Up to 15)</div>
     <div class="activity-grid" id="activity-grid">
-      <input type="text" placeholder="Activity 1" />
-      <input type="text" placeholder="Activity 2" />
-      <input type="text" placeholder="Activity 3" />
-      <input type="text" placeholder="Activity 4" />
-      <input type="text" placeholder="Activity 5" />
+      <!-- Dynamic inputs -->
     </div>
 
     <button type="button" class="add-activity-btn" id="add-activity">Add More +</button>
-
-    <button type="button" class="submit-btn" onclick="window.location.href='rating.html'">
+    <button type="button" class="submit-btn" id="submit-form">
       PROCEED <i class="fas fa-arrow-right"></i>
     </button>
   </form>
 </main>
+
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-contact">
@@ -96,53 +84,86 @@
         <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
       </div>
     </div>
-
     <div class="footer-links">
       <a href="#">About Us</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms & Conditions</a>
     </div>
-
     <div class="footer-social">
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>&copy; <span id="year"></span> Power Circles. All rights reserved.</p>
     <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
   </div>
 </footer>
 
-</body>
-
 <script>
   const activityGrid = document.getElementById('activity-grid');
-  const addBtn = document.getElementById('add-activity');
-  let activityCount = 5;
+  const addActivityBtn = document.getElementById('add-activity');
+  const submitBtn = document.getElementById('submit-form');
 
-  addBtn.addEventListener('click', () => {
-    if (activityCount < 15) {
-      activityCount++;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.placeholder = `Activity ${activityCount}`;
-      activityGrid.appendChild(input);
-    } else {
-      alert("You can only add up to 15 activities.");
+  // Pre-fill 5 activities by default
+  for (let i = 1; i <= 5; i++) addActivityInput(i);
+
+  addActivityBtn.addEventListener('click', () => {
+    const count = activityGrid.querySelectorAll('input').length;
+    if (count < 15) addActivityInput(count + 1);
+    else alert('Max 15 activities allowed.');
+  });
+
+  function addActivityInput(num) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = `Activity ${num}`;
+    activityGrid.appendChild(input);
+  }
+
+  submitBtn.addEventListener('click', async () => {
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+
+    const activityInputs = activityGrid.querySelectorAll('input');
+    const activities = Array.from(activityInputs)
+      .map(i => i.value.trim())
+      .filter(v => v)
+      .map(name => ({ name }));
+
+    if (!name || !age || !gender || activities.length === 0) {
+      alert('Please complete all fields and add at least 1 activity.');
+      return;
+    }
+
+    const payload = { name, age, gender, activities };
+
+    try {
+      const res = await fetch('http://localhost:5000/api/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.sessionId) {
+        localStorage.setItem('sessionId', data.sessionId);
+        window.location.href = `rating.html?sessionId=${data.sessionId}`;
+      } else {
+        alert(data.error || 'Something went wrong. Try again.');
+      }
+    } catch (err) {
+      console.error('Form submission failed:', err);
+      alert('Server error. Please try again later.');
     }
   });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const menuBtn = document.getElementById("menu-toggle");
-    const nav = document.getElementById("nav-links");
 
-    menuBtn.addEventListener("click", () => {
-      nav.classList.toggle("show");
-    });
-  });
+  // Fill footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
+</body>
 </html>

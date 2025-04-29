@@ -1,0 +1,86 @@
+[
+  {
+    "IntersectingCircles": "What you Love, What you do Well",
+    "OutcomeMainCategory": "Passion",
+    "OutcomeSubCategory": "Passionate Hobby",
+    "Details1": "You love it and do it well.",
+    "Details2": "Could be grown into a career later."
+  },
+  {
+    "IntersectingCircles": "What you do Well, Will the world pay for it",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "Comfortable Career",
+    "Details1": "You can get paid for it and do it well.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "Will the world pay for it, What the world needs",
+    "OutcomeMainCategory": "Charity",
+    "OutcomeSubCategory": "Mission Driven Career",
+    "Details1": "You are paid and the world needs it.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you Love, What the world needs",
+    "OutcomeMainCategory": "Volunteer",
+    "OutcomeSubCategory": "Social Impact Passion",
+    "Details1": "You love it and the world needs it.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you Love, Will the world pay for it",
+    "OutcomeMainCategory": "Passion",
+    "OutcomeSubCategory": "Potential Monetized Passion",
+    "Details1": "You love it and people will pay.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you do Well, What the world needs",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "Skill-based Social Career",
+    "Details1": "You do it well and the world needs it.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you Love, What you do Well, Will the world pay for it",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "Dream Job",
+    "Details1": "You love it, do it well, and get paid.",
+    "Details2": "Ultimate alignment!"
+  },
+  {
+    "IntersectingCircles": "What you Love, What you do Well, What the world needs",
+    "OutcomeMainCategory": "Volunteer",
+    "OutcomeSubCategory": "Purpose Driven Hobby",
+    "Details1": "You love it, do it well, and help the world.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you Love, What the world needs, Will the world pay for it",
+    "OutcomeMainCategory": "Charity",
+    "OutcomeSubCategory": "Passionate Charity Career",
+    "Details1": "You love it, it's needed, and paid.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you do Well, What the world needs, Will the world pay for it",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "High Impact Career",
+    "Details1": "You do it well, the world needs it, and people will pay.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you Love, What you do Well, What the world needs, Will the world pay for it",
+    "OutcomeMainCategory": "Bliss",
+    "OutcomeSubCategory": "Ultimate Alignment",
+    "Details1": "The perfect harmony of love, skill, demand, and value.",
+    "Details2": "Welcome to your bliss zone!"
+  },
+  {
+    "IntersectingCircles": "None of the Above",
+    "OutcomeMainCategory": "Ikigai",
+    "OutcomeSubCategory": "Self Discovery",
+    "Details1": "You are still discovering yourself.",
+    "Details2": "Every step is progress."
+  }
+]
