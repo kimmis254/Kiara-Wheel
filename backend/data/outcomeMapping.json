@@ -77,6 +77,34 @@
     "Details2": "Welcome to your bliss zone!"
   },
   {
+    "IntersectingCircles": "What you Love",
+    "OutcomeMainCategory": "Passion",
+    "OutcomeSubCategory": "Personal Interest",
+    "Details1": "You love it, even if it needs development.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What you do Well",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "Raw Skill",
+    "Details1": "You do this well — build on it.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "Will the world pay for it",
+    "OutcomeMainCategory": "Career",
+    "OutcomeSubCategory": "Marketable Idea",
+    "Details1": "There is potential demand.",
+    "Details2": ""
+  },
+  {
+    "IntersectingCircles": "What the world needs",
+    "OutcomeMainCategory": "Charity",
+    "OutcomeSubCategory": "Needed Impact",
+    "Details1": "This is something society values.",
+    "Details2": ""
+  },
+  {
     "IntersectingCircles": "None of the Above",
     "OutcomeMainCategory": "Ikigai",
     "OutcomeSubCategory": "Self Discovery",

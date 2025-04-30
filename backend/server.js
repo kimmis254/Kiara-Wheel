@@ -23,10 +23,10 @@ app.get('/', (req, res) => {
 const sessionRoutes = require('./routes/session');
 const wheelRoutes = require('./routes/wheel');
 const resultRoutes = require('./routes/result');
+
 app.use('/api/session', sessionRoutes);
 app.use('/api/wheel', wheelRoutes);
 app.use('/api/result', resultRoutes);
-
 
 // 6. Connect to MongoDB, then Start Server
 mongoose.connect(process.env.MONGO_URI)

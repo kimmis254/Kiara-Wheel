@@ -1,3 +1,4 @@
+// services/wheelService.js
 const mapping = require('../data/outcomeMapping.json');
 
 function generateWheel(activities) {
@@ -6,7 +7,8 @@ function generateWheel(activities) {
     Passion: [],
     Career: [],
     Charity: [],
-    Volunteer: []
+    Volunteer: [],
+    Ikigai: [] // optional fallback category for discovery
   };
 
   const sectionsData = [];
@@ -21,24 +23,18 @@ function generateWheel(activities) {
     };
 
     const match = findOutcome(yesMap);
-    if (match) {
-      sections[match.mainCategory].push(name);
-      sectionsData.push({
-        activity: name,
-        mainCategory: match.mainCategory,
-        subCategory: match.subCategory,
-        details1: match.details1,
-        details2: match.details2
-      });
-    } else {
-      sectionsData.push({
-        activity: name,
-        mainCategory: 'Uncategorized',
-        subCategory: '',
-        details1: '',
-        details2: ''
-      });
-    }
+
+    const category = match?.mainCategory || 'Ikigai'; // fallback
+    const activityResult = {
+      activity: name,
+      mainCategory: category,
+      subCategory: match?.subCategory || 'Self Discovery',
+      details1: match?.details1 || 'You are still discovering yourself.',
+      details2: match?.details2 || 'Every step is progress.'
+    };
+
+    sectionsData.push(activityResult);
+    if (sections[category]) sections[category].push(activityResult);
   });
 
   const total = activities.length || 1;
@@ -61,7 +57,8 @@ function findOutcome(yesMap) {
       world: circles.includes('What the world needs')
     };
 
-    const isMatch = Object.keys(requiredYes).every(k => requiredYes[k] === yesMap[k]);
+    const isMatch = Object.keys(requiredYes).every(key => requiredYes[key] === yesMap[key]);
+
     if (isMatch) {
       return {
         mainCategory: row.OutcomeMainCategory,
@@ -71,6 +68,7 @@ function findOutcome(yesMap) {
       };
     }
   }
+
   return null;
 }
 
