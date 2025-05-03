@@ -1,41 +1,36 @@
 // server.js
 
-// 1. Import Dependencies
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
-// 2. Load Environment Variables
+// Load environment variables
 dotenv.config();
 
-// 3. Initialize Express App
+// Initialize express app
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 4. Health Check Endpoint
+// Health check route
 app.get('/', (req, res) => {
   res.send('✅ Kiara Wheel API is running!');
 });
 
-// 5. Import and Use Routes
-const sessionRoutes = require('./routes/session');
-const wheelRoutes = require('./routes/wheel');
-const resultRoutes = require('./routes/result');
+// Register API routes
+app.use('/api/session', require('./routes/session'));
+app.use('/api/wheel', require('./routes/wheel'));
+app.use('/api/result', require('./routes/result'));
 
-app.use('/api/session', sessionRoutes);
-app.use('/api/wheel', wheelRoutes);
-app.use('/api/result', resultRoutes);
-
-// 6. Connect to MongoDB, then Start Server
+// Connect to MongoDB and start server
+const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB Connected');
-    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch(err => {
-    console.error('❌ MongoDB Connection Error:', err);
-    process.exit(1); // Exit process if DB connection fails
+    console.error('❌ MongoDB Connection Error:', err.message);
+    process.exit(1);
   });

@@ -1,4 +1,3 @@
-// services/wheelService.js
 const mapping = require('../data/outcomeMapping.json');
 
 function generateWheel(activities) {
@@ -8,13 +7,14 @@ function generateWheel(activities) {
     Career: [],
     Charity: [],
     Volunteer: [],
-    Ikigai: [] // optional fallback category for discovery
+    Ikigai: [] // fallback
   };
 
   const sectionsData = [];
 
   activities.forEach(activity => {
     const { name, love, well, pay, world } = activity;
+
     const yesMap = {
       love: love >= 5,
       well: well >= 5,
@@ -23,9 +23,9 @@ function generateWheel(activities) {
     };
 
     const match = findOutcome(yesMap);
+    const category = match?.mainCategory || 'Ikigai';
 
-    const category = match?.mainCategory || 'Ikigai'; // fallback
-    const activityResult = {
+    const result = {
       activity: name,
       mainCategory: category,
       subCategory: match?.subCategory || 'Self Discovery',
@@ -33,15 +33,15 @@ function generateWheel(activities) {
       details2: match?.details2 || 'Every step is progress.'
     };
 
-    sectionsData.push(activityResult);
-    if (sections[category]) sections[category].push(activityResult);
+    sectionsData.push(result);
+    sections[category].push(result);
   });
 
   const total = activities.length || 1;
   const sectionPercentages = {};
-  for (const key in sections) {
+  Object.keys(sections).forEach(key => {
     sectionPercentages[key] = Math.round((sections[key].length / total) * 100);
-  }
+  });
 
   return { sections, sectionPercentages, sectionsData };
 }
@@ -50,15 +50,14 @@ function findOutcome(yesMap) {
   for (const row of mapping) {
     const circles = row.IntersectingCircles.split(',').map(c => c.trim());
 
-    const requiredYes = {
+    const expected = {
       love: circles.includes('What you Love'),
       well: circles.includes('What you do Well'),
       pay: circles.includes('Will the world pay for it'),
       world: circles.includes('What the world needs')
     };
 
-    const isMatch = Object.keys(requiredYes).every(key => requiredYes[key] === yesMap[key]);
-
+    const isMatch = Object.keys(expected).every(k => expected[k] === yesMap[k]);
     if (isMatch) {
       return {
         mainCategory: row.OutcomeMainCategory,

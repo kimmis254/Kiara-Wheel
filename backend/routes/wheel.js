@@ -1,27 +1,41 @@
-// routes/wheel.js
 const express = require('express');
 const router = express.Router();
-const Session = require('../models/Session'); // ✅ MISSING import fixed
+const Session = require('../models/Session');
 const WheelResult = require('../models/WheelResult');
 const { generateWheel } = require('../services/wheelService');
 
-// POST /api/wheel/generate
+// POST /api/wheel/generate — handles session + wheel logic together
 router.post('/generate', async (req, res) => {
   try {
-    const { sessionId, activities } = req.body;
+    const { name, age, gender, activities } = req.body;
 
-    if (!sessionId || !Array.isArray(activities) || activities.length === 0) {
-      return res.status(400).json({ error: 'Missing or invalid sessionId/activities' });
+    if (!name || !age || !gender || !Array.isArray(activities) || activities.length === 0) {
+      return res.status(400).json({ error: 'Missing required fields or activities' });
     }
 
-    const session = await Session.findById(sessionId);
-    if (!session) return res.status(404).json({ error: 'Session not found' });
+    for (const a of activities) {
+      const { name, love, well, pay, world } = a;
+      if (
+        !name || typeof name !== 'string' || name.trim() === '' ||
+        !Number.isInteger(love) || love < 1 || love > 10 ||
+        !Number.isInteger(well) || well < 1 || well > 10 ||
+        !Number.isInteger(pay) || pay < 1 || pay > 10 ||
+        !Number.isInteger(world) || world < 1 || world > 10
+      ) {
+        return res.status(400).json({ error: 'Each activity must have a valid name and 1–10 scores for love, well, pay, and world.' });
+      }
+    }
 
+    // Create session with all ratings
+    const session = await Session.create({ name, age, gender, activities }); // ✅ saves all fields
+
+    // Generate outcome categories
     const result = generateWheel(activities);
     if (!result || !result.sectionsData || result.sectionsData.length !== activities.length) {
       return res.status(500).json({ error: 'Wheel generation failed or data mismatch' });
     }
 
+    // Enrich and save wheel results
     const enrichedActivities = activities.map((a, i) => ({
       ...a,
       outcomeCategory: result.sectionsData[i].mainCategory,
@@ -30,15 +44,12 @@ router.post('/generate', async (req, res) => {
       details2: result.sectionsData[i].details2
     }));
 
-    const saved = await WheelResult.create({
-      sessionId,
-      name: session.name,
-      age: session.age,
-      gender: session.gender,
+    await WheelResult.create({
+      sessionId: session._id,
       activities: enrichedActivities
     });
 
-    res.json({ message: 'Wheel generated successfully', result });
+    res.json({ message: 'Wheel generated successfully', sessionId: session._id, result });
   } catch (err) {
     console.error('🔥 Error in /api/wheel/generate:', err);
     res.status(500).json({ error: 'Server error while generating wheel' });

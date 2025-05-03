@@ -9,27 +9,27 @@ const ActivitySchema = new mongoose.Schema({
   },
   love: {
     type: Number,
-    min: 0,
-    max: 10,
-    default: 0
+    required: true,
+    min: 1,
+    max: 10
   },
   well: {
     type: Number,
-    min: 0,
-    max: 10,
-    default: 0
+    required: true,
+    min: 1,
+    max: 10
   },
   pay: {
     type: Number,
-    min: 0,
-    max: 10,
-    default: 0
+    required: true,
+    min: 1,
+    max: 10
   },
   world: {
     type: Number,
-    min: 0,
-    max: 10,
-    default: 0
+    required: true,
+    min: 1,
+    max: 10
   },
   outcomeCategory: {
     type: String,

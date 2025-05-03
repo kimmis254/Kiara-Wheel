@@ -7,11 +7,14 @@ const Session = require('../models/Session');
 router.get('/:sessionId', async (req, res) => {
   try {
     const sessionId = req.params.sessionId;
-    const result = await WheelResult.findOne({ sessionId }).lean();
-    const session = await Session.findById(sessionId).lean();
 
-    if (!result || !session) {
-      return res.status(404).json({ error: 'Result or session not found' });
+    const [result, session] = await Promise.all([
+      WheelResult.findOne({ sessionId }).lean(),
+      Session.findById(sessionId).lean()
+    ]);
+
+    if (!result) {
+      return res.status(404).json({ error: 'Wheel result not found' });
     }
 
     const categories = {};
@@ -24,18 +27,19 @@ router.get('/:sessionId', async (req, res) => {
       categories[key].push(act);
     }
 
-    const total = activities.length;
-    Object.keys(categories).forEach(cat => {
+    const total = activities.length || 1;
+    for (const cat in categories) {
       distribution[cat] = Math.round((categories[cat].length / total) * 100);
-    });
+    }
 
     res.json({
-      name: session.name,
-      age: session.age,
-      gender: session.gender,
+      name: session?.name || 'User',
+      age: session?.age || '',
+      gender: session?.gender || '',
       categories,
       distribution
     });
+
   } catch (err) {
     console.error('❌ Error fetching results:', err);
     res.status(500).json({ error: 'Server error while fetching results' });

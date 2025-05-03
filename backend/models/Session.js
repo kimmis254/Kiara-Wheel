@@ -6,6 +6,30 @@ const activitySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Activity name is required'],
     trim: true
+  },
+  love: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 10
+  },
+  well: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 10
+  },
+  pay: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 10
+  },
+  world: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 10
   }
 });
 

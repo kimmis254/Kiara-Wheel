@@ -1,20 +1,26 @@
-// routes/session.js
 const express = require('express');
 const router = express.Router();
 const Session = require('../models/Session');
 
-// POST /api/session — Save user details and activities
+// POST /api/session — Save user details and rated activities
 router.post('/', async (req, res) => {
   const { name, age, gender, activities } = req.body;
 
   if (!name || !age || !gender || !Array.isArray(activities) || activities.length === 0) {
-    return res.status(400).json({ error: 'All fields are required including at least one activity.' });
+    return res.status(400).json({ error: 'All fields and at least one rated activity are required.' });
   }
 
-  // Validate activity objects
-  for (let a of activities) {
-    if (!a.name || typeof a.name !== 'string' || a.name.trim() === '') {
-      return res.status(400).json({ error: 'Each activity must have a valid name.' });
+  for (const a of activities) {
+    const { name, love, well, pay, world } = a;
+
+    if (
+      !name || typeof name !== 'string' || name.trim() === '' ||
+      !Number.isInteger(love) || love < 1 || love > 10 ||
+      !Number.isInteger(well) || well < 1 || well > 10 ||
+      !Number.isInteger(pay) || pay < 1 || pay > 10 ||
+      !Number.isInteger(world) || world < 1 || world > 10
+    ) {
+      return res.status(400).json({ error: 'Each activity must have a valid name and 1–10 ratings for love, well, pay, world.' });
     }
   }
 

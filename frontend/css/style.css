@@ -188,11 +188,16 @@ p {
 }
 
 .spin-image-container {
+  display: flex;               /* Allows side-by-side layout */
+  gap: 20px;                   /* Space between circles */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;           /* Prevent stacking on large screens */
+  width: auto;
+  height: auto;
   position: relative;
-  width: 300px;
-  height: 300px;
+  z-index: 1;
 }
-
 .hero-bg-pattern {
   position: absolute;
   width: 120%;
@@ -205,8 +210,8 @@ p {
 }
 
 .spin-image {
-  width: 100%;
-  height: 100%;
+  width: 300px;
+  height: 300px;
   background: transparent;
   border-radius: 50%;
   display: flex;
@@ -215,7 +220,6 @@ p {
   animation: spin 20s linear infinite;
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
   position: relative;
-  z-index: 2;
 }
 
 .spin-icon {
@@ -333,8 +337,8 @@ p {
   }
 
   .spin-image-container {
-    width: 220px;
-    height: 220px;
+    flex-direction: column;
+    gap: 30px;
   }
 
   .hero-text {
@@ -344,6 +348,10 @@ p {
   .cta-buttons {
     flex-direction: column;
     align-items: center;
+  }
+  .spin-image {
+    width: 220px;
+    height: 220px;
   }
 }
 
@@ -897,26 +905,64 @@ blockquote::before {
 }
 
 .activity-label {
-  margin: 30px 0 15px;
-  font-weight: bold;
-  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  color: #0B0F4B;
 }
 
 .activity-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-
-.activity-grid input {
+.rating-labels,
+.activity-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.rating-labels {
+  font-weight: bold;
+  color: #333;
+  background: #f3f3f3;
+  padding: 8px;
+  border-radius: 6px;
+}
+.activity-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.activity-row input,
+.activity-row select {
   padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+}
+#add-activity,
+#submit-form {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: none;
   font-size: 1rem;
   border-radius: 6px;
-  border: none;
-  background-color: #f3f3f3;
+  cursor: pointer;
 }
 
+#add-activity {
+  background: #eaeaea;
+  color: #333;
+}
+
+#submit-form {
+  background: #FF6A3D;
+  color: white;
+}
 .add-activity-btn {
   display: inline-block;
   background-color: transparent;
