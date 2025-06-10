@@ -4,18 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Results - Kiara Wheel</title>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <link rel="stylesheet" href="../frontend/css/results.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <link rel="stylesheet" href="../frontend/css/results.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .chart-container:hover canvas {
+      transform: rotate(0deg) !important;
+      transition: transform 0.4s ease-in-out;
+    }
+  </style>
 </head>
-
 <body>
 <header class="navbar">
   <div class="logo">
@@ -24,8 +26,11 @@
   <div class="menu-toggle" id="menu-toggle">&#9776;</div>
   <nav class="nav-links" id="nav-links">
     <a href="index.html">Home</a>
-    <a href="create.html">Form</a>
+    <a href="create.html">Kiara Wheel</a>
     <a href="index.html#how-it-works">How It Works</a>
+    <a href="index.html#why-use-this">Why Use This</a>
+    <a href="index.html#what-to-expect">What To Expect</a>
+    <a href="index.html#testimonial-section">Testimonials</a>
     <a href="#">About</a>
   </nav>
   <div class="right-contact">
@@ -33,12 +38,10 @@
     <span class="contact-text">+254 745 738 345</span>
   </div>
 </header>
-
 <main class="results-page">
   <div class="results-card">
     <h1>Your Kiara Wheel!</h1>
     <p>This is your result based on the input you provided!</p>
-
     <div class="results-content">
       <div class="chart-container">
         <canvas id="kiaraWheel" width="960" height="960" style="width: 75vw; height: 75vw;"></canvas>
@@ -48,16 +51,13 @@
         <p>Click the wheel to view your categorized activities.</p>
       </div>
     </div>
-
     <div class="action-buttons">
       <a href="index.html" class="btn btn-home">Return to Home</a>
       <a href="create.html" class="btn btn-create">Create Another Wheel</a>
-      <button class="btn btn-download" id="downloadBtn">Download Wheel</button>
-      <button class="btn btn-email" id="emailBtn">Email My Results</button>
+      <button class="btn btn-download" id="downloadBtn">Download and Email Wheel</button>
     </div>
   </div>
 </main>
-
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-contact">
@@ -65,14 +65,12 @@
       <p><a href="tel:+254745783345"><i class="fas fa-phone"></i> +254 745 783 345</a></p>
       <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
     </div>
-
     <div class="footer-links">
       <h3>Quick Links</h3>
       <a href="#">About Us</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms & Conditions</a>
     </div>
-
     <div class="footer-social">
       <h3>Follow Us</h3>
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
@@ -80,62 +78,166 @@
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>&copy; <span id="year"></span> Power Circles. All rights reserved.</p>
     <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
   </div>
 </footer>
-
-
-
-
-
-
-</body>
 <script>
-  // /public/js/kiaraWheel.js
-
   let wheelChart, resultData;
   const canvas = document.getElementById('kiaraWheel');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas?.getContext('2d');
   const blissText = document.getElementById('blissText');
   const sessionId = new URLSearchParams(window.location.search).get('sessionId');
 
   const labelMap = {
-    Bliss: 'Bliss (also My Career Opportunities)',
-    Career: 'My Career Opportunities',
-    Passion: 'What I am Passionate',
-    Volunteer: 'Volunteering Options',
-    Charity: 'Charity Options'
+    Bliss: 'Bliss',
+    Career: 'My\nCareer Opportunities',
+    Passion: 'What I am\nPassionate\nAbout',
+    Volunteer: 'Volunteering\nOptions',
+    Charity: 'Charity\nOptions'
   };
 
-  const reverseLabelMap = Object.fromEntries(
-    Object.entries(labelMap).map(([k, v]) => [v, k])
-  );
+
+  function buildActivitySummaryHTML(categories, totalScoreAll) {
+    const categoryLabelMap = {
+      Bliss: 'BLISS',
+      Career: 'CAREER OPPORTUNITIES',
+      Passion: 'PASSIONS & INTERESTS',
+      Volunteer: 'VOLUNTEERING PATHS',
+      Charity: 'CHARITY INITIATIVES'
+    };
+
+    const sortedCategories = Object.keys(categories)
+      .filter(c => c !== 'Bliss')
+      .sort((a, b) => {
+        const scoreA = categories[a].reduce((sum, act) => sum + [act.love, act.well, act.pay, act.world].filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        const scoreB = categories[b].reduce((sum, act) => sum + [act.love, act.well, act.pay, act.world].filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        return scoreB - scoreA;
+      });
+
+    const allCategories = ['Bliss', ...sortedCategories];
+
+    return allCategories.map(cat => {
+      const acts = categories[cat] || [];
+      const label = categoryLabelMap[cat] || cat.toUpperCase();
+      const activityWord = acts.length === 1 ? 'activity' : 'activities';
+
+      const divider = '━'.repeat(70);
+
+
+      if (!acts.length) {
+        return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n🌱 _You haven’t found your Bliss yet — keep exploring!_`;
+      }
+
+      const activityList = acts.map((a, i) => {
+        const score = a.love + a.well + a.pay + a.world;
+        const selected = [];
+
+        if (a.love >= 5) selected.push('❤️ What you love');
+        if (a.well >= 5) selected.push('💪 What you do well');
+        if (a.pay >= 5) selected.push('💰 What the world will pay for');
+        if (a.world >= 5) selected.push('🌍 What the world needs');
+
+        const intersections = selected.length > 0
+          ? `${selected.length} – ${selected.join(', ')}`
+          : '—';
+
+        return (
+          `${i + 1}. ${a.name} — ${a.outcomeSubCategory}\n• ${a.details1}\n• ${a.details2}\n📊 Score: ${score}\n🔄 Intersections: ${intersections}`
+        );
+      }).join('\n\n');
+
+      return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n${activityList}`;
+    }).join('\n\n\n');
+  }
+
+
+
+
+  function showActivities() {
+    const container = document.getElementById('activitiesDisplay');
+    if (!container || !resultData || !resultData.categories) return;
+
+    const categories = resultData.categories;
+    const categoryTotals = {};
+    let globalTotal = 0;
+
+    // Calculate each category's score and global total
+    for (const [cat, acts] of Object.entries(categories)) {
+      let sectionScore = 0;
+      for (const a of acts) {
+        a.outcomeScore = [a.love, a.well, a.pay, a.world]
+          .filter(val => val >= 5)
+          .reduce((sum, val) => sum + val, 0);
+        sectionScore += a.outcomeScore;
+      }
+      categoryTotals[cat] = sectionScore;
+      globalTotal += sectionScore;
+    }
+
+    const html = Object.keys(categories).map(cat => {
+      const acts = categories[cat] || [];
+      const label = labelMap[cat] || cat;
+      const sectionScore = categoryTotals[cat] || 0;
+      const sectionPct = globalTotal > 0 ? ((sectionScore / globalTotal) * 100).toFixed(1) : '0.0';
+
+      const cards = acts.map((a, j) => {
+        const selected = [];
+        let ratingSum = 0;
+        const ratings = [a.love, a.well, a.pay, a.world];
+        if (a.love >= 5) { selected.push('❤️ What you love'); ratingSum += a.love; }
+        if (a.well >= 5) { selected.push('💪 What you do well'); ratingSum += a.well; }
+        if (a.pay >= 5)  { selected.push('💰 What the world will pay for'); ratingSum += a.pay; }
+        if (a.world >= 5){ selected.push('🌍 What the world needs'); ratingSum += a.world; }
+
+        const eligibleRatings = ratings.filter(val => val >= 5);
+        const outcomePct = eligibleRatings.length > 0
+          ? ((eligibleRatings.reduce((s, v) => s + v, 0) / 40) * 100).toFixed(1)
+          : '0.0';
+
+        return `
+      <div class="activity-card">
+        <h4>${j + 1}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>
+        <p>${a.details1}</p>
+        <p>${a.details2}</p>
+        <p><strong>Score (Ratings):</strong> ${ratingSum}</p>
+        <p><strong>Outcome %:</strong> ${outcomePct}%</p>
+        <p><strong>Intersecting Circles:</strong> ${selected.length} – ${selected.join(', ')}</p>
+      </div>`;
+      }).join('');
+
+      return `
+    <div class="activity-section">
+      <h3>${label} (Total: ${sectionScore} | ${sectionPct}%)</h3>
+      <div class="activity-grid-cards">${cards}</div>
+    </div>`;
+    }).join('');
+
+    container.innerHTML = html || '<p>No activities to show.</p>';
+  }
 
   async function loadResults() {
     if (!sessionId) return alert("Missing session ID");
-
     const res = await fetch(`http://localhost:5000/api/result/${sessionId}`);
     if (!res.ok) return alert('Failed to load wheel data');
-
     resultData = await res.json();
-    const categories = resultData.categories || {};
 
+    const categories = resultData.categories || {};
     const categoryScores = {};
-    const allActivities = [];
     let totalOutcomeScore = 0;
 
-    for (const [category, activities] of Object.entries(categories)) {
-      const categoryTotal = activities.reduce((sum, a) => {
-        const score = a.love + a.well + a.pay + a.world;
-        a.outcomeScore = score;
-        totalOutcomeScore += score;
-        allActivities.push({ ...a, category });
-        return sum + score;
-      }, 0);
-      categoryScores[category] = categoryTotal;
+    for (const [category, acts] of Object.entries(categories)) {
+      let categorySum = 0;
+      for (const a of acts) {
+        a.outcomeScore = [a.love, a.well, a.pay, a.world]
+          .filter(val => val >= 5)
+          .reduce((sum, val) => sum + val, 0);
+        a.ratings = `${a.love}/${a.well}/${a.pay}/${a.world}`;
+        categorySum += a.outcomeScore;
+      }
+      categoryScores[category] = categorySum;
+      totalOutcomeScore += categorySum;
     }
 
     const rawLabels = Object.keys(categoryScores);
@@ -152,6 +254,8 @@
       blissText.classList.remove('flicker');
     }
 
+    if (wheelChart) wheelChart.destroy();
+
     wheelChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -160,203 +264,178 @@
           label: 'Wheel',
           data,
           backgroundColor: colors.slice(0, labels.length),
-          cutout: '45%',
+          cutout: '30%',
           borderWidth: 2
         }]
       },
       options: {
+        animation: {
+          animateRotate: true,
+          duration: 1000
+        },
         plugins: {
           tooltip: {
             callbacks: {
               label: ctx => {
-                const original = rawLabels[ctx.dataIndex];
-                const display = labelMap[original] || original;
-                const total = categoryScores[original];
-                const acts = categories[original] || [];
+                const index = ctx.dataIndex;
+                const cat = rawLabels[index];
+                const acts = categories[cat] || [];
                 const actList = acts.map(a => `– ${a.name}`).join('\n');
-                const pct = ((total / totalOutcomeScore) * 100).toFixed(1);
-                return `${display}: ${total} pts (${pct}%)\n${actList}`;
+                const score = categoryScores[cat];
+                const pct = ((score / totalOutcomeScore) * 100).toFixed(1);
+                return `${labelMap[cat] || cat}: ${score} pts (${pct}%)\n${actList}`;
               }
             }
           },
           datalabels: {
             color: '#fff',
             font: { weight: 'bold', size: 14 },
+            align: 'center',
+            anchor: 'center',
             formatter: (val, ctx) => {
-              const label = ctx.chart.data.labels[ctx.dataIndex];
               const percent = ((val / totalOutcomeScore) * 100).toFixed(1);
-              return `${label}\n${percent}%`;
+              return `${ctx.chart.data.labels[ctx.dataIndex]}\n${percent}%`;
             }
           },
           legend: { display: false }
         },
         onClick: (e) => {
-          const points = wheelChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-          if (points.length) {
-            const index = points[0].index;
-            const original = rawLabels[index];
-            showActivities(original);
-          }
+          showActivities();
+        },
+        onHover: (evt, elements) => {
+          canvas.style.cursor = elements.length ? 'pointer' : 'default';
         }
       },
       plugins: [ChartDataLabels]
     });
   }
 
-  function showActivities(category = null) {
-    const container = document.getElementById('activitiesDisplay');
-    const categories = resultData.categories || {};
-    let html = '';
 
-    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
-    const allActivities = Object.values(categories).flat();
-    const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
 
-    allCategories.forEach((cat) => {
-      const acts = categories[cat] || [];
-      const sectionScore = acts.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
-      const sectionPct = totalScoreAll > 0 ? ((sectionScore / totalScoreAll) * 100).toFixed(1) : '0.0';
-      const display = labelMap[cat] || cat;
-
-      html += `<div class="activity-section"><h4>${display} (Total Outcome: ${sectionScore} | ${sectionPct}%)</h4>`;
-
-      if (acts.length === 0 && cat === 'Bliss') {
-        html += `<p class="no-bliss">You haven't found your Bliss yet — keep exploring! 🌱</p>`;
-      }
-
-      html += `<div class="activity-grid-cards">` + acts.map((a, i) => {
-        const activityIndex = i + 1;
-        const selected = [];
-        if (a.love >= 5) selected.push('What you Love');
-        if (a.well >= 5) selected.push('What you do Well');
-        if (a.pay >= 5) selected.push('Can people pay for it');
-        if (a.world >= 5) selected.push('Does the world need it');
-
-        const rawScore = a.love + a.well + a.pay + a.world;
-        const scorePct = totalScoreAll > 0 ? ((rawScore / totalScoreAll) * 100).toFixed(1) : '0.0';
-
-        return `
-      <div class="activity-card">
-        <h4>${activityIndex}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>
-        <p>${a.details1}</p>
-        <p>${a.details2}</p>
-        <p><strong>Outcome Score:</strong> ${rawScore}</p>
-        <p><strong>Outcome %:</strong> ${scorePct}%</p>
-        <p><strong>Intersecting Circles:</strong> ${selected.length} – ${selected.join(', ')}</p>
-      </div>`;
-      }).join('') + `</div></div>`;
-    });
-
-    container.innerHTML = html;
-  }
-
-  function drawBlissLabel() {
-    if (!resultData.distribution?.Bliss) return;
-    const x = canvas.width / 2;
-    const y = canvas.height / 2;
-    ctx.save();
-    ctx.font = 'bold 26px Inter';
-    ctx.fillStyle = '#34D399';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('BLISS', x, y);
-    ctx.restore();
-  }
 
   document.getElementById('downloadBtn').addEventListener('click', async () => {
-    drawBlissLabel();
+    const userEmail = prompt('Enter your email address to receive and download your Kiara Wheel results:');
+    if (!userEmail || !userEmail.includes('@')) return alert('Invalid email.');
 
-    const chartCanvas = document.getElementById('kiaraWheel');
-    const activityDiv = document.getElementById('activitiesDisplay');
-
-    const combinedContainer = document.createElement('div');
-    combinedContainer.style.background = '#1a1a40';
-    combinedContainer.style.padding = '20px';
-
-    const image = new Image();
-    image.src = chartCanvas.toDataURL("image/png");
-    image.style.maxWidth = '400px';
-    image.style.display = 'block';
-    image.style.margin = '0 auto';
-    combinedContainer.appendChild(image);
-    combinedContainer.appendChild(activityDiv.cloneNode(true));
-    document.body.appendChild(combinedContainer);
-
-    html2canvas(combinedContainer).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'kiara-wheel-full.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      document.body.removeChild(combinedContainer);
-    });
-  });
-
-  emailjs.init('oBelMPyBkq3aJB_-D');
-
-  function buildActivitySummaryHTML(categories, totalScoreAll) {
-    const sections = [];
-
-    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
-
-    allCategories.forEach((cat) => {
-      const acts = categories[cat] || [];
-      const isBliss = cat === 'Bliss';
-      const sectionHeader = `🔷 ${cat.toUpperCase()} — ${isBliss
-        ? 'These reflect your power & purpose!'
-        : 'Not quite blissful, but still insightful.'}`;
-
-      if (acts.length === 0 && isBliss) {
-        sections.push(`${sectionHeader}\n🌱 You haven't found your Bliss yet — keep exploring!`);
-        return;
-      }
-
-      const sectionLines = acts.map((a, i) => {
-        const rawScore = a.love + a.well + a.pay + a.world;
-        const scorePct = totalScoreAll > 0 ? ((rawScore / totalScoreAll) * 100).toFixed(1) : '0.0';
-        const selected = [];
-        if (a.love >= 5) selected.push('What you Love');
-        if (a.well >= 5) selected.push('What you do Well');
-        if (a.pay >= 5) selected.push('Can people pay for it');
-        if (a.world >= 5) selected.push('Does the world need it');
-
-        return `${i + 1}. ${cat} — ${a.name} — ${a.outcomeSubCategory}
-➤ ${a.details1}
-➤ ${a.details2}
-📊 Outcome Score: ${rawScore}
-📈 Outcome %: ${scorePct}%
-🔄 Intersecting Circles: ${selected.length} – ${selected.join(', ')}`;
-      });
-
-      sections.push(`${sectionHeader}\n\n${sectionLines.join('\n\n')}`);
-    });
-
-    return sections.join('\n\n\n');
-  }
-
-  document.getElementById('emailBtn').addEventListener('click', async () => {
-    const userEmail = prompt('Enter your email address:');
-    if (!userEmail || !userEmail.includes('@')) return alert('Invalid email address.');
-
-    drawBlissLabel();
-
-    // Compress canvas
     const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = canvas.width * 0.5;
-    tempCanvas.height = canvas.height * 0.5;
-    const ctx2 = tempCanvas.getContext('2d');
-    ctx2.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
-    const image = tempCanvas.toDataURL('image/jpeg', 0.6);
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(canvas, 0, 0);
+    tempCtx.font = 'bold 32px Inter';
+    tempCtx.fillStyle = '#34D399';
+    tempCtx.textAlign = 'center';
+    tempCtx.textBaseline = 'middle';
+    tempCtx.fillText('BLISS', tempCanvas.width / 2, tempCanvas.height / 2);
 
-    // Build correct activity data
+    const chartImage = tempCanvas.toDataURL('image/png');
+    const doc = new jspdf.jsPDF('p', 'mm', 'a4');
+
+    doc.setFontSize(26);
+    doc.setTextColor('#0B0F4B');
+    doc.setFont('helvetica', 'bold');
+    doc.text("Your Kiara Wheel Results", 105, 40, null, null, 'center');
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor('#333');
+    doc.text(`Email: ${userEmail}`, 105, 50, null, null, 'center');
+    doc.addImage(chartImage, 'PNG', 35, 65, 140, 140);
+    doc.setFontSize(10);
+    doc.text("Powered by Kiara Wheel", 105, 210, null, null, 'center');
+    doc.addPage();
+
     const categories = resultData.categories || {};
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
+    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
+    const labelMapClean = {
+      Bliss: 'BLISS',
+      Career: 'MY CAREER OPPORTUNITIES',
+      Passion: 'WHAT I AM PASSIONATE ABOUT',
+      Volunteer: 'VOLUNTEERING OPTIONS',
+      Charity: 'CHARITY OPTIONS'
+    };
+
+    let y = 20;
+
+    for (const cat of allCategories) {
+      const acts = categories[cat] || [];
+      const label = labelMapClean[cat] || cat;
+      const activityWord = acts.length === 1 ? "activity" : "activities";
+
+      if (y + 15 > 280) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.setFillColor(11, 15, 75);
+      doc.setTextColor('#ffffff');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.rect(10, y, 190, 10, 'F');
+      doc.text(`${label} (${acts.length} ${activityWord})`, 14, y + 7);
+      y += 14;
+
+      if (!acts.length) {
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(10);
+        doc.setTextColor('#444');
+        doc.text('You haven’t found your Bliss yet — keep exploring!', 14, y);
+        y += 10;
+        continue;
+      }
+
+      for (let i = 0; i < acts.length; i++) {
+        const a = acts[i];
+        const selected = [];
+        if (a.love >= 5) selected.push('❤️ What you love');
+        if (a.well >= 5) selected.push('💪 What you do well');
+        if (a.pay >= 5) selected.push('💰 What the world will pay for');
+        if (a.world >= 5) selected.push('🌍 What the world needs');
+
+        const ratings = `${a.love}/${a.well}/${a.pay}/${a.world}`;
+        const intersect = selected.join(', ') || '—';
+
+        const lines = [
+          `${i + 1}. ${a.name} — ${a.outcomeSubCategory}`,
+          `${a.details1}`,
+          `${a.details2}`,
+          `Score(Ratings): ${a.outcomeScore}`,
+          `Intersections: ${intersect}`
+        ];
+
+        const boxHeight = lines.length * 6 + 6;
+
+        if (y + boxHeight > 270) {
+          doc.addPage();
+          y = 20;
+        }
+
+        doc.setDrawColor(220);
+        doc.setFillColor(248, 248, 248);
+        doc.roundedRect(12, y, 185, boxHeight, 2, 2, 'S');
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor('#000');
+        for (let j = 0; j < lines.length; j++) {
+          doc.text(lines[j], 16, y + 10 + j * 6);
+        }
+
+        y += boxHeight + 4;
+      }
+    }
+
+    doc.save('kiara-wheel-results.pdf');
+
+    // EMAIL SENDING
+    const image = tempCanvas.toDataURL('image/jpeg', 0.7);
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
     const payload = {
       to_email: userEmail,
       user_name: resultData?.name || 'User',
-      message: "Here's your personalized Kiara Wheel!",
+      message: "Here's your personalized Kiara Wheel! 🎡",
       kiara_wheel_base64: image,
       activity_summary: activitySummary
     };
@@ -371,16 +450,19 @@
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);
-      alert('Wheel emailed successfully!');
+      alert('✅ Wheel downloaded and emailed successfully!');
     } catch (err) {
       console.error('EmailJS send error:', err);
-      alert('Email sending failed.');
+      alert('❌ Email sending failed.');
     }
   });
 
-
-  window.onload = loadResults;
+  emailjs.init('oBelMPyBkq3aJB_-D');
+  window.onload = () => setTimeout(loadResults, 100);
 
 </script>
 
+
+</body>
 </html>
+

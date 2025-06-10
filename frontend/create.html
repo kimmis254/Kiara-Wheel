@@ -20,8 +20,11 @@
   <div class="menu-toggle" id="menu-toggle">&#9776;</div>
   <nav class="nav-links" id="nav-links">
     <a href="index.html">Home</a>
-    <a href="create.html">Form</a>
+    <a href="create.html">Kiara Wheel</a>
     <a href="index.html#how-it-works">How It Works</a>
+    <a href="index.html#why-use-this">Why Use This</a>
+    <a href="index.html#what-to-expect">What To Expect</a>
+    <a href="index.html#testimonial-section">Testimonials</a>
     <a href="#">About</a>
   </nav>
   <div class="right-contact">
@@ -31,8 +34,10 @@
 </header>
 
 <main class="form-section">
-  <h2 class="form-title">Build Your Wheel</h2>
-  <p class="form-subtext">Rate each activity across love, skill, monetization, and world need.</p>
+  <h2 class="form-title">Build Your Kiara Wheel</h2>
+  <p class="form-subtext">Rate each <strong> ACTIVITY </strong> across What you love, What you do well, What the world will pay for, and What the world needs.
+    <br><br>(Activity could be SKILL/ TRAINING / GIFTS / TALENTS / ASPIRATION)</p>
+  <p class="form-subtext">  </p>
 
   <form id="kiara-form">
     <div class="form-row">
@@ -63,15 +68,21 @@
       </div>
     </div>
 
-    <h3 class="activity-label">Your Activities (Max 12)</h3>
 
     <div class="activity-grid">
       <div class="rating-labels">
-        <span><i class="fas fa-tasks"></i> Activity</span>
-        <span><i class="fas fa-heart"></i> What you love</span>
-        <span><i class="fas fa-brain"></i> What you do well</span>
-        <span><i class="fas fa-dollar-sign"></i> Can people pay for it</span>
-        <span><i class="fas fa-globe"></i> Does the world need it</span>
+        <span><i class="fas fa-tasks"></i> ACTIVITY</span>
+        <span><i class="fas fa-heart"></i> WHAT YOU LOVE</span>
+        <span><i class="fas fa-brain"></i> WHAT YOU DO WELL</span>
+        <span><i class="fas fa-dollar-sign"></i> WHAT THE WORLD WILL PAY FOR</span>
+        <span><i class="fas fa-globe"></i> WHAT THE WORLD NEEDS</span>
+      </div>
+      <div class="rating-help-row">
+        <span>Rate between 1–10 (1 = lowest, 10 = highest)</span>
+        <span>Your passion level</span>
+        <span>Your expertise level</span>
+        <span>Market value of your skill</span>
+        <span>Critical need in the world</span>
       </div>
       <div id="activity-rows"></div>
     </div>
@@ -137,7 +148,7 @@
       const nameInput = document.createElement('input');
       nameInput.name = 'activity';
       nameInput.placeholder = `Activity ${activityCount + 1}`;
-      nameInput.maxLength = 20; // limit to 50 characters
+      nameInput.maxLength = 30; // limit to 50 characters
 
       row.append(
         nameInput,
