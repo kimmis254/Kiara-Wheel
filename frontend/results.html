@@ -316,7 +316,7 @@
   }
 
   async function uploadImageToMyServer(base64Image) {
-    const res = await fetch('http://localhost:5000/api/upload', {
+    const res = await fetch('https://kiara-wheel.onrender.com/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image: base64Image })

@@ -8,11 +8,10 @@ dotenv.config();
 
 // Initialize express app
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:63342', // allow your frontend dev origin
+  origin: '*', // allow your frontend dev origin
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 };
