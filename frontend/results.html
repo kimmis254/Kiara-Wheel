@@ -163,7 +163,6 @@
     const categoryTotals = {};
     let globalTotal = 0;
 
-    // Calculate each category's score and global total
     for (const [cat, acts] of Object.entries(categories)) {
       let sectionScore = 0;
       for (const a of acts) {
@@ -176,11 +175,17 @@
       globalTotal += sectionScore;
     }
 
-    const html = Object.keys(categories).map(cat => {
+    const categoryOrder = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
+
+    const html = categoryOrder.map(cat => {
       const acts = categories[cat] || [];
       const label = labelMap[cat] || cat;
       const sectionScore = categoryTotals[cat] || 0;
       const sectionPct = globalTotal > 0 ? ((sectionScore / globalTotal) * 100).toFixed(1) : '0.0';
+
+      if (cat === 'Bliss' && acts.length === 0) {
+        return `<div class="activity-section"><h3>${label}</h3><p>🌱 You haven’t found your Bliss yet — keep exploring!</p></div>`;
+      }
 
       const cards = acts.map((a, j) => {
         const selected = [];
@@ -310,6 +315,18 @@
     });
   }
 
+  async function uploadImageToMyServer(base64Image) {
+    const res = await fetch('http://localhost:5000/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64Image })
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.url) throw new Error('Image upload failed');
+    return data.url;
+  }
+
 
 
 
@@ -321,12 +338,9 @@
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
+
+    // Draw only the original canvas content, do NOT overlay "BLISS"
     tempCtx.drawImage(canvas, 0, 0);
-    tempCtx.font = 'bold 32px Inter';
-    tempCtx.fillStyle = '#34D399';
-    tempCtx.textAlign = 'center';
-    tempCtx.textBaseline = 'middle';
-    tempCtx.fillText('BLISS', tempCanvas.width / 2, tempCanvas.height / 2);
 
     const chartImage = tempCanvas.toDataURL('image/png');
     const doc = new jspdf.jsPDF('p', 'mm', 'a4');
@@ -347,7 +361,11 @@
     const categories = resultData.categories || {};
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
-    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
+
+    const allCategories = Object.keys(categories).filter(cat =>
+            cat !== 'Bliss' || (categories['Bliss'] && categories['Bliss'].length > 0)
+    );
+
     const labelMapClean = {
       Bliss: 'BLISS',
       Career: 'MY CAREER OPPORTUNITIES',
@@ -388,12 +406,11 @@
       for (let i = 0; i < acts.length; i++) {
         const a = acts[i];
         const selected = [];
-        if (a.love >= 5) selected.push('❤️ What you love');
-        if (a.well >= 5) selected.push('💪 What you do well');
-        if (a.pay >= 5) selected.push('💰 What the world will pay for');
-        if (a.world >= 5) selected.push('🌍 What the world needs');
+        if (a.love >= 5) selected.push('What you love');
+        if (a.well >= 5) selected.push('What you do well');
+        if (a.pay >= 5) selected.push('What the world will pay for');
+        if (a.world >= 5) selected.push('What the world needs');
 
-        const ratings = `${a.love}/${a.well}/${a.pay}/${a.world}`;
         const intersect = selected.join(', ') || '—';
 
         const lines = [
@@ -429,17 +446,40 @@
     doc.save('kiara-wheel-results.pdf');
 
     // EMAIL SENDING
-    const image = tempCanvas.toDataURL('image/jpeg', 0.7);
+    const image = tempCanvas.toDataURL('image/jpeg', 0.5);
+    let imageUrl = '';
+
+    try {
+      imageUrl = await uploadImageToMyServer(image); // ⬅️ your own backend uploader
+      console.log('✅ Uploaded image URL:', imageUrl);
+    } catch (err) {
+      console.error('❌ Image upload failed:', err);
+
+      // fallback image URL
+      imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png';
+
+      alert('⚠️ Upload failed. Using fallback image instead.');
+    }
+    const previewWindow = window.open();
+    previewWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;" />`);
+
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
+// Validate image URL before sending
+    if (!imageUrl || !imageUrl.startsWith('http')) {
+      return alert('❌ Invalid image URL — cannot send email.');
+    }
+
+// EmailJS user payload
     const payload = {
       to_email: userEmail,
       user_name: resultData?.name || 'User',
-      message: "Here's your personalized Kiara Wheel! 🎡",
-      kiara_wheel_base64: image,
+      message: "Here's your personalized Kiara Wheel!",
+      kiara_wheel_link: imageUrl,
       activity_summary: activitySummary
     };
 
+// Admin copy payload
     const adminPayload = {
       ...payload,
       to_email: 'kathanzuwayne2@gmail.com',
@@ -447,18 +487,20 @@
       user_email: userEmail
     };
 
+// Send emails
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);
       alert('✅ Wheel downloaded and emailed successfully!');
     } catch (err) {
-      console.error('EmailJS send error:', err);
-      alert('❌ Email sending failed.');
+      console.error('❌ EmailJS send error:', err);
+      alert('❌ Failed to send email. Please try again.');
     }
   });
 
   emailjs.init('oBelMPyBkq3aJB_-D');
   window.onload = () => setTimeout(loadResults, 100);
+
 
 </script>
 

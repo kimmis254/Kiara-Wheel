@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -13,17 +11,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check route
+const corsOptions = {
+  origin: 'http://localhost:63342', // allow your frontend dev origin
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+};
+
+app.use(cors(corsOptions));
+
+
+// Serve public images
+app.use('/uploads', express.static('uploads'));
+
+// Health check
 app.get('/', (req, res) => {
   res.send('✅ Kiara Wheel API is running!');
 });
 
-// Register API routes
+// Register routes
 app.use('/api/session', require('./routes/session'));
 app.use('/api/wheel', require('./routes/wheel'));
 app.use('/api/result', require('./routes/result'));
+app.use('/api/upload', require('./routes/upload')); // ✅ NEW
 
-// Connect to MongoDB and start server
+// Connect MongoDB and start server
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
