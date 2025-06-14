@@ -316,19 +316,23 @@
   }
 
   async function uploadImageToMyServer(base64Image) {
+    console.log('📤 Uploading image...');
     const res = await fetch('https://kiara-wheel.onrender.com/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image: base64Image })
     });
 
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('❌ Server Error:', err);
+      throw new Error('Image upload failed');
+    }
+
     const data = await res.json();
-    if (!res.ok || !data.url) throw new Error('Image upload failed');
+    if (!data.url) throw new Error('No URL returned');
     return data.url;
   }
-
-
-
 
   document.getElementById('downloadBtn').addEventListener('click', async () => {
     const userEmail = prompt('Enter your email address to receive and download your Kiara Wheel results:');
@@ -338,8 +342,6 @@
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
-
-    // Draw only the original canvas content, do NOT overlay "BLISS"
     tempCtx.drawImage(canvas, 0, 0);
 
     const chartImage = tempCanvas.toDataURL('image/png');
@@ -362,10 +364,7 @@
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
 
-    const allCategories = Object.keys(categories).filter(cat =>
-            cat !== 'Bliss' || (categories['Bliss'] && categories['Bliss'].length > 0)
-    );
-
+    const allCategories = Object.keys(categories).filter(cat => cat !== 'Bliss' || (categories['Bliss']?.length > 0));
     const labelMapClean = {
       Bliss: 'BLISS',
       Career: 'MY CAREER OPPORTUNITIES',
@@ -375,7 +374,6 @@
     };
 
     let y = 20;
-
     for (const cat of allCategories) {
       const acts = categories[cat] || [];
       const label = labelMapClean[cat] || cat;
@@ -422,7 +420,6 @@
         ];
 
         const boxHeight = lines.length * 6 + 6;
-
         if (y + boxHeight > 270) {
           doc.addPage();
           y = 20;
@@ -450,27 +447,28 @@
     let imageUrl = '';
 
     try {
-      imageUrl = await uploadImageToMyServer(image); // ⬅️ your own backend uploader
+      imageUrl = await uploadImageToMyServer(image);
       console.log('✅ Uploaded image URL:', imageUrl);
     } catch (err) {
       console.error('❌ Image upload failed:', err);
-
-      // fallback image URL
       imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png';
-
-      alert('⚠️ Upload failed. Using fallback image instead.');
+      alert('⚠️ Upload failed. Using fallback image.');
     }
-    const previewWindow = window.open();
-    previewWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;" />`);
+
+    // SAFELY OPEN PREVIEW WINDOW
+    const previewWindow = window.open('', '_blank');
+    if (previewWindow) {
+      previewWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;" />`);
+    } else {
+      console.warn('⚠️ Popup blocked. No preview shown.');
+    }
 
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
-// Validate image URL before sending
     if (!imageUrl || !imageUrl.startsWith('http')) {
       return alert('❌ Invalid image URL — cannot send email.');
     }
 
-// EmailJS user payload
     const payload = {
       to_email: userEmail,
       user_name: resultData?.name || 'User',
@@ -479,7 +477,6 @@
       activity_summary: activitySummary
     };
 
-// Admin copy payload
     const adminPayload = {
       ...payload,
       to_email: 'kathanzuwayne2@gmail.com',
@@ -487,7 +484,6 @@
       user_email: userEmail
     };
 
-// Send emails
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);

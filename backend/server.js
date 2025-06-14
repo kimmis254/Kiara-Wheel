@@ -11,8 +11,8 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: '*', // allow your frontend dev origin
-  methods: ['GET', 'POST'],
+  origin: '*', // You can later replace this with your production URL
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 };
 
