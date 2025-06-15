@@ -26,20 +26,21 @@ router.post('/generate', async (req, res) => {
       }
     }
 
-    // Create session with all ratings
-    const session = await Session.create({ name, age, gender, activities }); // ✅ saves all fields
+    // Create session
+    const session = await Session.create({ name, age, gender, activities });
 
-    // Generate outcome categories
+    // Generate outcomes
     const result = generateWheel(activities);
     if (!result || !result.sectionsData || result.sectionsData.length !== activities.length) {
       return res.status(500).json({ error: 'Wheel generation failed or data mismatch' });
     }
 
-    // Enrich and save wheel results
+    // Merge outcomes into activities
     const enrichedActivities = activities.map((a, i) => ({
       ...a,
-      outcomeCategory: result.sectionsData[i].mainCategory,
-      outcomeSubCategory: result.sectionsData[i].subCategory,
+      outcomeCategory: result.sectionsData[i].outcomeCategory,
+      outcomeSubCategory: result.sectionsData[i].outcomeSubCategory,
+      extra: result.sectionsData[i].extra,
       details1: result.sectionsData[i].details1,
       details2: result.sectionsData[i].details2
     }));
@@ -49,7 +50,12 @@ router.post('/generate', async (req, res) => {
       activities: enrichedActivities
     });
 
-    res.json({ message: 'Wheel generated successfully', sessionId: session._id, result });
+    res.json({
+      message: 'Wheel generated successfully',
+      sessionId: session._id,
+      result
+    });
+
   } catch (err) {
     console.error('🔥 Error in /api/wheel/generate:', err);
     res.status(500).json({ error: 'Server error while generating wheel' });

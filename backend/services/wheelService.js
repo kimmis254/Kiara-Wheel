@@ -7,7 +7,7 @@ function generateWheel(activities) {
     Career: [],
     Charity: [],
     Volunteer: [],
-    Ikigai: [] // fallback
+    Ikigai: [] // fallback bucket
   };
 
   const sectionsData = [];
@@ -23,14 +23,20 @@ function generateWheel(activities) {
     };
 
     const match = findOutcome(yesMap);
+
     const category = match?.mainCategory || 'Ikigai';
 
     const result = {
-      activity: name,
-      mainCategory: category,
-      subCategory: match?.subCategory || 'Self Discovery',
-      details1: match?.details1 || 'You are still discovering yourself.',
-      details2: match?.details2 || 'Every step is progress.'
+      name,
+      love,
+      well,
+      pay,
+      world,
+      outcomeCategory: category,
+      outcomeSubCategory: match?.subCategory || 'Self Discovery',
+      extra: match?.Extra || '',
+      details1: match?.Details1 || 'You are still discovering yourself.',
+      details2: match?.Details2 || 'Every step is progress.'
     };
 
     sectionsData.push(result);
@@ -60,10 +66,11 @@ function findOutcome(yesMap) {
     const isMatch = Object.keys(expected).every(k => expected[k] === yesMap[k]);
     if (isMatch) {
       return {
-        mainCategory: row.OutcomeMainCategory,
-        subCategory: row.OutcomeSubCategory,
-        details1: row.Details1,
-        details2: row.Details2
+        mainCategory: row['Outcome (Main Category)'],
+        subCategory: row['Outcome Sub-category'],
+        Extra: row.Extra || '',
+        Details1: row.Details1 || '',
+        Details2: row.Details2 || ''
       };
     }
   }

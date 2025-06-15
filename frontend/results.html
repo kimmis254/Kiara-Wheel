@@ -98,7 +98,6 @@
     Charity: 'Charity\nOptions'
   };
 
-
   function buildActivitySummaryHTML(categories, totalScoreAll) {
     const categoryLabelMap = {
       Bliss: 'BLISS',
@@ -109,12 +108,16 @@
     };
 
     const sortedCategories = Object.keys(categories)
-      .filter(c => c !== 'Bliss')
-      .sort((a, b) => {
-        const scoreA = categories[a].reduce((sum, act) => sum + [act.love, act.well, act.pay, act.world].filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
-        const scoreB = categories[b].reduce((sum, act) => sum + [act.love, act.well, act.pay, act.world].filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
-        return scoreB - scoreA;
-      });
+            .filter(c => c !== 'Bliss')
+            .sort((a, b) => {
+              const scoreA = categories[a].reduce((sum, act) =>
+                      sum + [act.love, act.well, act.pay, act.world]
+                              .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+              const scoreB = categories[b].reduce((sum, act) =>
+                      sum + [act.love, act.well, act.pay, act.world]
+                              .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+              return scoreB - scoreA;
+            });
 
     const allCategories = ['Bliss', ...sortedCategories];
 
@@ -122,38 +125,42 @@
       const acts = categories[cat] || [];
       const label = categoryLabelMap[cat] || cat.toUpperCase();
       const activityWord = acts.length === 1 ? 'activity' : 'activities';
-
       const divider = '━'.repeat(70);
-
 
       if (!acts.length) {
         return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n🌱 _You haven’t found your Bliss yet — keep exploring!_`;
       }
 
-      const activityList = acts.map((a, i) => {
-        const score = a.love + a.well + a.pay + a.world;
-        const selected = [];
+      const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
 
+      const activityList = sortedActs.map((a, i) => {
+        const selected = [];
         if (a.love >= 5) selected.push('❤️ What you love');
         if (a.well >= 5) selected.push('💪 What you do well');
         if (a.pay >= 5) selected.push('💰 What the world will pay for');
         if (a.world >= 5) selected.push('🌍 What the world needs');
 
+        const score = a.love + a.well + a.pay + a.world;
+        const percent = ((score / 40) * 100).toFixed(0);
         const intersections = selected.length > 0
-          ? `${selected.length} – ${selected.join(', ')}`
-          : '—';
+                ? `${selected.length} (${selected.join(', ')})`
+                : '—';
 
-        return (
-          `${i + 1}. ${a.name} — ${a.outcomeSubCategory}\n• ${a.details1}\n• ${a.details2}\n📊 Score: ${score}\n🔄 Intersections: ${intersections}`
-        );
+        const lines = [
+          `${a.name} — ${a.outcomeSubCategory}`,
+          a.extra ? `- ${a.extra}` : '',
+          `- ${a.details1}`,
+          ...(a.details2 && a.details2 !== 'N/A' ? [`- ${a.details2}`] : []),
+          `📊 Score: ${score} out of 40 (${percent}%)`,
+          `🔄 Intersections: ${intersections}`
+        ];
+
+        return lines.filter(Boolean).join('\n');
       }).join('\n\n');
 
       return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n${activityList}`;
     }).join('\n\n\n');
   }
-
-
-
 
   function showActivities() {
     const container = document.getElementById('activitiesDisplay');
@@ -167,56 +174,61 @@
       let sectionScore = 0;
       for (const a of acts) {
         a.outcomeScore = [a.love, a.well, a.pay, a.world]
-          .filter(val => val >= 5)
-          .reduce((sum, val) => sum + val, 0);
+                .filter(val => val >= 5)
+                .reduce((sum, val) => sum + val, 0);
         sectionScore += a.outcomeScore;
       }
       categoryTotals[cat] = sectionScore;
       globalTotal += sectionScore;
     }
 
-    const categoryOrder = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
+    const sortedCategories = Object.keys(categories)
+            .filter(c => c !== 'Bliss')
+            .sort((a, b) => (categoryTotals[b] || 0) - (categoryTotals[a] || 0));
+    const categoryOrder = ['Bliss', ...sortedCategories];
 
     const html = categoryOrder.map(cat => {
       const acts = categories[cat] || [];
       const label = labelMap[cat] || cat;
       const sectionScore = categoryTotals[cat] || 0;
-      const sectionPct = globalTotal > 0 ? ((sectionScore / globalTotal) * 100).toFixed(1) : '0.0';
+      const sectionPct = globalTotal > 0 ? Math.round((sectionScore / globalTotal) * 100) : 0;
 
       if (cat === 'Bliss' && acts.length === 0) {
         return `<div class="activity-section"><h3>${label}</h3><p>🌱 You haven’t found your Bliss yet — keep exploring!</p></div>`;
       }
 
-      const cards = acts.map((a, j) => {
+      const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
+
+      const cards = sortedActs.map((a, j) => {
         const selected = [];
-        let ratingSum = 0;
-        const ratings = [a.love, a.well, a.pay, a.world];
-        if (a.love >= 5) { selected.push('❤️ What you love'); ratingSum += a.love; }
-        if (a.well >= 5) { selected.push('💪 What you do well'); ratingSum += a.well; }
-        if (a.pay >= 5)  { selected.push('💰 What the world will pay for'); ratingSum += a.pay; }
-        if (a.world >= 5){ selected.push('🌍 What the world needs'); ratingSum += a.world; }
+        const circleIds = [];
 
-        const eligibleRatings = ratings.filter(val => val >= 5);
-        const outcomePct = eligibleRatings.length > 0
-          ? ((eligibleRatings.reduce((s, v) => s + v, 0) / 40) * 100).toFixed(1)
-          : '0.0';
+        if (a.love >= 5) { selected.push('❤️ What you love'); circleIds.push(1); }
+        if (a.well >= 5) { selected.push('💪 What you do well'); circleIds.push(2); }
+        if (a.pay >= 5) { selected.push('💰 What the world will pay for'); circleIds.push(3); }
+        if (a.world >= 5) { selected.push('🌍 What the world needs'); circleIds.push(4); }
 
-        return `
-      <div class="activity-card">
-        <h4>${j + 1}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>
-        <p>${a.details1}</p>
-        <p>${a.details2}</p>
-        <p><strong>Score (Ratings):</strong> ${ratingSum}</p>
-        <p><strong>Outcome %:</strong> ${outcomePct}%</p>
-        <p><strong>Intersecting Circles:</strong> ${selected.length} – ${selected.join(', ')}</p>
-      </div>`;
+        const circleCount = circleIds.length;
+        const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
+        const intersectText = selected.join(', ') || '—';
+
+        const lines = [
+          `<h4>${j + 1}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>`,
+          a.extra ? `<p>- ${a.extra}</p>` : '',
+          a.details1 ? `<p>- ${a.details1}</p>` : '',
+          a.details2 && a.details2 !== 'N/A' ? `<p>- ${a.details2}</p>` : '',
+          `<p><strong>📊 Score:</strong> ${a.outcomeScore} out of 40 (${percent}%)</p>`,
+          `<p><strong>🔄 ${circleCount} Intersecting circle${circleCount !== 1 ? 's' : ''}</strong> (${intersectText})</p>`
+        ].filter(Boolean).join('\n');
+
+        return `<div class="activity-card">\n${lines}\n</div>`;
       }).join('');
 
       return `
-    <div class="activity-section">
-      <h3>${label} (Total: ${sectionScore} | ${sectionPct}%)</h3>
-      <div class="activity-grid-cards">${cards}</div>
-    </div>`;
+      <div class="activity-section">
+        <h3>${label} (Total: ${sectionScore} | ${sectionPct}%)</h3>
+        <div class="activity-grid-cards">${cards}</div>
+      </div>`;
     }).join('');
 
     container.innerHTML = html || '<p>No activities to show.</p>';
@@ -236,8 +248,8 @@
       let categorySum = 0;
       for (const a of acts) {
         a.outcomeScore = [a.love, a.well, a.pay, a.world]
-          .filter(val => val >= 5)
-          .reduce((sum, val) => sum + val, 0);
+                .filter(val => val >= 5)
+                .reduce((sum, val) => sum + val, 0);
         a.ratings = `${a.love}/${a.well}/${a.pay}/${a.world}`;
         categorySum += a.outcomeScore;
       }
@@ -287,7 +299,7 @@
                 const acts = categories[cat] || [];
                 const actList = acts.map(a => `– ${a.name}`).join('\n');
                 const score = categoryScores[cat];
-                const pct = ((score / totalOutcomeScore) * 100).toFixed(1);
+                const pct = Math.round((score / totalOutcomeScore) * 100);
                 return `${labelMap[cat] || cat}: ${score} pts (${pct}%)\n${actList}`;
               }
             }
@@ -298,15 +310,13 @@
             align: 'center',
             anchor: 'center',
             formatter: (val, ctx) => {
-              const percent = ((val / totalOutcomeScore) * 100).toFixed(1);
+              const percent = Math.round((val / totalOutcomeScore) * 100);
               return `${ctx.chart.data.labels[ctx.dataIndex]}\n${percent}%`;
             }
           },
           legend: { display: false }
         },
-        onClick: (e) => {
-          showActivities();
-        },
+        onClick: () => showActivities(),
         onHover: (evt, elements) => {
           canvas.style.cursor = elements.length ? 'pointer' : 'default';
         }
@@ -315,28 +325,13 @@
     });
   }
 
-  async function uploadImageToMyServer(base64Image) {
-    console.log('📤 Uploading image...');
-    const res = await fetch('https://kiara-wheel.onrender.com/api/upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: base64Image })
-    });
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('❌ Server Error:', err);
-      throw new Error('Image upload failed');
-    }
-
-    const data = await res.json();
-    if (!data.url) throw new Error('No URL returned');
-    return data.url;
-  }
 
   document.getElementById('downloadBtn').addEventListener('click', async () => {
     const userEmail = prompt('Enter your email address to receive and download your Kiara Wheel results:');
     if (!userEmail || !userEmail.includes('@')) return alert('Invalid email.');
+
+    const userName = resultData?.name || 'there';
 
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = canvas.width;
@@ -344,27 +339,52 @@
     const tempCtx = tempCanvas.getContext('2d');
     tempCtx.drawImage(canvas, 0, 0);
 
+    const hasBliss = resultData.categories?.Bliss?.length > 0;
+    if (hasBliss) {
+      tempCtx.font = 'bold 32px Inter';
+      tempCtx.fillStyle = '#34D399';
+      tempCtx.textAlign = 'center';
+      tempCtx.textBaseline = 'middle';
+      tempCtx.fillText('BLISS', tempCanvas.width / 2, tempCanvas.height / 2);
+    }
+
     const chartImage = tempCanvas.toDataURL('image/png');
     const doc = new jspdf.jsPDF('p', 'mm', 'a4');
 
+// Title Page
     doc.setFontSize(26);
     doc.setTextColor('#0B0F4B');
     doc.setFont('helvetica', 'bold');
-    doc.text("Your Kiara Wheel Results", 105, 40, null, null, 'center');
-    doc.setFontSize(14);
+    doc.text("Your Kiara Wheel Results", 105, 30, null, null, 'center');
+
+    doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor('#333');
-    doc.text(`Email: ${userEmail}`, 105, 50, null, null, 'center');
-    doc.addImage(chartImage, 'PNG', 35, 65, 140, 140);
+    doc.setTextColor('#444');
+    const introText = `Hi ${userName}, here’s your custom Kiara Wheel!
+
+Thank you for completing Kiara Wheel. We’ve analyzed your activity ratings and generated your personalized Kiara Wheel based on
+What you love, What you do well, What the world will pay for and What the world needs`;
+
+    const introLines = doc.splitTextToSize(introText, 180);
+    doc.text(introLines, 15, 40);
+
+    doc.addImage(chartImage, 'PNG', 35, 80, 140, 140);
     doc.setFontSize(10);
-    doc.text("Powered by Kiara Wheel", 105, 210, null, null, 'center');
+    doc.setTextColor('#888');
+    doc.text("Powered by Kiara Wheel", 105, 220, null, null, 'center');
     doc.addPage();
 
+// Activity Data
     const categories = resultData.categories || {};
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
 
-    const allCategories = Object.keys(categories).filter(cat => cat !== 'Bliss' || (categories['Bliss']?.length > 0));
+// Sort activities in each category by score
+    for (const [cat, acts] of Object.entries(categories)) {
+      categories[cat] = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
+    }
+
+    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
     const labelMapClean = {
       Bliss: 'BLISS',
       Career: 'MY CAREER OPPORTUNITIES',
@@ -374,8 +394,11 @@
     };
 
     let y = 20;
+
     for (const cat of allCategories) {
       const acts = categories[cat] || [];
+      if (cat === 'Bliss' && acts.length === 0) continue; // Skip Bliss if empty
+
       const label = labelMapClean[cat] || cat;
       const activityWord = acts.length === 1 ? "activity" : "activities";
 
@@ -404,19 +427,45 @@
       for (let i = 0; i < acts.length; i++) {
         const a = acts[i];
         const selected = [];
-        if (a.love >= 5) selected.push('What you love');
-        if (a.well >= 5) selected.push('What you do well');
-        if (a.pay >= 5) selected.push('What the world will pay for');
-        if (a.world >= 5) selected.push('What the world needs');
+        const circleIds = [];
+
+        if (a.love >= 5) {
+          selected.push('What you love');
+          circleIds.push(1);
+        }
+        if (a.well >= 5) {
+          selected.push('What you do well');
+          circleIds.push(2);
+        }
+        if (a.pay >= 5) {
+          selected.push('What the world will pay for');
+          circleIds.push(3);
+        }
+        if (a.world >= 5) {
+          selected.push('What the world needs');
+          circleIds.push(4);
+        }
 
         const intersect = selected.join(', ') || '—';
+        const circleLabel = circleIds.length > 1
+                ? `Intersection of Circles ${circleIds.join(', ')}`
+                : `Intersection of Circle ${circleIds[0]}`;
+        const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
+
+        const title = `${a.name} – ${a.outcomeSubCategory}`;
+        const blendLine = `- A Blend of Skill, Value and Demand`;
+        const details1Line = `- ${a.details1}`;
+        const details2Line = a.details2 && a.details2 !== 'N/A' ? `- ${a.details2}` : null;
+        const scoreLine = `Score ${a.outcomeScore} out of 40, ${percent}%`;
+        const intersectLine = `- ${circleIds.length} intersecting circles (${intersect})`;
 
         const lines = [
-          `${i + 1}. ${a.name} — ${a.outcomeSubCategory}`,
-          `${a.details1}`,
-          `${a.details2}`,
-          `Score(Ratings): ${a.outcomeScore}`,
-          `Intersections: ${intersect}`
+          ...doc.splitTextToSize(`${circleLabel}: ${title}`, 180),
+          ...doc.splitTextToSize(blendLine, 180),
+          ...doc.splitTextToSize(details1Line, 180),
+          ...(details2Line ? doc.splitTextToSize(details2Line, 180) : []),
+          scoreLine,
+          intersectLine
         ];
 
         const boxHeight = lines.length * 6 + 6;
@@ -444,43 +493,21 @@
 
     // EMAIL SENDING
     const image = tempCanvas.toDataURL('image/jpeg', 0.5);
-    let imageUrl = '';
-
-    try {
-      imageUrl = await uploadImageToMyServer(image);
-      console.log('✅ Uploaded image URL:', imageUrl);
-    } catch (err) {
-      console.error('❌ Image upload failed:', err);
-      imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png';
-      alert('⚠️ Upload failed. Using fallback image.');
-    }
-
-    // SAFELY OPEN PREVIEW WINDOW
-    const previewWindow = window.open('', '_blank');
-    if (previewWindow) {
-      previewWindow.document.write(`<img src="${imageUrl}" style="max-width:100%;" />`);
-    } else {
-      console.warn('⚠️ Popup blocked. No preview shown.');
-    }
 
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
-    if (!imageUrl || !imageUrl.startsWith('http')) {
-      return alert('❌ Invalid image URL — cannot send email.');
-    }
-
     const payload = {
       to_email: userEmail,
-      user_name: resultData?.name || 'User',
-      message: "Here's your personalized Kiara Wheel!",
-      kiara_wheel_link: imageUrl,
+      user_name: userName,
+      message: "Here's your personalized Kiara Wheel! 🎡",
+      kiara_wheel_base64: image,
       activity_summary: activitySummary
     };
 
     const adminPayload = {
       ...payload,
       to_email: 'kathanzuwayne2@gmail.com',
-      user_name: `ADMIN COPY for ${resultData?.name || 'Anonymous'}`,
+      user_name: `ADMIN COPY for ${userName}`,
       user_email: userEmail
     };
 
@@ -493,9 +520,10 @@
       alert('❌ Failed to send email. Please try again.');
     }
   });
+// 🟢 EmailJS Init
+    emailjs.init('oBelMPyBkq3aJB_-D');
+    window.onload = () => setTimeout(loadResults, 100);
 
-  emailjs.init('oBelMPyBkq3aJB_-D');
-  window.onload = () => setTimeout(loadResults, 100);
 
 
 </script>

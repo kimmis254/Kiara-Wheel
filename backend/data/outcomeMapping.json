@@ -1,114 +1,122 @@
 [
   {
     "IntersectingCircles": "What you Love, What you do Well",
-    "OutcomeMainCategory": "Passion",
+    "OutcomeMainCategory": "What I am passionate and/or do well",
     "OutcomeSubCategory": "Passionate Hobby",
-    "Details1": "You love it and do it well.",
-    "Details2": "Could be grown into a career later."
+    "Extra": "A blend of Love and Skill",
+    "Details1": "You Love it, you do it well. Likely to be a passionate hobby. Could be grown into a career later.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you do Well, Will the world pay for it",
-    "OutcomeMainCategory": "Career",
+    "IntersectingCircles": "What you do Well, What the World will pay for",
+    "OutcomeMainCategory": "My Career Opportunities",
     "OutcomeSubCategory": "Comfortable Career",
-    "Details1": "You can get paid for it and do it well.",
-    "Details2": ""
+    "Extra": "A blend of Skill and Value",
+    "Details1": "You do it well and the World will pay for it. Likely to be a comfortable career.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "Will the world pay for it, What the world needs",
-    "OutcomeMainCategory": "Charity",
-    "OutcomeSubCategory": "Mission Driven Career",
-    "Details1": "You are paid and the world needs it.",
-    "Details2": ""
+    "IntersectingCircles": "What the World will pay for, What the World needs",
+    "OutcomeMainCategory": "Charitable Options",
+    "OutcomeSubCategory": "Charitable Career",
+    "Extra": "A blend of Value and Demand",
+    "Details1": "The World will pay you for this and the World needs it. Likely to be a charitable career with social impact",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you Love, What the world needs",
-    "OutcomeMainCategory": "Volunteer",
-    "OutcomeSubCategory": "Social Impact Passion",
-    "Details1": "You love it and the world needs it.",
-    "Details2": ""
+    "IntersectingCircles": "What you Love, What the World needs",
+    "OutcomeMainCategory": "Volunteering Options",
+    "OutcomeSubCategory": "Passionate Voluntary Work",
+    "Extra": "A blend of Love and Demand",
+    "Details1": "You Love it and the World needs it. Likely to be a passionate voluntary work with social impact",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you Love, Will the world pay for it",
-    "OutcomeMainCategory": "Passion",
-    "OutcomeSubCategory": "Potential Monetized Passion",
-    "Details1": "You love it and people will pay.",
-    "Details2": ""
+    "IntersectingCircles": "What you Love, What the World will pay for",
+    "OutcomeMainCategory": "My Career Opportunities",
+    "OutcomeSubCategory": "Passionate Career",
+    "Extra": "A blend of Love and Value",
+    "Details1": "You Love it, the World will pay for. Likely to be a passionate career.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you do Well, What the world needs",
-    "OutcomeMainCategory": "Career",
-    "OutcomeSubCategory": "Skill-based Social Career",
-    "Details1": "You do it well and the world needs it.",
-    "Details2": ""
+    "IntersectingCircles": "What you do Well, What the World needs",
+    "OutcomeMainCategory": "Volunteering Options",
+    "OutcomeSubCategory": "Comfortable Voluntary Work",
+    "Extra": "A blend of Skill and Demand",
+    "Details1": "You do it well and the World needs it. Likely to be a comfortable voluntary work with social impact",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you Love, What you do Well, Will the world pay for it",
-    "OutcomeMainCategory": "Career",
-    "OutcomeSubCategory": "Dream Job",
-    "Details1": "You love it, do it well, and get paid.",
-    "Details2": "Ultimate alignment!"
-  },
-  {
-    "IntersectingCircles": "What you Love, What you do Well, What the world needs",
-    "OutcomeMainCategory": "Volunteer",
-    "OutcomeSubCategory": "Purpose Driven Hobby",
-    "Details1": "You love it, do it well, and help the world.",
-    "Details2": ""
-  },
-  {
-    "IntersectingCircles": "What you Love, What the world needs, Will the world pay for it",
-    "OutcomeMainCategory": "Charity",
-    "OutcomeSubCategory": "Passionate Charity Career",
-    "Details1": "You love it, it's needed, and paid.",
-    "Details2": ""
-  },
-  {
-    "IntersectingCircles": "What you do Well, What the world needs, Will the world pay for it",
-    "OutcomeMainCategory": "Career",
+    "IntersectingCircles": "What you Love, What you do well, What the World will pay for",
+    "OutcomeMainCategory": "My Career Opportunities",
     "OutcomeSubCategory": "High Impact Career",
-    "Details1": "You do it well, the world needs it, and people will pay.",
-    "Details2": ""
+    "Extra": "A blend of Love, Skill and Value",
+    "Details1": "You Love it, you do it well and the World is willing to pay you for this. Likely to be a passionate career",
+    "Details2": "You are likely to find satisfaction."
   },
   {
-    "IntersectingCircles": "What you Love, What you do Well, What the world needs, Will the world pay for it",
-    "OutcomeMainCategory": "Bliss",
-    "OutcomeSubCategory": "Ultimate Alignment",
-    "Details1": "The perfect harmony of love, skill, demand, and value.",
-    "Details2": "Welcome to your bliss zone!"
+    "IntersectingCircles": "What you Love, What you do well, What the World needs",
+    "OutcomeMainCategory": "Volunteering Options",
+    "OutcomeSubCategory": "High Impact Voluntary Work",
+    "Extra": "A blend of Love, Skill and Demand",
+    "Details1": "You Love it, you do it well and the World needs it. Likely to be a passionate Voluntary work with high social impact.",
+    "Details2": "You are likely to find contentment."
+  },
+  {
+    "IntersectingCircles": "What you Love, What the World will pay for, What the World needs",
+    "OutcomeMainCategory": "My Career Opportunities",
+    "OutcomeSubCategory": "High Impact Career",
+    "Extra": "A blend of Love, Value and Demand",
+    "Details1": "You Love it, the World needs it and the World will pay you for this. Likely to be a passionate career with high social impact.",
+    "Details2": "You are likely to find fulfilment."
+  },
+  {
+    "IntersectingCircles": "What you do Well, What the World will pay for, What the World needs",
+    "OutcomeMainCategory": "My Career Opportunities",
+    "OutcomeSubCategory": "High Impact Career",
+    "Extra": "A blend of Skill, Value and Demand",
+    "Details1": "You do it well, the World will pay you for and the World needs this! This is likely to be a charitable Career with high social impact.",
+    "Details2": "You are likely to find comfort"
+  },
+  {
+    "IntersectingCircles": "What you Love, What you do Well, What the World will pay for, What the World needs",
+    "OutcomeMainCategory": "Bliss!",
+    "OutcomeSubCategory": "Passionate Life's Mission",
+    "Extra": "Ultimate Alignment! The perfect harmony of Love, Skill, Value and Demand. Welcome to Bliss Zone!",
+    "Details1": "You love it, You do it well, the World will pay you for and the World needs this! This is likely to be your purpose! You will have great impact in the world! Enjoy the adventure.",
+    "Details2": "You are likely to find satisfaction, comfort, contentment and fulfilment."
   },
   {
     "IntersectingCircles": "What you Love",
-    "OutcomeMainCategory": "Passion",
-    "OutcomeSubCategory": "Personal Interest",
-    "Details1": "You love it, even if it needs development.",
-    "Details2": ""
+    "OutcomeMainCategory": "What I am Passionate and/or do well",
+    "OutcomeSubCategory": "Passionate Hobby",
+    "Extra": "Your Passion!",
+    "Details1": "You Love it! Likely to be a hobby.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What you do Well",
-    "OutcomeMainCategory": "Career",
-    "OutcomeSubCategory": "Raw Skill",
-    "Details1": "You do this well — build on it.",
-    "Details2": ""
+    "IntersectingCircles": "What you do well",
+    "OutcomeMainCategory": "What I am passionate and/or do well",
+    "OutcomeSubCategory": "Your Gift",
+    "Extra": "You do this effortlessly!",
+    "Details1": "You do it well! Likely to be a gift.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "Will the world pay for it",
-    "OutcomeMainCategory": "Career",
-    "OutcomeSubCategory": "Marketable Idea",
-    "Details1": "There is potential demand.",
-    "Details2": ""
+    "IntersectingCircles": "What the World will pay for",
+    "OutcomeMainCategory": "My Career Opportunities",
+    "OutcomeSubCategory": "A possible career",
+    "Extra": "A career opportunity",
+    "Details1": "The World will pay for? Likely to be a career.",
+    "Details2": "N/A"
   },
   {
-    "IntersectingCircles": "What the world needs",
-    "OutcomeMainCategory": "Charity",
-    "OutcomeSubCategory": "Needed Impact",
-    "Details1": "This is something society values.",
-    "Details2": ""
-  },
-  {
-    "IntersectingCircles": "None of the Above",
-    "OutcomeMainCategory": "Ikigai",
-    "OutcomeSubCategory": "Self Discovery",
-    "Details1": "You are still discovering yourself.",
-    "Details2": "Every step is progress."
+    "IntersectingCircles": "What the World needs",
+    "OutcomeMainCategory": "Volunteering Options",
+    "OutcomeSubCategory": "A possible volunteering option",
+    "Extra": "An opportunity to give back",
+    "Details1": "The World needs it? Likely to be a volunteering option.",
+    "Details2": "N/A"
   }
 ]
