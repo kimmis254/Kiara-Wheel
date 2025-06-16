@@ -14,51 +14,67 @@ router.post('/generate', async (req, res) => {
     }
 
     for (const a of activities) {
-      const { name, love, well, pay, world } = a;
+      const { name: actName, love, well, pay, world } = a;
+
       if (
-        !name || typeof name !== 'string' || name.trim() === '' ||
+        !actName || typeof actName !== 'string' || actName.trim() === '' ||
         !Number.isInteger(love) || love < 1 || love > 10 ||
         !Number.isInteger(well) || well < 1 || well > 10 ||
         !Number.isInteger(pay) || pay < 1 || pay > 10 ||
         !Number.isInteger(world) || world < 1 || world > 10
       ) {
-        return res.status(400).json({ error: 'Each activity must have a valid name and 1–10 scores for love, well, pay, and world.' });
+        return res.status(400).json({
+          error: 'Each activity must have a valid name and 1–10 scores for love, well, pay, and world.'
+        });
       }
     }
 
-    // Create session
+    // Save session
     const session = await Session.create({ name, age, gender, activities });
 
-    // Generate outcomes
-    const result = generateWheel(activities);
-    if (!result || !result.sectionsData || result.sectionsData.length !== activities.length) {
-      return res.status(500).json({ error: 'Wheel generation failed or data mismatch' });
+    // Generate categorized results
+    const wheelData = generateWheel(activities);
+    if (!wheelData || !wheelData.sectionsData) {
+      return res.status(500).json({ error: 'Wheel generation failed' });
     }
 
-    // Merge outcomes into activities
-    const enrichedActivities = activities.map((a, i) => ({
-      ...a,
-      outcomeCategory: result.sectionsData[i].outcomeCategory,
-      outcomeSubCategory: result.sectionsData[i].outcomeSubCategory,
-      extra: result.sectionsData[i].extra,
-      details1: result.sectionsData[i].details1,
-      details2: result.sectionsData[i].details2
-    }));
+    // Filter out unmatched outcomes (null or no mainCategory)
+    const enrichedActivities = wheelData.sectionsData
+      .filter(a => !!a.outcomeCategory) // only valid outcomes
+      .map((a, i) => ({
+        name: a.name,
+        love: a.love,
+        well: a.well,
+        pay: a.pay,
+        world: a.world,
+        outcomeCategory: a.outcomeCategory,
+        outcomeSubCategory: a.outcomeSubCategory,
+        extra: a.extra,
+        details1: a.details1,
+        details2: a.details2
+      }));
+
+    if (enrichedActivities.length === 0) {
+      return res.status(400).json({ error: 'No valid outcome matches found for provided activities.' });
+    }
 
     await WheelResult.create({
       sessionId: session._id,
       activities: enrichedActivities
     });
 
-    res.json({
+    return res.json({
       message: 'Wheel generated successfully',
       sessionId: session._id,
-      result
+      result: {
+        categories: wheelData.sections,
+        distribution: wheelData.sectionPercentages
+      }
     });
 
   } catch (err) {
     console.error('🔥 Error in /api/wheel/generate:', err);
-    res.status(500).json({ error: 'Server error while generating wheel' });
+    return res.status(500).json({ error: 'Server error while generating wheel' });
   }
 });
 

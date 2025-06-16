@@ -148,7 +148,7 @@
       const nameInput = document.createElement('input');
       nameInput.name = 'activity';
       nameInput.placeholder = `Activity ${activityCount + 1}`;
-      nameInput.maxLength = 30; // limit to 50 characters
+      nameInput.maxLength = 50;
 
       row.append(
         nameInput,
@@ -189,25 +189,34 @@
 
       if (activities.length === 0) return alert('Add at least one activity.');
 
+      const payload = { name, age, gender, activities };
+
+      console.log('📤 Submitting payload:', payload); // ✅ log entire request body
+
       try {
         const res = await fetch('http://localhost:5000/api/wheel/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, age, gender, activities })
+          body: JSON.stringify(payload)
         });
 
         const data = await res.json();
-        if (res.ok && data.sessionId) {
-          window.location.href = `results.html?sessionId=${data.sessionId}`;
-        } else {
+
+        if (!res.ok) {
+          console.error('❌ Server returned error response:', data); // ✅ show backend validation failures
           alert(data.error || 'Failed to generate wheel.');
+          return;
         }
+
+        console.log('✅ Success! Server returned:', data); // ✅ view full response if successful
+        window.location.href = `results.html?sessionId=${data.sessionId}`;
       } catch (err) {
-        console.error('Error:', err);
+        console.error('❌ Network/server error during form submission:', err); // ✅ network or server down
         alert('Server error. Please try again later.');
       }
     });
   });
+
 </script>
 
 

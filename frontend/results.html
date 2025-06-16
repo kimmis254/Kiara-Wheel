@@ -45,7 +45,6 @@
     <div class="results-content">
       <div class="chart-container">
         <canvas id="kiaraWheel" width="960" height="960" style="width: 75vw; height: 75vw;"></canvas>
-        <div class="bliss-center" id="blissText">BLISS</div>
       </div>
       <div class="details-container" id="activitiesDisplay">
         <p>Click the wheel to view your categorized activities.</p>
@@ -91,7 +90,7 @@
   const sessionId = new URLSearchParams(window.location.search).get('sessionId');
 
   const labelMap = {
-    Bliss: 'Bliss',
+    Bliss: 'BLISS',
     Career: 'My\nCareer Opportunities',
     Passion: 'What I am\nPassionate\nAbout',
     Volunteer: 'Volunteering\nOptions',
@@ -107,19 +106,26 @@
       Charity: 'CHARITY INITIATIVES'
     };
 
+    // Sort categories (except Bliss) by total score descending
     const sortedCategories = Object.keys(categories)
-            .filter(c => c !== 'Bliss')
-            .sort((a, b) => {
-              const scoreA = categories[a].reduce((sum, act) =>
-                      sum + [act.love, act.well, act.pay, act.world]
-                              .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
-              const scoreB = categories[b].reduce((sum, act) =>
-                      sum + [act.love, act.well, act.pay, act.world]
-                              .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
-              return scoreB - scoreA;
-            });
+      .filter(c => c !== 'Bliss')
+      .sort((a, b) => {
+        const scoreA = categories[a].reduce((sum, act) =>
+          sum + [act.love, act.well, act.pay, act.world]
+            .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        const scoreB = categories[b].reduce((sum, act) =>
+          sum + [act.love, act.well, act.pay, act.world]
+            .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        return scoreB - scoreA;
+      });
 
-    const allCategories = ['Bliss', ...sortedCategories];
+    const allCategories = [];
+
+    if (categories.Bliss?.length > 0) {
+      allCategories.push('Bliss');
+    }
+
+    allCategories.push(...sortedCategories);
 
     return allCategories.map(cat => {
       const acts = categories[cat] || [];
@@ -127,8 +133,8 @@
       const activityWord = acts.length === 1 ? 'activity' : 'activities';
       const divider = '━'.repeat(70);
 
-      if (!acts.length) {
-        return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n🌱 _You haven’t found your Bliss yet — keep exploring!_`;
+      if (cat === 'Bliss' && acts.length === 0) {
+        return ''; // skip Bliss entirely if empty
       }
 
       const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
@@ -143,8 +149,8 @@
         const score = a.love + a.well + a.pay + a.world;
         const percent = ((score / 40) * 100).toFixed(0);
         const intersections = selected.length > 0
-                ? `${selected.length} (${selected.join(', ')})`
-                : '—';
+          ? `${selected.length} (${selected.join(', ')})`
+          : '—';
 
         const lines = [
           `${a.name} — ${a.outcomeSubCategory}`,
@@ -159,7 +165,7 @@
       }).join('\n\n');
 
       return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n${activityList}`;
-    }).join('\n\n\n');
+    }).filter(Boolean).join('\n\n\n'); // filter out empty Bliss
   }
 
   function showActivities() {
@@ -174,8 +180,8 @@
       let sectionScore = 0;
       for (const a of acts) {
         a.outcomeScore = [a.love, a.well, a.pay, a.world]
-                .filter(val => val >= 5)
-                .reduce((sum, val) => sum + val, 0);
+          .filter(val => val >= 5)
+          .reduce((sum, val) => sum + val, 0);
         sectionScore += a.outcomeScore;
       }
       categoryTotals[cat] = sectionScore;
@@ -183,8 +189,8 @@
     }
 
     const sortedCategories = Object.keys(categories)
-            .filter(c => c !== 'Bliss')
-            .sort((a, b) => (categoryTotals[b] || 0) - (categoryTotals[a] || 0));
+      .filter(c => c !== 'Bliss')
+      .sort((a, b) => (categoryTotals[b] || 0) - (categoryTotals[a] || 0));
     const categoryOrder = ['Bliss', ...sortedCategories];
 
     const html = categoryOrder.map(cat => {
@@ -193,8 +199,11 @@
       const sectionScore = categoryTotals[cat] || 0;
       const sectionPct = globalTotal > 0 ? Math.round((sectionScore / globalTotal) * 100) : 0;
 
-      if (cat === 'Bliss' && acts.length === 0) {
-        return `<div class="activity-section"><h3>${label}</h3><p>🌱 You haven’t found your Bliss yet — keep exploring!</p></div>`;
+      if (cat === 'Bliss') {
+        if (!categories.hasOwnProperty('Bliss')) return ''; // skip rendering if Bliss category not present
+        if (acts.length === 0) {
+          return `<div class="activity-section"><h3>${label}</h3><p>🌱 You haven’t found your Bliss yet — keep exploring!</p></div>`;
+        }
       }
 
       const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
@@ -205,8 +214,8 @@
 
         if (a.love >= 5) { selected.push('❤️ What you love'); circleIds.push(1); }
         if (a.well >= 5) { selected.push('💪 What you do well'); circleIds.push(2); }
-        if (a.pay >= 5) { selected.push('💰 What the world will pay for'); circleIds.push(3); }
-        if (a.world >= 5) { selected.push('🌍 What the world needs'); circleIds.push(4); }
+        if (a.pay >= 5)  { selected.push('💰 What the world will pay for'); circleIds.push(3); }
+        if (a.world >= 5){ selected.push('🌍 What the world needs'); circleIds.push(4); }
 
         const circleCount = circleIds.length;
         const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
@@ -225,105 +234,158 @@
       }).join('');
 
       return `
-      <div class="activity-section">
-        <h3>${label} (Total: ${sectionScore} | ${sectionPct}%)</h3>
-        <div class="activity-grid-cards">${cards}</div>
-      </div>`;
-    }).join('');
+    <div class="activity-section">
+      <h3>${label} (Total: ${sectionScore} | ${sectionPct}%)</h3>
+      <div class="activity-grid-cards">${cards}</div>
+    </div>`;
+    }).filter(Boolean).join('');
 
     container.innerHTML = html || '<p>No activities to show.</p>';
   }
 
+
   async function loadResults() {
+    let lastPulseTime = Date.now();
+    let flickerDirection = 1;
+
     if (!sessionId) return alert("Missing session ID");
+
     const res = await fetch(`http://localhost:5000/api/result/${sessionId}`);
     if (!res.ok) return alert('Failed to load wheel data');
-    resultData = await res.json();
 
+    resultData = await res.json();
     const categories = resultData.categories || {};
     const categoryScores = {};
-    let totalOutcomeScore = 0;
+    let total = 0;
 
-    for (const [category, acts] of Object.entries(categories)) {
-      let categorySum = 0;
-      for (const a of acts) {
-        a.outcomeScore = [a.love, a.well, a.pay, a.world]
-                .filter(val => val >= 5)
-                .reduce((sum, val) => sum + val, 0);
-        a.ratings = `${a.love}/${a.well}/${a.pay}/${a.world}`;
-        categorySum += a.outcomeScore;
-      }
-      categoryScores[category] = categorySum;
-      totalOutcomeScore += categorySum;
-    }
+    Object.entries(categories).forEach(([cat, acts]) => {
+      const sum = acts.reduce((s, a) => {
+        const sc = [a.love, a.well, a.pay, a.world].filter(v => v >= 5).reduce((x, v) => x + v, 0);
+        total += sc;
+        return s + sc;
+      }, 0);
+      categoryScores[cat] = sum;
+    });
 
     const rawLabels = Object.keys(categoryScores);
+    const labelMap = {
+      Bliss: 'Bliss',
+      Career: 'My\nCareer Opportunities',
+      Passion: 'What I am\nPassionate\nAbout',
+      Volunteer: 'Volunteering\nOptions',
+      Charity: 'Charity\nOptions'
+    };
+
     const labels = rawLabels.map(cat => labelMap[cat] || cat);
     const data = rawLabels.map(cat => categoryScores[cat]);
+    const hasBliss = rawLabels.some(label => label.toLowerCase().startsWith('bliss'));
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#5ADF80'];
 
-    if (rawLabels.includes('Bliss')) {
-      blissText.style.display = 'flex';
-      blissText.classList.add('flicker');
-      blissText.onclick = () => showActivities('Bliss');
-    } else {
-      blissText.style.display = 'none';
-      blissText.classList.remove('flicker');
-    }
-
     if (wheelChart) wheelChart.destroy();
+
+    const centerBlissPlugin = {
+      id: 'centerBlissText',
+      afterDraw(chart) {
+        const enabled = chart.config.options.plugins.centerText?.enabled;
+        if (!enabled) return;
+
+        const { ctx, chartArea: { width, height, left, top } } = chart;
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+
+        // Use cutout to estimate the inner hole radius
+        const outerRadius = Math.min(width, height) / 2;
+        const cutoutPct = parseFloat(chart.config._config.data.datasets[0].cutout || '30') / 100;
+        const innerRadius = outerRadius * cutoutPct;
+
+        const glowRadius = innerRadius * 0.95; // slightly inside the hole
+        const now = Date.now();
+        const time = (now % 2000) / 1000;
+        const alpha = 0.2 + 0.3 * Math.abs(Math.sin(time * Math.PI));
+
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRadius);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        gradient.addColorStop(1, `rgba(255, 255, 255, 0.8)`);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.arc(centerX, centerY, glowRadius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.restore();
+
+        // Center Text
+        ctx.save();
+        ctx.font = 'bold 38px Inter, sans-serif';
+        ctx.fillStyle = '#34D399';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('BLISS', centerX, centerY);
+        ctx.restore();
+
+        requestAnimationFrame(() => chart.draw());
+      }
+    };
+
 
     wheelChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels,
         datasets: [{
-          label: 'Wheel',
           data,
-          backgroundColor: colors.slice(0, labels.length),
-          cutout: '30%',
-          borderWidth: 2
+          backgroundColor: colors.slice(0, data.length),
+          cutout: hasBliss ? '40%' : '30%',
         }]
       },
       options: {
-        animation: {
-          animateRotate: true,
-          duration: 1000
-        },
         plugins: {
+          centerText: {
+            enabled: hasBliss,
+            text: 'BLISS',
+            fontSize: 36,
+            fontFamily: 'Arial',
+            color: '#34D399'
+          },
           tooltip: {
             callbacks: {
-              label: ctx => {
-                const index = ctx.dataIndex;
-                const cat = rawLabels[index];
+              label: context => {
+                const idx = context.dataIndex;
+                const cat = rawLabels[idx];
                 const acts = categories[cat] || [];
-                const actList = acts.map(a => `– ${a.name}`).join('\n');
                 const score = categoryScores[cat];
-                const pct = Math.round((score / totalOutcomeScore) * 100);
-                return `${labelMap[cat] || cat}: ${score} pts (${pct}%)\n${actList}`;
+                const pct = Math.round((score / total) * 100);
+                const actNames = acts.map(a => `– ${a.name}`).join('\n');
+                return `${labelMap[cat] || cat}: ${score} pts (${pct}%)\n${actNames}`;
               }
             }
           },
           datalabels: {
             color: '#fff',
             font: { weight: 'bold', size: 14 },
-            align: 'center',
-            anchor: 'center',
             formatter: (val, ctx) => {
-              const percent = Math.round((val / totalOutcomeScore) * 100);
-              return `${ctx.chart.data.labels[ctx.dataIndex]}\n${percent}%`;
+              const pct = Math.round((val / total) * 100);
+              return `${labels[ctx.dataIndex]}\n${pct}%`;
             }
           },
           legend: { display: false }
         },
         onClick: () => showActivities(),
-        onHover: (evt, elements) => {
-          canvas.style.cursor = elements.length ? 'pointer' : 'default';
+        onHover: (e, items) => {
+          canvas.style.cursor = items.length ? 'pointer' : 'default';
         }
       },
-      plugins: [ChartDataLabels]
+      plugins: [ChartDataLabels, centerBlissPlugin]
     });
+    console.log('Raw labels:', rawLabels);
+    console.log('hasBliss?', hasBliss);
+    console.log(wheelChart.options.plugins.centerText);
+
+    // save for debugging or future use
+    window.kiaraCategoryScores = categoryScores;
   }
+
+
 
 
 
@@ -361,7 +423,6 @@
     doc.setFont('helvetica', 'normal');
     doc.setTextColor('#444');
     const introText = `Hi ${userName}, here’s your custom Kiara Wheel!
-
 Thank you for completing Kiara Wheel. We’ve analyzed your activity ratings and generated your personalized Kiara Wheel based on
 What you love, What you do well, What the world will pay for and What the world needs`;
 
@@ -371,20 +432,45 @@ What you love, What you do well, What the world will pay for and What the world 
     doc.addImage(chartImage, 'PNG', 35, 80, 140, 140);
     doc.setFontSize(10);
     doc.setTextColor('#888');
-    doc.text("Powered by Kiara Wheel", 105, 220, null, null, 'center');
     doc.addPage();
+
 
 // Activity Data
     const categories = resultData.categories || {};
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
+    for (const acts of Object.values(categories)) {
+      for (const a of acts) {
+        if (typeof a.outcomeScore !== 'number') {
+          a.outcomeScore = [a.love, a.well, a.pay, a.world]
+            .filter(val => val >= 5)
+            .reduce((sum, val) => sum + val, 0);
+        }
+      }
+    }
 
-// Sort activities in each category by score
+// Sort activities in each category by outcomeScore
     for (const [cat, acts] of Object.entries(categories)) {
       categories[cat] = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
     }
 
-    const allCategories = ['Bliss', ...Object.keys(categories).filter(c => c !== 'Bliss')];
+// --- Updated Category Order Logic ---
+    const allCategories = [];
+
+    if (categories.Bliss?.length > 0) {
+      allCategories.push('Bliss');
+    }
+
+    allCategories.push(
+      ...Object.keys(categories)
+        .filter(c => c !== 'Bliss')
+        .sort((a, b) => {
+          const aScore = categories[a].reduce((sum, a) => sum + a.outcomeScore, 0);
+          const bScore = categories[b].reduce((sum, a) => sum + a.outcomeScore, 0);
+          return bScore - aScore;
+        })
+    );
+
     const labelMapClean = {
       Bliss: 'BLISS',
       Career: 'MY CAREER OPPORTUNITIES',
@@ -397,8 +483,6 @@ What you love, What you do well, What the world will pay for and What the world 
 
     for (const cat of allCategories) {
       const acts = categories[cat] || [];
-      if (cat === 'Bliss' && acts.length === 0) continue; // Skip Bliss if empty
-
       const label = labelMapClean[cat] || cat;
       const activityWord = acts.length === 1 ? "activity" : "activities";
 
@@ -414,15 +498,6 @@ What you love, What you do well, What the world will pay for and What the world 
       doc.rect(10, y, 190, 10, 'F');
       doc.text(`${label} (${acts.length} ${activityWord})`, 14, y + 7);
       y += 14;
-
-      if (!acts.length) {
-        doc.setFont('helvetica', 'italic');
-        doc.setFontSize(10);
-        doc.setTextColor('#444');
-        doc.text('You haven’t found your Bliss yet — keep exploring!', 14, y);
-        y += 10;
-        continue;
-      }
 
       for (let i = 0; i < acts.length; i++) {
         const a = acts[i];
@@ -447,20 +522,17 @@ What you love, What you do well, What the world will pay for and What the world 
         }
 
         const intersect = selected.join(', ') || '—';
-        const circleLabel = circleIds.length > 1
-                ? `Intersection of Circles ${circleIds.join(', ')}`
-                : `Intersection of Circle ${circleIds[0]}`;
         const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
 
         const title = `${a.name} – ${a.outcomeSubCategory}`;
-        const blendLine = `- A Blend of Skill, Value and Demand`;
+        const blendLine = a.extra ? `- ${a.extra}` : '';
         const details1Line = `- ${a.details1}`;
         const details2Line = a.details2 && a.details2 !== 'N/A' ? `- ${a.details2}` : null;
-        const scoreLine = `Score ${a.outcomeScore} out of 40, ${percent}%`;
+        const scoreLine = `- Score ${a.outcomeScore} out of 40, ${percent}%`;
         const intersectLine = `- ${circleIds.length} intersecting circles (${intersect})`;
 
         const lines = [
-          ...doc.splitTextToSize(`${circleLabel}: ${title}`, 180),
+          ...doc.splitTextToSize(`${title}`, 180),
           ...doc.splitTextToSize(blendLine, 180),
           ...doc.splitTextToSize(details1Line, 180),
           ...(details2Line ? doc.splitTextToSize(details2Line, 180) : []),

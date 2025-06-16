@@ -17,19 +17,19 @@ router.get('/:sessionId', async (req, res) => {
       return res.status(404).json({ error: 'Wheel result not found' });
     }
 
+    const activities = result.activities || [];
     const categories = {};
     const distribution = {};
-    const activities = result.activities || [];
 
     for (const act of activities) {
-      const key = act.outcomeCategory || 'Uncategorized';
-      if (!categories[key]) categories[key] = [];
-      categories[key].push(act);
+      const cat = act.outcomeCategory?.trim() || 'Uncategorized';
+      if (!categories[cat]) categories[cat] = [];
+      categories[cat].push(act);
     }
 
-    const total = activities.length || 1;
-    for (const cat in categories) {
-      distribution[cat] = Math.round((categories[cat].length / total) * 100);
+    const totalActivities = activities.length || 1;
+    for (const cat of Object.keys(categories)) {
+      distribution[cat] = Math.round((categories[cat].length / totalActivities) * 100);
     }
 
     res.json({

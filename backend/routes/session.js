@@ -1,3 +1,4 @@
+// routes/session.js
 const express = require('express');
 const router = express.Router();
 const Session = require('../models/Session');
@@ -11,37 +12,39 @@ router.post('/', async (req, res) => {
   }
 
   for (const a of activities) {
-    const { name, love, well, pay, world } = a;
+    const { name: actName, love, well, pay, world } = a;
 
     if (
-      !name || typeof name !== 'string' || name.trim() === '' ||
+      !actName || typeof actName !== 'string' || actName.trim() === '' ||
       !Number.isInteger(love) || love < 1 || love > 10 ||
       !Number.isInteger(well) || well < 1 || well > 10 ||
       !Number.isInteger(pay) || pay < 1 || pay > 10 ||
       !Number.isInteger(world) || world < 1 || world > 10
     ) {
-      return res.status(400).json({ error: 'Each activity must have a valid name and 1–10 ratings for love, well, pay, world.' });
+      return res.status(400).json({
+        error: 'Each activity must have a valid name and 1–10 ratings for love, well, pay, and world.'
+      });
     }
   }
 
   try {
     const session = await Session.create({ name, age, gender, activities });
-    res.json({ sessionId: session._id });
+    return res.json({ sessionId: session._id });
   } catch (err) {
     console.error('❌ Failed to save session:', err);
-    res.status(500).json({ error: 'Server failed to save session.' });
+    return res.status(500).json({ error: 'Server failed to save session.' });
   }
 });
 
 // GET /api/session/:id — Fetch session by ID
 router.get('/:id', async (req, res) => {
   try {
-    const session = await Session.findById(req.params.id);
+    const session = await Session.findById(req.params.id).lean();
     if (!session) return res.status(404).json({ error: 'Session not found' });
-    res.json(session);
+    return res.json(session);
   } catch (err) {
     console.error('❌ Failed to retrieve session:', err);
-    res.status(500).json({ error: 'Server failed to fetch session.' });
+    return res.status(500).json({ error: 'Server failed to fetch session.' });
   }
 });
 

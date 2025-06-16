@@ -33,23 +33,28 @@ const ActivitySchema = new mongoose.Schema({
   },
   outcomeCategory: {
     type: String,
-    default: ''
+    default: '',
+    trim: true
   },
   outcomeSubCategory: {
     type: String,
-    default: ''
+    default: '',
+    trim: true
   },
   extra: {
     type: String,
-    default: ''
+    default: '',
+    trim: true
   },
   details1: {
     type: String,
-    default: ''
+    default: '',
+    trim: true
   },
   details2: {
     type: String,
-    default: ''
+    default: '',
+    trim: true
   }
 });
 
@@ -61,7 +66,10 @@ const WheelResultSchema = new mongoose.Schema({
   },
   activities: {
     type: [ActivitySchema],
-    validate: [arr => arr.length > 0, 'At least one rated activity is required']
+    validate: {
+      validator: arr => Array.isArray(arr) && arr.length > 0,
+      message: 'At least one rated activity is required'
+    }
   },
   createdAt: {
     type: Date,

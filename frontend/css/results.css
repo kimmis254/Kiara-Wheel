@@ -212,36 +212,6 @@ p {
 
 
 
-.bliss-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 900;
-  color: #000;
-  font-size: 2.5rem;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-  animation: flicker 1.5s infinite alternate;
-  z-index: 10;
-  text-align: center;
-  padding: 1rem;
-}
-
-@media (max-width: 600px) {
-  .bliss-center {
-    width: 50px;
-    height: 50px;
-    font-size: 1.6rem;
-  }
-}
-
 .details-container {
   padding: 20px;
   border-radius: 12px;
@@ -459,3 +429,4 @@ p {
   color: #ffc107;
   margin-bottom: 10px;
 }
+
