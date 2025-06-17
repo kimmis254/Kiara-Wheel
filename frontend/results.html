@@ -82,6 +82,22 @@
     <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
   </div>
 </footer>
+<div id="reviewModal" class="review-modal hidden">
+  <div class="review-content">
+    <h2>We value your feedback!</h2>
+    <p id="userEmailDisplay"></p>
+    <div class="stars" id="starRating">
+      <span data-star="1">&#9734;</span>
+      <span data-star="2">&#9734;</span>
+      <span data-star="3">&#9734;</span>
+      <span data-star="4">&#9734;</span>
+      <span data-star="5">&#9734;</span>
+    </div>
+    <textarea id="reviewMessage" rows="4" placeholder="Leave your thoughts..."></textarea>
+    <button id="submitReview">Submit Review</button>
+  </div>
+</div>
+<div id="overlay" class="overlay hidden"></div>
 <script>
   let wheelChart, resultData;
   const canvas = document.getElementById('kiaraWheel');
@@ -268,6 +284,15 @@
     });
 
     const rawLabels = Object.keys(categoryScores);
+
+    const normalize = label =>
+      label.toLowerCase().includes('bliss') ? 'Bliss' :
+        label.toLowerCase().includes('career') ? 'Career' :
+          label.toLowerCase().includes('passion') ? 'Passion' :
+            label.toLowerCase().includes('volunteer') ? 'Volunteer' :
+              label.toLowerCase().includes('charity') ? 'Charity' :
+                label;
+
     const labelMap = {
       Bliss: 'Bliss',
       Career: 'My\nCareer Opportunities',
@@ -276,7 +301,7 @@
       Charity: 'Charity\nOptions'
     };
 
-    const labels = rawLabels.map(cat => labelMap[cat] || cat);
+    const labels = rawLabels.map(label => labelMap[normalize(label)] || label);
     const data = rawLabels.map(cat => categoryScores[cat]);
     const hasBliss = rawLabels.some(label => label.toLowerCase().startsWith('bliss'));
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#5ADF80'];
@@ -377,12 +402,49 @@
       },
       plugins: [ChartDataLabels, centerBlissPlugin]
     });
-    console.log('Raw labels:', rawLabels);
-    console.log('hasBliss?', hasBliss);
-    console.log(wheelChart.options.plugins.centerText);
 
     // save for debugging or future use
     window.kiaraCategoryScores = categoryScores;
+  }
+
+  function showReviewModal(email) {
+    const modal = document.getElementById('reviewModal');
+    const overlay = document.getElementById('overlay');
+    const stars = document.querySelectorAll('#starRating span');
+    const submitBtn = document.getElementById('submitReview');
+    const reviewMessage = document.getElementById('reviewMessage');
+    const emailDisplay = document.getElementById('userEmailDisplay');
+
+    emailDisplay.textContent = `Sending feedback as: ${email}`;
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+
+    let rating = 0;
+
+    stars.forEach(star => {
+      star.onclick = () => {
+        rating = parseInt(star.dataset.star);
+        stars.forEach(s => s.classList.remove('selected'));
+        for (let i = 1; i <= rating; i++) {
+          document.querySelector(`[data-star="${i}"]`).classList.add('selected');
+        }
+      };
+    });
+
+    submitBtn.onclick = () => {
+      const message = reviewMessage.value;
+      console.log(`Email: ${email}\nRating: ${rating}\nMessage: ${message}`);
+      alert('Thanks for your feedback!');
+      modal.classList.add('hidden');
+      overlay.classList.add('hidden');
+      reviewMessage.value = '';
+      stars.forEach(s => s.classList.remove('selected'));
+    };
+
+    overlay.onclick = () => {
+      modal.classList.add('hidden');
+      overlay.classList.add('hidden');
+    };
   }
 
 
@@ -586,7 +648,9 @@ What you love, What you do well, What the world will pay for and What the world 
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);
+      doc.save('kiara-wheel-results.pdf');
       alert('✅ Wheel downloaded and emailed successfully!');
+      showReviewModal(userEmail); // 🔥 Trigger review only after success
     } catch (err) {
       console.error('❌ EmailJS send error:', err);
       alert('❌ Failed to send email. Please try again.');
