@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="js/NotoColorEmoji-Regular-normal.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="../frontend/css/results.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -62,7 +63,7 @@
     <div class="footer-contact">
       <h3>Contact Us</h3>
       <p><a href="tel:+254745783345"><i class="fas fa-phone"></i> +254 745 783 345</a></p>
-      <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@powercircles.com</a></p>
+      <p><a href="mailto:info@powercircles.com"><i class="fas fa-envelope"></i> info@kiarawheel.com</a></p>
     </div>
     <div class="footer-links">
       <h3>Quick Links</h3>
@@ -78,7 +79,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Power Circles. All rights reserved.</p>
+    <p>&copy; <span id="year"></span> Kiara Wheel. All rights reserved.</p>
     <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
   </div>
 </footer>
@@ -94,10 +95,27 @@
       <span data-star="5">&#9734;</span>
     </div>
     <textarea id="reviewMessage" rows="4" placeholder="Leave your thoughts..."></textarea>
-    <button id="submitReview">Submit Review</button>
+    <div class="review-buttons">
+      <button id="submitReview">Submit Review</button>
+      <button id="cancelReview" class="cancel-btn">Cancel</button>
+    </div>
   </div>
 </div>
 <div id="overlay" class="overlay hidden"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+      });
+    }
+  });
+</script>
+
 <script>
   let wheelChart, resultData;
   const canvas = document.getElementById('kiaraWheel');
@@ -412,6 +430,7 @@
     const overlay = document.getElementById('overlay');
     const stars = document.querySelectorAll('#starRating span');
     const submitBtn = document.getElementById('submitReview');
+    const cancelBtn = document.getElementById('cancelReview');
     const reviewMessage = document.getElementById('reviewMessage');
     const emailDisplay = document.getElementById('userEmailDisplay');
 
@@ -431,21 +450,24 @@
       };
     });
 
-    submitBtn.onclick = () => {
-      const message = reviewMessage.value;
-      console.log(`Email: ${email}\nRating: ${rating}\nMessage: ${message}`);
-      alert('Thanks for your feedback!');
+    const closeReviewModal = () => {
       modal.classList.add('hidden');
       overlay.classList.add('hidden');
       reviewMessage.value = '';
       stars.forEach(s => s.classList.remove('selected'));
     };
 
-    overlay.onclick = () => {
-      modal.classList.add('hidden');
-      overlay.classList.add('hidden');
+    submitBtn.onclick = () => {
+      const message = reviewMessage.value;
+      console.log(`Email: ${email}\nRating: ${rating}\nMessage: ${message}`);
+      alert('Thanks for your feedback!');
+      closeReviewModal();
     };
+
+    cancelBtn.onclick = closeReviewModal;
+    overlay.onclick = closeReviewModal;
   }
+
 
 
 
@@ -625,40 +647,86 @@ What you love, What you do well, What the world will pay for and What the world 
 
     doc.save('kiara-wheel-results.pdf');
 
+    async function uploadKiaraWheelImage(base64Image) {
+      const CLOUDINARY_CLOUD_NAME = 'dljc3haxx'; // REPLACE THIS
+      const CLOUDINARY_UPLOAD_PRESET = 'kiara_wheel_upload'; // REPLACE THIS (e.g., 'kiara_wheel_upload')
+
+      // Cloudinary's upload URL format
+      const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+      const formData = new FormData();
+      formData.append('file', base64Image); // The base64 string
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      formData.append('folder', 'kiara_wheels'); // Optional: specify a folder in Cloudinary
+
+      try {
+        const response = await fetch(uploadUrl, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Cloudinary upload failed: ${errorData.error.message || response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.secure_url; // This is the public URL of the uploaded image
+      } catch (error) {
+        console.error('❌ Error uploading Kiara Wheel image to Cloudinary:', error);
+        alert('Failed to upload Kiara Wheel image. It might not appear in the email, but the PDF will have it.');
+        return null; // Return null if upload fails
+      }
+    }
     // EMAIL SENDING
-    const image = tempCanvas.toDataURL('image/jpeg', 0.5);
+    const image = tempCanvas.toDataURL('image/jpeg', 0.5); // Your base64 image string
+
+    // *** NEW: Upload image to Cloudinary before sending email ***
+    const kiaraWheelUrl = await uploadKiaraWheelImage(image); // Call the new upload function
 
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
-    const payload = {
+    // Construct payload for EmailJS
+    let payload = {
       to_email: userEmail,
       user_name: userName,
       message: "Here's your personalized Kiara Wheel! 🎡",
-      kiara_wheel_base64: image,
       activity_summary: activitySummary
     };
 
+    if (kiaraWheelUrl) {
+      payload.kiara_wheel_url = kiaraWheelUrl;
+    } else {
+      console.warn("Kiara Wheel image URL not available for email. It will not be embedded.");
+      payload.message += "\n\nP.S. The Kiara Wheel image could not be embedded directly. Please check the attached PDF for your full results!";
+    }
+
+    // Admin copy payload
     const adminPayload = {
-      ...payload,
-      to_email: 'kathanzuwayne2@gmail.com',
+      ...payload, // Spread the modified payload (including kiara_wheel_url if present)
+      to_email: 'kathanzuwayne2@gmail.com', // Your admin email
       user_name: `ADMIN COPY for ${userName}`,
-      user_email: userEmail
+      user_email: userEmail // Original user's email for admin reference
     };
 
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);
-      doc.save('kiara-wheel-results.pdf');
+
+      doc.save('kiara-wheel-results.pdf'); // Save the PDF locally
       alert('✅ Wheel downloaded and emailed successfully!');
       showReviewModal(userEmail); // 🔥 Trigger review only after success
+
     } catch (err) {
       console.error('❌ EmailJS send error:', err);
       alert('❌ Failed to send email. Please try again.');
     }
   });
-// 🟢 EmailJS Init
-    emailjs.init('oBelMPyBkq3aJB_-D');
-    window.onload = () => setTimeout(loadResults, 100);
+
+  // 🟢 EmailJS Init
+  emailjs.init('oBelMPyBkq3aJB_-D');
+  window.onload = () => setTimeout(loadResults, 100);
+
 
 
 
