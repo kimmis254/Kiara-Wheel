@@ -148,17 +148,39 @@ a:hover {
 }
 
 .logo {
+  /* Now a flex container for the image and text */
+  display: flex;
+  align-items: center; /* Vertically align image and text */
+  gap: 10px; /* Space between logo image and text */
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.8rem; /* Keep text size, but it's part of a flex item now */
   font-weight: 700;
   color: var(--color-accent);
+  text-decoration: none; /* Ensure text is not underlined */
   flex-shrink: 0;
   margin-right: var(--spacing-md);
+  transition: color 0.3s ease; /* Transition for text color */
 }
 
 .logo:hover {
-  color: var(--color-secondary);
+  color: var(--color-secondary); /* Text color on hover */
 }
+
+/* Stylish Header Logo Image */
+.header-logo-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%; /* Make it round */
+  object-fit: cover; /* Ensure image covers the round shape */
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1); /* Subtle inner glow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
+
+.logo:hover .header-logo-image {
+  transform: scale(1.1) rotate(5deg); /* Slightly enlarge and rotate on hover */
+  box-shadow: 0 0 12px var(--color-secondary); /* More prominent glow with secondary color */
+}
+
 
 .nav-links-and-cta {
   display: flex;
