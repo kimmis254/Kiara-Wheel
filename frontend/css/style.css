@@ -85,9 +85,10 @@ a:hover {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 1000; /* Ensure header is above other content */
 }
 
+/* --- Top Bar Styles --- */
 .header-top-bar {
   background-color: var(--color-background);
   padding: 8px 0;
@@ -98,11 +99,13 @@ a:hover {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding: 0 var(--spacing-md); /* Consistent padding for content */
 }
 
 .top-utility-nav {
   display: flex;
   gap: var(--spacing-md);
+  align-items: center; /* Vertically align items */
 }
 
 .top-utility-link {
@@ -112,82 +115,82 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap; /* Prevent phone number from wrapping */
 }
 
 .top-utility-link:hover {
   color: var(--color-secondary);
 }
 
-/* Make Contact Us more prominent */
-.top-utility-button {
-  background-color: var(--color-primary); /* Primary color background */
-  color: var(--color-accent); /* White text */
-  padding: 6px 15px; /* Button-like padding */
-  border-radius: var(--border-radius-sm); /* Rounded corners */
+/* Make Contact Us more prominent - applies to .top-utility-link.top-utility-button */
+.top-utility-link.top-utility-button { /* More specific selector */
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  padding: 6px 15px;
+  border-radius: var(--border-radius-sm);
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  /* Override default link color for this button */
+  color: var(--color-accent) !important;
 }
 
-.top-utility-button:hover {
+.top-utility-link.top-utility-button:hover {
   background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-  color: var(--color-accent); /* Keep text white */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-
+/* --- Main Navigation Styles --- */
 .main-nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 20px; /* Base padding */
 }
 
 .logo {
-  /* Now a flex container for the image and text */
   display: flex;
-  align-items: center; /* Vertically align image and text */
-  gap: 10px; /* Space between logo image and text */
+  align-items: center;
+  gap: 10px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.8rem; /* Keep text size, but it's part of a flex item now */
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--color-accent);
-  text-decoration: none; /* Ensure text is not underlined */
+  text-decoration: none;
   flex-shrink: 0;
   margin-right: var(--spacing-md);
-  transition: color 0.3s ease; /* Transition for text color */
+  white-space: nowrap; /* Prevent logo text from wrapping */
+  transition: color 0.3s ease;
 }
 
 .logo:hover {
-  color: var(--color-secondary); /* Text color on hover */
+  color: var(--color-secondary);
 }
 
-/* Stylish Header Logo Image */
 .header-logo-image {
   width: 80px;
   height: 80px;
-  border-radius: 50%; /* Make it round */
-  object-fit: cover; /* Ensure image covers the round shape */
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1); /* Subtle inner glow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logo:hover .header-logo-image {
-  transform: scale(1.1) rotate(5deg); /* Slightly enlarge and rotate on hover */
-  box-shadow: 0 0 12px var(--color-secondary); /* More prominent glow with secondary color */
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 12px var(--color-secondary);
 }
-
 
 .nav-links-and-cta {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-lg); /* Space between nav links and CTA button */
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Push content to the right */
 }
 
 .nav-links {
@@ -208,6 +211,7 @@ a:hover {
   padding: 8px 0;
   position: relative;
   transition: color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap; /* Prevent nav links from wrapping */
 }
 
 .nav-links li a.nav-link::after {
@@ -232,6 +236,7 @@ a:hover {
   transform: translateY(-2px);
 }
 
+/* Buy on Amazon CTA Button */
 .header-cta-button {
   padding: 10px 25px;
   font-size: 1rem;
@@ -239,7 +244,10 @@ a:hover {
   background-color: var(--color-primary);
   color: var(--color-accent);
   transition: background-color 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Prevent button from shrinking */
+  text-decoration: none; /* Ensure it doesn't look like a link */
+  text-align: center;
+  white-space: nowrap; /* Prevent button text from wrapping */
 }
 
 .header-cta-button:hover {
@@ -247,11 +255,16 @@ a:hover {
   transform: translateY(-2px);
 }
 
+/* Hamburger Icon Base Styles (Hidden by default on desktop) */
 .hamburger {
-  display: none;
+  display: none; /* Hidden by default on desktop */
   cursor: pointer;
   padding: 10px;
-  z-index: 1001;
+  z-index: 1001; /* Ensure it's above other elements if needed */
+  background: none;
+  border: none;
+  /* Visually make it a button without default styling */
+  outline: none;
 }
 
 .hamburger .bar {
@@ -259,9 +272,165 @@ a:hover {
   width: 28px;
   height: 3px;
   margin: 6px auto;
-  background-color: var(--color-accent);
-  transition: all 0.3s ease-in-out;
+  background-color: var(--color-accent); /* Color of the three lines */
+  transition: all 0.3s ease-in-out; /* Smooth transition for animation */
   border-radius: 2px;
+}
+
+/* Hamburger menu animation for close icon */
+.hamburger.is-active .bar:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.is-active .bar:nth-child(2) {
+  opacity: 0; /* Middle bar fades out */
+}
+
+.hamburger.is-active .bar:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+
+/* =============================================================== */
+/* Responsive Styles (Media Queries) */
+/* =============================================================== */
+
+@media (max-width: 992px) { /* Tablet and smaller screens */
+
+  .header-top-bar-content {
+    justify-content: center; /* Center top bar content on smaller screens */
+    padding: 0 var(--spacing-sm);
+  }
+
+  .top-utility-nav {
+    flex-wrap: wrap; /* Allow items to wrap if screen is very narrow */
+    justify-content: center;
+    gap: var(--spacing-sm);
+  }
+
+  .top-utility-link, .top-utility-link.top-utility-button {
+    font-size: 0.8rem;
+    padding: 4px 8px; /* Smaller padding for button in top bar */
+  }
+
+  .main-nav-container {
+    padding: 10px 15px; /* Adjust main nav padding */
+  }
+
+  .logo {
+    font-size: 1.5rem; /* Smaller logo text */
+    gap: 8px;
+  }
+
+  .header-logo-image {
+    width: 60px; /* Smaller logo image */
+    height: 60px;
+  }
+
+  /* Hide desktop nav links and CTA, show hamburger */
+  .nav-links-and-cta {
+    display: flex; /* Keep flex to manage layout internally */
+    flex-direction: column; /* Stack vertically for mobile menu */
+    align-items: flex-start; /* Align items to the start of the column */
+    gap: 0; /* Reset gap as items will be stacked */
+
+    /* Position the mobile menu off-screen initially */
+    position: absolute;
+    top: 100%; /* Position below the main header */
+    left: 0;
+    width: 100%;
+    background-color: color-mix(in srgb, var(--color-background) 80%, black); /* Slightly darker background for menu */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateX(100%); /* Start off-screen to the right */
+    transition: transform 0.4s ease-out; /* Smooth slide-in transition */
+    overflow-y: auto; /* Enable scrolling for many links */
+    max-height: calc(100vh - 120px); /* Limit height to viewport minus header height */
+    z-index: 999; /* Ensure menu is below hamburger but above page content */
+  }
+
+  .nav-links {
+    flex-direction: column; /* Stack nav links vertically */
+    width: 100%; /* Take full width of parent (.nav-links-and-cta) */
+    padding: 0; /* Reset list padding */
+    margin: 0;
+  }
+
+  .nav-links li {
+    width: 100%; /* Each list item takes full width */
+    text-align: center; /* Center align text */
+  }
+
+  .nav-links li a.nav-link {
+    padding: 15px 20px; /* More padding for clickable area */
+    display: block; /* Make the entire link clickable */
+    font-size: 1.1rem; /* Slightly larger text in menu */
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separator between links */
+  }
+
+  .nav-links li:last-child a.nav-link {
+    border-bottom: none; /* No border for the last link */
+  }
+
+  .nav-links li a.nav-link::after {
+    height: 2px; /* Thinner underline */
+    bottom: 5px; /* Adjust position */
+  }
+
+  .nav-links li a.nav-link:hover,
+  .nav-links li a.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.08); /* Highlight active/hovered link */
+    color: var(--color-primary); /* Change color on hover/active */
+    transform: none; /* Remove translateY on hover in mobile menu */
+  }
+
+  .header-cta-button {
+    /* Style for CTA button when it's inside the mobile menu */
+    margin: 20px auto; /* Center button and add space */
+    width: calc(100% - 40px); /* Adjust width to fit padding */
+    max-width: 250px; /* Limit max width for very wide screens */
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 1.0rem;
+  }
+
+  /* JavaScript will toggle this class to open the menu */
+  .nav-links-and-cta.is-open {
+    transform: translateX(0); /* Slide in from the right */
+  }
+
+  .hamburger {
+    display: block; /* Show hamburger icon on mobile */
+  }
+}
+
+@media (max-width: 600px) { /* Even smaller screens (e.g., mobile portrait) */
+  .main-nav-container {
+    padding: 8px 10px; /* Reduce padding further */
+  }
+
+  .logo {
+    font-size: 1.3rem; /* Even smaller logo text */
+    gap: 5px;
+  }
+
+  .header-logo-image {
+    width: 50px; /* Even smaller logo image */
+    height: 50px;
+  }
+
+  /* Ensure mobile menu stays legible */
+  .nav-links li a.nav-link {
+    font-size: 0.95rem;
+    padding: 10px 15px;
+  }
+
+  .header-cta-button {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
 }
 
 /* --- Hero Section Styling (retained from last update) --- */

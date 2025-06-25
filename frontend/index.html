@@ -13,7 +13,7 @@
   <div class="header-top-bar">
     <div class="container header-top-bar-content">
       <div class="top-utility-nav">
-        <a href="#contact" class="top-utility-link top-utility-button">Contact Us</a>
+        <a href="#contact" class="top-utility-link top-utility-button"><i class="fas fa-envelope"> Contact Us </i></a>
         <a href="tel:+254712345678" class="top-utility-link">
           <i class="fas fa-phone-alt"></i> +254 712 345 678
         </a>
@@ -22,7 +22,7 @@
   </div>
 
   <nav class="container main-nav-container">
-    <a href="#" class="logo">
+    <a href="" class="logo">
       <img src="assets/booklogo.png" alt="The 7 Priceless Gifts Book Logo" class="header-logo-image">
       The 7 Priceless Gifts
     </a>
@@ -54,7 +54,7 @@
         <h2>Using the 7 Priceless Gifts</h2>
         <p class="hero-description">Embark on an inspiring journey of healing and restoration. Get your copy today and discover the transformative framework to overcome adversity God's way, unlocking a life of purpose and abundance.</p>
         <div class="hero-action-buttons"> <a href="#" class="button button--primary button--large button--wobble">Buy on Amazon!</a>
-          <a href="http://www.the7pricelessgifts.com/KiaraWheel" target="_blank" class="button button--secondary button--large button--grow">Get a Kiara Wheel!</a>
+          <a href="home.html" target="_blank" class="button button--secondary button--large button--grow">Get a Kiara Wheel!</a>
         </div>
       </div>
     </div>
@@ -285,6 +285,25 @@
           hamburger.classList.remove('active');
           navLinksAndCta.classList.remove('active');
           document.body.classList.remove('no-scroll');
+        });
+      });
+    }
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const hamburger = document.querySelector('.hamburger');
+    const navLinksAndCta = document.querySelector('.nav-links-and-cta'); // IMPORTANT: Target this element
+
+    if (hamburger && navLinksAndCta) { // Check if elements exist
+      hamburger.addEventListener('click', () => {
+        navLinksAndCta.classList.toggle('is-open'); // Toggles the menu's visibility
+        hamburger.classList.toggle('is-active');    // Toggles the hamburger icon's animation
+      });
+
+      navLinksAndCta.querySelectorAll('a.nav-link, .header-cta-button').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinksAndCta.classList.remove('is-open');
+          hamburger.classList.remove('is-active');
         });
       });
     }
