@@ -318,7 +318,7 @@
           // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
           // If your frontend and backend are on the same domain/port after deployment,
           // you might just use '/api/contact'
-          const response = await fetch('${API_BASE_URL}/api/contact', {
+          const response = await fetch(`${API_BASE_URL}/api/contact`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

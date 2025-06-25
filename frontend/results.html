@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="js/NotoColorEmoji-Regular-normal.js"></script>
-  <link rel="stylesheet" href="../frontend/css/results.css" />
+  <link rel="stylesheet" href="css/results.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     .chart-container:hover canvas {
@@ -498,7 +498,7 @@
       try {
         // Send the review data to your Node.js backend
         // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
-        const response = await fetch('${API_BASE_URL}/api/review', {
+        const response = await fetch(`${API_BASE_URL}/api/review`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

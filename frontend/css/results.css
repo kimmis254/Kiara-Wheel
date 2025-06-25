@@ -54,7 +54,7 @@
 /* ========== BASE ========== */
 body {
   margin: 0;
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-base), serif;
   background-color: var(--color-background);
   color: var(--color-accent);
   overflow-x: hidden;
@@ -400,7 +400,7 @@ p {
   padding: 40px;
   max-width: 1200px;
   width: 100%;
-  color: var(--light);
+  color: var(--color-text-light);
   text-align: center;
 }
 .results-card p{
