@@ -993,4 +993,52 @@ button.cancel-btn:hover {
     padding: var(--spacing-sm) var(--spacing-md);
   }
 }
+/* Loading Overlay (remains the same) */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
 
+/* Loading Indicator Container (remains the same) */
+.loading-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1.2em;
+  z-index: 10000;
+}
+
+/* Spinner Logo Animation (UPDATED) */
+.spinner-logo { /* Changed from .spinner to .spinner-logo */
+  width: 80px;  /* Adjust size of your logo as needed */
+  height: 80px; /* Adjust size of your logo as needed */
+  animation: spin 2s linear infinite; /* Apply spin animation, adjust speed (2s) */
+  margin-bottom: 15px; /* Space between logo and text */
+}
+
+/* Keyframe for spin animation (remains the same) */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hidden class for toggling visibility (remains the same) */
+.hidden {
+  display: none !important;
+}

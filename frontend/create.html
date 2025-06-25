@@ -125,6 +125,10 @@
     <a href="#" class="back-to-top" aria-label="Back to top">&#8679;</a>
   </div>
 </footer>
+<div id="loadingIndicator" class="loading-indicator hidden">
+  <img src="assets/logo.png" alt="Loading Logo" class="spinner-logo"> <p>Generating your wheel...</p>
+</div>
+<div id="loadingOverlay" class="loading-overlay hidden"></div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
@@ -139,12 +143,42 @@
 </script>
 
 <script>
+  const loadingIndicator = document.getElementById('loadingIndicator');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+
+  // Functions to show/hide the loading indicator
+  function showLoading() {
+    loadingIndicator.classList.remove('hidden');
+    loadingOverlay.classList.remove('hidden');
+  }
+
+  function hideLoading() {
+    loadingIndicator.classList.add('hidden');
+    loadingOverlay.classList.add('hidden');
+  }
+
   const API_BASE_URL = 'https://the-7-priceless-gifts.onrender.com';
+
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('kiara-form');
     const activityRows = document.getElementById('activity-rows');
     const addBtn = document.getElementById('add-activity');
     let activityCount = 0;
+
+    // Get references to loading indicator elements
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    // Functions to show/hide the loading indicator
+    function showLoading() {
+      loadingIndicator.classList.remove('hidden');
+      loadingOverlay.classList.remove('hidden');
+    }
+
+    function hideLoading() {
+      loadingIndicator.classList.add('hidden');
+      loadingOverlay.classList.add('hidden');
+    }
 
     const createDropdown = (name) => {
       const select = document.createElement('select');
@@ -181,37 +215,46 @@
     };
 
     addBtn.addEventListener('click', addActivityRow);
-    addActivityRow();
+    addActivityRow(); // Add an initial row when the page loads
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const age = document.getElementById('age').value;
-      const gender = document.getElementById('gender').value;
 
-      if (!name || !age || !gender) return alert('Please complete all personal info.');
-
-      const activities = [];
-      activityRows.querySelectorAll('.activity-row').forEach(row => {
-        const [nameInput, love, well, pay, world] = row.querySelectorAll('input, select');
-        if (nameInput.value.trim()) {
-          activities.push({
-            name: nameInput.value.trim(),
-            love: parseInt(love.value),
-            well: parseInt(well.value),
-            pay: parseInt(pay.value),
-            world: parseInt(world.value)
-          });
-        }
-      });
-
-      if (activities.length === 0) return alert('Add at least one activity.');
-
-      const payload = { name, age, gender, activities };
-
-      console.log('📤 Submitting payload:', payload); // ✅ log entire request body
+      // Show loading indicator immediately
+      showLoading();
 
       try {
+        const name = document.getElementById('name').value.trim();
+        const age = document.getElementById('age').value;
+        const gender = document.getElementById('gender').value;
+
+        if (!name || !age || !gender) {
+          alert('Please complete all personal info.');
+          return; // Exit if validation fails
+        }
+
+        const activities = [];
+        activityRows.querySelectorAll('.activity-row').forEach(row => {
+          const [nameInput, love, well, pay, world] = row.querySelectorAll('input, select');
+          if (nameInput.value.trim()) {
+            activities.push({
+              name: nameInput.value.trim(),
+              love: parseInt(love.value),
+              well: parseInt(well.value),
+              pay: parseInt(pay.value),
+              world: parseInt(world.value)
+            });
+          }
+        });
+
+        if (activities.length === 0) {
+          alert('Add at least one activity.');
+          return; // Exit if validation fails
+        }
+
+        const payload = { name, age, gender, activities };
+        console.log('📤 Submitting payload:', payload);
+
         const res = await fetch(`${API_BASE_URL}/api/wheel/generate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -221,16 +264,20 @@
         const data = await res.json();
 
         if (!res.ok) {
-          console.error('❌ Server returned error response:', data); // ✅ show backend validation failures
+          console.error('❌ Server returned error response:', data);
           alert(data.error || 'Failed to generate wheel.');
           return;
         }
 
-        console.log('✅ Success! Server returned:', data); // ✅ view full response if successful
+        console.log('✅ Success! Server returned:', data);
         window.location.href = `results.html?sessionId=${data.sessionId}`;
+
       } catch (err) {
-        console.error('❌ Network/server error during form submission:', err); // ✅ network or server down
+        console.error('❌ Network/server error during form submission:', err);
         alert('Server error. Please try again later.');
+      } finally {
+        // Hide loading indicator regardless of success or failure
+        hideLoading();
       }
     });
   });
