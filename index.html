@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Mindset to Overcome - Francis Njiraini K</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="frontend/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
 
   <nav class="container main-nav-container">
     <a href="#" class="logo">
-      <img src="assets/booklogo.png" alt="The 7 Priceless Gifts Book Logo" class="header-logo-image">
+      <img src="frontend/assets/booklogo.png" alt="The 7 Priceless Gifts Book Logo" class="header-logo-image">
       The 7 Priceless Gifts
     </a>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div class="hero-book-showcase animate-fade-in delay-1">
-      <img src="assets/Book Cover Page v1.jpg" alt="The 7 Priceless Gifts Book Cover" class="book-cover-main">
+      <img src="frontend/assets/Book%20Cover%20Page%20v1.jpg" alt="The 7 Priceless Gifts Book Cover" class="book-cover-main">
     </div>
   </div>
 </section>
@@ -82,12 +82,12 @@
   <section id="free-gift" class="content-section accent-bg animate-section">
     <div class="container free-gift-container">
       <div class="free-gift-image-wrapper animate-fade-in delay-1">
-        <img src="assets/kiara.png" alt="Kiara Wheel" class="spinning-wheel">
+        <img src="frontend/assets/kiara.png" alt="Kiara Wheel" class="spinning-wheel">
       </div>
       <div class="free-gift-content animate-fade-in delay-2">
         <h2 class="section-title">Your Free Gift</h2>
         <p>Imagine a powerful tool that helps you **discover your true passions** and connect them with your unique gifts. This creates your personalized **Kiara Wheel** – a clear visual of where you can make the **biggest impact and generate the most income!**</p>
-        <a href="home.html" target="_blank" class="button button--secondary button--large">Create Your Own Kiara Wheel Now!</a>
+        <a href="frontend/home.html" target="_blank" class="button button--secondary button--large">Create Your Own Kiara Wheel Now!</a>
       </div>
     </div>
   </section>
@@ -95,7 +95,7 @@
   <section id="about-author" class="content-section animate-section">
     <div class="container author-container">
       <div class="author-image-wrapper animate-fade-in delay-1">
-        <img src="assets/profile.png" alt="Francis Njiraini K" class="author-profile-img">
+        <img src="frontend/assets/profile.png" alt="Francis Njiraini K" class="author-profile-img">
         <div class="author-social-links">
           <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social-icon" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
@@ -161,7 +161,7 @@
 <footer>
   <div class="container footer-content">
     <div class="footer-logo">
-      <img src="assets/booklogo.png" alt="The 7 Priceless Gifts Logo">
+      <img src="frontend/assets/booklogo.png" alt="The 7 Priceless Gifts Logo">
     </div>
     <nav class="footer-nav">
       <ul>
@@ -286,6 +286,64 @@
           navLinksAndCta.classList.remove('active');
           document.body.classList.remove('no-scroll');
         });
+      });
+    }
+  });
+  const API_BASE_URL = 'https://your-backend-api-name.onrender.com';
+  document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.querySelector('.contact-form');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission (page reload)
+
+        // Get form data
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          subject: document.getElementById('subject').value,
+          message: document.getElementById('message').value,
+        };
+
+        // Get the submit button and store its original text
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+
+        // Provide immediate feedback to the user and disable the button
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+
+        try {
+          // Send the form data to your Node.js backend
+          // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
+          // If your frontend and backend are on the same domain/port after deployment,
+          // you might just use '/api/contact'
+          const response = await fetch('${API_BASE_URL}/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json(); // Parse the JSON response from the backend
+
+          if (response.ok) { // Check if the response status is 2xx (success)
+            alert('Message sent successfully! We will get back to you soon.');
+            contactForm.reset(); // Clear the form fields
+          } else {
+            // Handle errors sent from the backend
+            alert(`Failed to send message: ${result.message || 'Unknown error occurred.'}`);
+          }
+        } catch (error) {
+          // Handle network errors or other unexpected issues
+          console.error('Error submitting form:', error);
+          alert('An error occurred while sending your message. Please try again later.');
+        } finally {
+          // Revert button text and enable it, regardless of success or failure
+          submitButton.textContent = originalButtonText;
+          submitButton.disabled = false;
+        }
       });
     }
   });

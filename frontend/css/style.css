@@ -636,7 +636,7 @@ a:hover {
 .content-section .container {
   max-width: var(--max-width-container);
   margin: 0 auto;
-  padding: 0 var(--spacing-unit);
+  padding: 0 var(--spacing-md);
 }
 
 /* Section Title */

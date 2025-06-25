@@ -139,6 +139,7 @@
 </script>
 
 <script>
+  const API_BASE_URL = 'https://your-backend-api-name.onrender.com';
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('kiara-form');
     const activityRows = document.getElementById('activity-rows');
@@ -211,7 +212,7 @@
       console.log('📤 Submitting payload:', payload); // ✅ log entire request body
 
       try {
-        const res = await fetch('http://localhost:5000/api/wheel/generate', {
+        const res = await fetch('${API_BASE_URL}/api/wheel/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)

@@ -122,6 +122,7 @@
   const ctx = canvas?.getContext('2d');
   const blissText = document.getElementById('blissText');
   const sessionId = new URLSearchParams(window.location.search).get('sessionId');
+  const API_BASE_URL = 'https://your-backend-api-name.onrender.com';
 
   const labelMap = {
     Bliss: 'BLISS',
@@ -284,7 +285,7 @@
 
     if (!sessionId) return alert("Missing session ID");
 
-    const res = await fetch(`http://localhost:5000/api/result/${sessionId}`);
+    const res = await fetch(`${API_BASE_URL}/api/result/${sessionId}`);
     if (!res.ok) return alert('Failed to load wheel data');
 
     resultData = await res.json();
@@ -431,39 +432,101 @@
     const stars = document.querySelectorAll('#starRating span');
     const submitBtn = document.getElementById('submitReview');
     const cancelBtn = document.getElementById('cancelReview');
-    const reviewMessage = document.getElementById('reviewMessage');
+    const reviewMessageInput = document.getElementById('reviewMessage'); // Renamed for clarity
     const emailDisplay = document.getElementById('userEmailDisplay');
 
+    // Set the email display
     emailDisplay.textContent = `Sending feedback as: ${email}`;
+
+    // Show the modal and overlay
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
 
-    let rating = 0;
+    let rating = 0; // Initialize rating
 
+    // Reset selected stars when opening the modal
+    stars.forEach(s => s.classList.remove('selected'));
+    reviewMessageInput.value = ''; // Clear message when opening
+    submitBtn.textContent = 'Submit Review'; // Reset button text
+    submitBtn.disabled = false; // Enable button
+
+    // Star Rating Click Handler
     stars.forEach(star => {
       star.onclick = () => {
         rating = parseInt(star.dataset.star);
-        stars.forEach(s => s.classList.remove('selected'));
+        stars.forEach(s => s.classList.remove('selected')); // Remove from all first
         for (let i = 1; i <= rating; i++) {
-          document.querySelector(`[data-star="${i}"]`).classList.add('selected');
+          // Add 'selected' class to stars up to the chosen rating
+          document.querySelector(`#starRating [data-star="${i}"]`).classList.add('selected');
         }
       };
     });
 
+    // Function to close and reset the modal
     const closeReviewModal = () => {
       modal.classList.add('hidden');
       overlay.classList.add('hidden');
-      reviewMessage.value = '';
-      stars.forEach(s => s.classList.remove('selected'));
+      reviewMessageInput.value = ''; // Clear review message
+      rating = 0; // Reset rating
+      stars.forEach(s => s.classList.remove('selected')); // Remove selected class from stars
+      // Ensure button is reset to original state if modal is closed via cancel/overlay click
+      submitBtn.textContent = 'Submit Review';
+      submitBtn.disabled = false;
     };
 
-    submitBtn.onclick = () => {
-      const message = reviewMessage.value;
-      console.log(`Email: ${email}\nRating: ${rating}\nMessage: ${message}`);
-      alert('Thanks for your feedback!');
-      closeReviewModal();
+    // Submit Button Click Handler (Async for network request)
+    submitBtn.onclick = async () => { // Made the function async
+      if (rating === 0) {
+        alert('Please select a star rating before submitting.');
+        return;
+      }
+
+      const message = reviewMessageInput.value.trim();
+      const userEmail = email; // Use the email passed into the function
+
+      const reviewData = {
+        userEmail: userEmail,
+        rating: rating,
+        message: message
+      };
+
+      // Provide immediate feedback and disable button
+      const originalButtonText = submitBtn.textContent;
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+
+      try {
+        // Send the review data to your Node.js backend
+        // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
+        const response = await fetch('${API_BASE_URL}/api/review', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reviewData),
+        });
+
+        const result = await response.json(); // Parse the JSON response
+
+        if (response.ok) { // Check if the response status is 2xx (success)
+          alert('Thank you for your valuable feedback!');
+          closeReviewModal(); // Close modal on success
+        } else {
+          // Handle errors from the backend
+          alert(`Failed to submit review: ${result.message || 'Unknown error occurred.'}`);
+        }
+      } catch (error) {
+        // Handle network errors or other unexpected issues
+        console.error('Error submitting review:', error);
+        alert('An error occurred while submitting your review. Please try again later.');
+      } finally {
+        // Always revert button state
+        submitBtn.textContent = originalButtonText;
+        submitBtn.disabled = false;
+      }
     };
 
+    // Cancel Button and Overlay Click Handlers
     cancelBtn.onclick = closeReviewModal;
     overlay.onclick = closeReviewModal;
   }
@@ -493,7 +556,7 @@
       tempCtx.fillStyle = '#34D399';
       tempCtx.textAlign = 'center';
       tempCtx.textBaseline = 'middle';
-      tempCtx.fillText('✨ BLISS ✨', tempCanvas.width / 2, tempCanvas.height / 2); // EMOJI ADDED
+      tempCtx.fillText(' BLISS ', tempCanvas.width / 2, tempCanvas.height / 2); // EMOJI ADDED
     }
 
     const chartImage = tempCanvas.toDataURL('image/png');
@@ -516,9 +579,9 @@
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor('#444');
-    const introText = `Hi ${userName}, here’s your custom Kiara Wheel! 🎡
+    const introText = `Hi ${userName}, here’s your custom Kiara Wheel!
 Thank you for completing Kiara Wheel. We’ve analyzed your activity ratings and generated your personalized Kiara Wheel based on
-What you love, What you do well, What the world will pay for and What the world needs. 🚀`; // EMOJIS ADDED
+What you love, What you do well, What the world will pay for and What the world needs.`; // EMOJIS ADDED
 
     const introLines = doc.splitTextToSize(introText, 180);
 
@@ -575,13 +638,12 @@ What you love, What you do well, What the world will pay for and What the world 
           return bScore - aScore;
         })
     );
-
     const labelMapClean = {
-      Bliss: '✨ BLISS ✨', // EMOJI ADDED
-      Career: '💼 MY CAREER OPPORTUNITIES', // EMOJI ADDED
-      Passion: '❤️ WHAT I AM PASSIONATE ABOUT', // EMOJI ADDED
-      Volunteer: '🤝 VOLUNTEERING OPTIONS', // EMOJI ADDED
-      Charity: '🤲 CHARITY OPTIONS' // EMOJI ADDED
+      Bliss: 'BLISS', // EMOJI ADDED
+      Career: 'MY CAREER OPPORTUNITIES', // EMOJI ADDED
+      Passion: 'WHAT I AM PASSIONATE ABOUT', // EMOJI ADDED
+      Volunteer: 'VOLUNTEERING OPTIONS', // EMOJI ADDED
+      Charity: 'CHARITY OPTIONS' // EMOJI ADDED
     };
 
     let y = 20;
@@ -612,19 +674,19 @@ What you love, What you do well, What the world will pay for and What the world 
 
         // EMOJIS ADDED TO SELECTED ARRAY STRINGS
         if (a.love >= 5) {
-          selected.push('💖 What you love');
+          selected.push('What you love');
           circleIds.push(1);
         }
         if (a.well >= 5) {
-          selected.push('✅ What you do well');
+          selected.push('What you do well');
           circleIds.push(2);
         }
         if (a.pay >= 5) {
-          selected.push('💰 What the world will pay for');
+          selected.push('What the world will pay for');
           circleIds.push(3);
         }
         if (a.world >= 5) {
-          selected.push('🌍 What the world needs');
+          selected.push('What the world needs');
           circleIds.push(4);
         }
 
