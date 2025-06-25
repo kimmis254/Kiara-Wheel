@@ -15,7 +15,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000', // For local frontend development
   'http://localhost:5000', // If frontend is on same port
-  'https://your-frontend-site.onrender.com', // Replace with your *actual* Render frontend URL
+  'https://kiara-wheel-5trf.onrender.com', // Replace with your *actual* Render frontend URL
   // Add any other specific domains that need to access your API
 ];
 
