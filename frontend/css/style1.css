@@ -400,48 +400,62 @@ p {
   }
 }
 
-.spin-image-container {
+.spin-image-container { /* This is now the flex container for its children */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 1;
+  flex-wrap: wrap; /* Allows wheels to wrap to the next line on smaller screens */
+  justify-content: center; /* Centers the wheels horizontally within the container */
+  align-items: center; /* Aligns them vertically if they have different heights */
+  gap: var(--spacing-lg); /* Provides consistent space between the wheels */
+  /* Adds space above the set of wheels */
+  /* Adds space below the set of wheels */
+  max-width: 1200px; /* Limits the overall width of the wheel section on very large screens */
+  /* Centers the container itself */
+  /* Centers the container itself */
+  margin: var(--spacing-xl) auto;
+
+  /* Keep original positioning for hero-bg-pattern, but move z-index to the pattern itself */
+  position: relative; /* Keep relative for absolute positioning of hero-bg-pattern */
   perspective: 1000px;
+  /* Remove z-index: 1; from here as it might interfere with hero-bg-pattern */
 }
 
 .hero-bg-pattern {
-  position: absolute;
+  position: absolute; /* Keeps it positioned relative to .spin-image-container */
   width: 140%;
   height: 140%;
   opacity: 0.08;
   top: -20%;
   left: -20%;
-  z-index: 0;
+  z-index: 0; /* Ensure it's behind the images */
   animation: spin 60s linear infinite reverse;
   will-change: transform;
 }
 
 .spin-image {
-  width: 350px; /* Made the middle circle bigger (default) */
-  height: 350px; /* Made the middle circle bigger (default) */
-  background: radial-gradient(circle, rgba(255, 200, 87, 0.1) 0%, rgba(255, 200, 87, 0) 70%);
+  /* Default size for spin images */
+  width: 250px; /* Reduced default size to allow more to fit horizontally */
+  height: 250px;
+  /* Using RGB variables for background and box-shadow consistency */
+  background: radial-gradient(circle, rgba(var(--color-secondary-rgb), 0.1) 0%, rgba(var(--color-secondary-rgb), 0) 70%);
   border-radius: var(--border-radius-full);
-  display: flex;
+  display: flex; /* Keep flex for centering spin-icon */
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 3px solid var(--color-secondary);
-  box-shadow: 0 0 30px rgba(255, 200, 87, 0.8),
-  0 0 60px rgba(255, 106, 61, 0.4);
-  position: relative;
-  z-index: 1;
+  box-shadow: 0 0 30px rgba(var(--color-secondary-rgb), 0.8),
+  0 0 60px rgba(var(--color-primary-rgb), 0.4);
+  position: relative; /* Essential for its own z-index if needed, or if containing absolutely positioned elements */
+  z-index: 1; /* Ensure spin images are above the hero-bg-pattern */
   animation: glowPulse 4s infinite ease-in-out;
   transform: rotateY(15deg) rotateX(5deg);
   transition: transform 0.5s var(--transition-ease);
+  flex-shrink: 0; /* Prevents the images from shrinking excessively */
+  flex-grow: 0; /* Prevents the images from growing */
 }
 
 .spin-image:hover {
-  transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+  transform: rotateY(0deg) rotateX(0deg) scale(1.05);
 }
 
 .spin-icon {
@@ -453,22 +467,61 @@ p {
 }
 
 .spin-image.large-spin {
-  width: 450px; /* Made the large spin circle bigger */
-  height: 450px; /* Made the large spin circle bigger */
+  width: 350px; /* Larger size for this variant */
+  height: 350px;
   animation: spin 30s linear infinite;
-}
-
-@media (min-width: 1024px) {
-  .spin-image.large-spin {
-    width: 600px; /* Made the very large spin circle bigger */
-    height: 600px; /* Made the very large spin circle bigger */
-  }
 }
 
 .spin-image.no-spin {
   animation: none !important;
+  transform: rotateY(0deg) rotateX(0deg); /* Reset transform for static display */
 }
 
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 1023px) {
+  .spin-image-container {
+    gap: var(--spacing-md);
+  }
+  .spin-image {
+    width: 200px;
+    height: 200px;
+  }
+  .spin-image.large-spin {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .spin-image-container {
+    gap: var(--spacing-sm);
+    /* For smaller screens, if you want them to stack if there are too many or they are too big */
+    /* flex-direction: column; */ /* Uncomment this if you want them to stack vertically on small screens */
+  }
+  .spin-image {
+    width: 150px;
+    height: 150px;
+  }
+  .spin-image.large-spin {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spin-image-container {
+    gap: var(--spacing-xs); /* Even smaller gap for very tight spaces */
+  }
+  .spin-image {
+    width: 120px;
+    height: 120px;
+  }
+  .spin-image.large-spin {
+    width: 200px;
+    height: 200px;
+  }
+}
 .hero-text {
   max-width: 550px;
   z-index: 2;
