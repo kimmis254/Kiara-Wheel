@@ -1002,10 +1002,9 @@ p {
 .expect-section {
   background: var(--color-background);
   padding: var(--spacing-xxl) 5%;
-  text-align: center;
+  text-align: center; /* Still center text within the section */
   position: relative;
-  /* Ensure overflow hidden is only for the section if it contains other elements */
-  overflow: hidden;
+  overflow: hidden; /* Keep this to ensure nothing spills out */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1016,36 +1015,36 @@ p {
 
 .expect-content {
   display: flex;
-  /* Changed from wrap to column to stack items */
-  flex-direction: column;
-  /* Centered items horizontally when stacked */
-  align-items: center;
-  /* Centered content vertically */
-  justify-content: center;
-  gap: var(--spacing-xxl);
+  /* Default: ROW for desktop (slideshow next to text) */
+  flex-direction: row;
+  /* Space out items, push text box to one side and slideshow to another */
+  justify-content: center; /* Adjust to space-around or space-between if you have more than two main items */
+  align-items: center; /* Vertically align items in the middle */
+  gap: var(--spacing-xxl); /* Gap between the slideshow and text box */
+  max-width: 1200px; /* Limit content width on very large screens */
+  margin: 0 auto; /* Center the content container itself */
 }
 
 /* --- Slideshow Container for 3D Effect --- */
 .slideshow-box {
   position: relative;
-  /* Smaller width for the carousel container */
-  width: 400px;
+  width: 400px; /* Base width for desktop carousel */
   height: 0;
-  /* Make it square to properly contain the circle images */
-  padding-bottom: 400px;
-  max-width: 90%;
-  margin-top: var(--spacing-xl);
+  padding-bottom: 400px; /* Make it square for the circle images */
+  max-width: 45%; /* Allow it to shrink, occupy max 45% of parent */
+  flex-shrink: 0; /* Prevents it from shrinking too much */
+  flex-grow: 0; /* Prevents it from growing too much */
+
+  margin-top: var(--spacing-xl); /* Adjust margins for desktop layout */
   margin-bottom: var(--spacing-xl);
 
   overflow: visible;
   transition: box-shadow 0.5s var(--transition-ease), border-color 0.5s var(--transition-ease);
   will-change: box-shadow, border-color;
 
-  /* Establish 3D context */
   perspective: 1200px;
   perspective-origin: center center;
 
-  /* Define CSS variables for easier calculation in 3D transforms */
   --slideshow-base-width: 400px; /* Matches the new width property */
   --slideshow-radius: calc(var(--slideshow-base-width) / 2);
   --rotate-angle: 45deg;
@@ -1070,19 +1069,17 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 70%; /* Size of each slide relative to slideshow-box (adjust as needed) */
+  width: 70%; /* Size of each slide relative to slideshow-box */
   height: 0;
   padding-bottom: 70%; /* Make it square for a perfect circle wrapper */
   transform-style: preserve-3d;
-  /* Add z-index to transition for smooth layering changes */
   transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, z-index 0.4s step-end;
   will-change: transform, opacity;
   backface-visibility: hidden;
 
-  /* Start all non-active slides faded out and non-interactive */
   opacity: 0;
   pointer-events: none;
-  z-index: 1; /* Default z-index for inactive */
+  z-index: 1;
 }
 
 /* --- Wrapper for Circular Image --- */
@@ -1092,8 +1089,8 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 50%; /* Make it circular */
-  overflow: hidden; /* Hide parts of image outside the circle */
+  border-radius: 50%;
+  overflow: hidden;
   box-shadow: 0 5px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.3);
   border: 2px solid rgba(255, 200, 87, 0.2);
   display: flex;
@@ -1104,7 +1101,7 @@ p {
 .slide-circle-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Crucial: Image fills the circle without distortion */
+  object-fit: cover;
   display: block;
 }
 
@@ -1112,30 +1109,29 @@ p {
 .slide-panel.active {
   transform: translate(-50%, -50%) rotateY(0deg) translateZ(var(--translate-z-val));
   opacity: 1;
-  z-index: 5; /* Active slide on top */
-  pointer-events: auto; /* Active slide is interactive */
+  z-index: 5;
+  pointer-events: auto;
 }
 
 .slide-panel.next {
   transform: translate(-50%, -50%) rotateY(var(--rotate-angle)) translateZ(var(--translate-z-val));
-  opacity: 0.7; /* Keep slight fade for depth */
-  z-index: 4; /* Next slide slightly behind */
-  pointer-events: auto; /* Allow interaction with next slide */
+  opacity: 0.7;
+  z-index: 4;
+  pointer-events: auto;
 }
 
 .slide-panel.prev {
   transform: translate(-50%, -50%) rotateY(calc(var(--rotate-angle) * -1)) translateZ(var(--translate-z-val));
-  opacity: 0.7; /* Keep slight fade for depth */
-  z-index: 4; /* Prev slide slightly behind */
-  pointer-events: auto; /* Allow interaction with prev slide */
+  opacity: 0.7;
+  z-index: 4;
+  pointer-events: auto;
 }
 
-/* For slides further out (if you have more than 3) - these remain hidden */
 .slide-panel.far-next,
 .slide-panel.far-prev {
   transform: translate(-50%, -50%) rotateY(180deg) translateZ(var(--translate-z-val));
-  opacity: 0; /* Fully hidden */
-  pointer-events: none; /* Not interactive */
+  opacity: 0;
+  pointer-events: none;
   z-index: 1;
 }
 
@@ -1171,165 +1167,151 @@ p {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.6); /* Slightly darker background for better contrast */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Slightly more prominent border */
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: var(--color-accent);
-  font-size: 2.2rem; /* Slightly larger arrows */
+  font-size: 2.2rem;
   padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
   border-radius: var(--border-radius-full);
   z-index: 10;
-  transition: all var(--transition-speed-normal) var(--transition-ease); /* Apply transition to 'all' for scale effect */
-  box-shadow: 0 0 25px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.2); /* Enhanced shadow */
+  transition: all var(--transition-speed-normal) var(--transition-ease);
+  box-shadow: 0 0 25px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.2);
   user-select: none;
 }
 
 .slide-nav-arrow.prev {
-  left: -80px; /* Pushed significantly further left */
-  /* Using calc() for more responsive positioning relative to slideshow-box width */
-  /* left: calc(50% - var(--slideshow-base-width) / 2 - 50px); */
+  left: -80px;
 }
 
 .slide-nav-arrow.next {
-  right: -80px; /* Pushed significantly further right */
-  /* Using calc() for more responsive positioning relative to slideshow-box width */
-  /* right: calc(50% - var(--slideshow-base-width) / 2 - 50px); */
+  right: -80px;
 }
 
 .slide-nav-arrow:hover {
   background: var(--color-primary);
   color: var(--color-accent);
-  box-shadow: 0 0 40px var(--color-primary), 0 0 20px rgba(255, 255, 255, 0.3); /* Stronger, more colorful shadow */
+  box-shadow: 0 0 40px var(--color-primary), 0 0 20px rgba(255, 255, 255, 0.3);
   border-color: var(--color-primary);
-  transform: translateY(-50%) scale(1.1); /* Slightly larger on hover */
+  transform: translateY(-50%) scale(1.1);
 }
 
 .slide-nav-arrow:active {
-  transform: translateY(-50%) scale(0.9); /* More pronounced press effect */
-  box-shadow: 0 0 10px rgba(0,0,0,0.3); /* Muted shadow on active */
+  transform: translateY(-50%) scale(0.9);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  /* ... (other existing mobile styles for expect-content, text-box, slideshow-box) ... */
-
-  .slide-nav-arrow {
-    font-size: 1.8rem; /* Adjusted for mobile */
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-  .slide-nav-arrow.prev {
-    left: -20px; /* Adjusted for mobile */
-  }
-  .slide-nav-arrow.next {
-    right: -20px; /* Adjusted for mobile */
-  }
-}
-/* Remove dots styles */
 
 /* --- Text Box and Button --- */
 .text-box {
   max-width: 550px;
-  text-align: center; /* Center text when stacked below */
+  text-align: left; /* Align text to the left when next to slideshow */
   animation: fadeInSlideUp 1.2s var(--transition-ease) forwards;
   will-change: transform, opacity;
-  /* Ensure transform is none unless explicitly desired for a specific media query */
-  transform: none;
+  /* Allow text-box to grow/shrink based on content but not too much */
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 300px; /* Ensures it has a minimum width on desktop */
 }
 
-@media (min-width: 1024px) {
+.highlight-text {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem); /* Ensure responsiveness for highlight text */
+  margin-bottom: var(--spacing-sm);
+}
+
+.expect-heading {
+  font-size: clamp(2.5rem, 6vw, 3.5rem); /* Responsive heading size */
+  margin-bottom: var(--spacing-md);
+}
+
+.expect-description {
+  font-size: clamp(1rem, 2vw, 1.1rem); /* Responsive description size */
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.expect-btn {
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  padding: 12px 28px;
+  /* Add button specific styles if not already defined */
+}
+
+
+/* --- Mobile Adjustments (Stacking) --- */
+@media (max-width: 1023px) { /* Breakpoint for stacking content */
   .expect-content {
-    /* When text is below, we usually want content centered */
-    justify-content: center;
-    align-items: center; /* Ensure vertical alignment remains centered if desired */
+    flex-direction: column; /* Stack slideshow and text vertically */
+    gap: var(--spacing-xl); /* Gap between stacked items */
+    text-align: center; /* Center align all content when stacked */
   }
+
   .text-box {
-    text-align: center; /* Keep text centered on desktop when below */
-    transform: none; /* No horizontal translation needed when stacked */
+    text-align: center; /* Center text when stacked */
+    max-width: 600px; /* Adjust max-width for text-box when stacked */
+  }
+
+  .slideshow-box {
+    width: 90%; /* Make slideshow wider on mobile for better visibility */
+    padding-bottom: 90%; /* Keep it square */
+    /* Adjust base width for mobile perspective calculations */
+    --slideshow-base-width: 90vw; /* Use viewport width for better responsiveness */
+    --slideshow-radius: calc(var(--slideshow-base-width) / 2);
+    perspective: 800px; /* Adjust perspective for smaller screens */
+    --rotate-angle: 40deg; /* Slightly less rotation for compact view */
+    --translate-z-val: calc(var(--slideshow-radius) * 0.9); /* Closer to viewer */
+  }
+
+  .slide-nav-arrow.prev {
+    left: var(--spacing-md); /* Bring arrows closer to the box */
+  }
+  .slide-nav-arrow.next {
+    right: var(--spacing-md); /* Bring arrows closer to the box */
   }
 }
 
-/* Mobile adjustments (mostly carried over, ensuring new stacked layout) */
-@media (max-width: 768px) { /* Changed from 1023px to 768px for standard mobile breakpoint */
+@media (max-width: 768px) { /* Further adjustments for smaller tablets and phones */
   .expect-section {
     padding: var(--spacing-xl) 5%;
   }
-  .expect-content {
-    flex-direction: column; /* Ensure column on small screens */
-    gap: var(--spacing-xl);
-  }
-  .text-box {
-    max-width: 100%;
-    padding: 0;
-    text-align: center; /* Ensure centered text on mobile */
-    transform: none; /* No translation on mobile */
-  }
+
   .slideshow-box {
-    width: 90%; /* Use percentage for responsiveness */
-    padding-bottom: 90%; /* Keep it square */
-    /* For dynamic calculations on mobile, use a percentage of the viewport width */
-    --slideshow-base-width: 90vw;
-    --slideshow-radius: calc(var(--slideshow-base-width) / 2);
-    perspective: 700px;
-    --rotate-angle: 40deg;
-    --translate-z-val: calc(var(--slideshow-radius) * 0.9);
-    margin-top: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
+    width: 95%; /* Make it almost full width on smaller phones */
+    padding-bottom: 95%;
   }
 
-  .slide-panel {
-    width: 85%;
-    padding-bottom: 85%;
+  .slide-nav-arrow {
+    font-size: 1.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
-
-  /* Mobile transforms (remains mostly same as before for 3D effect) */
-  .slide-panel.active {
-    transform: translate(-50%, -50%) rotateY(0deg) translateZ(var(--translate-z-val));
+  .slide-nav-arrow.prev {
+    left: var(--spacing-sm);
   }
-  .slide-panel.next {
-    transform: translate(-50%, -50%) rotateY(var(--rotate-angle)) translateZ(var(--translate-z-val));
-  }
-  .slide-panel.prev {
-    transform: translate(-50%, -50%) rotateY(calc(var(--rotate-angle) * -1)) translateZ(var(--translate-z-val));
-  }
-  .slide-panel.far-next,
-  .slide-panel.far-prev {
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) rotateY(180deg) translateZ(var(--translate-z-val));
+  .slide-nav-arrow.next {
+    right: var(--spacing-sm);
   }
 
   .caption {
     bottom: var(--spacing-xs);
     padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.85rem;
-    max-width: 90%;
+    font-size: 0.8rem;
+    max-width: 95%;
   }
-  .slide-nav-arrow {
-    font-size: 1.5rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-  .slide-nav-arrow.prev {
-    left: var(--spacing-xs);
-  }
-  .slide-nav-arrow.next {
-    right: var(--spacing-xs);
-  }
+}
 
-  .highlight-text {
-    font-size: 1rem;
-    margin-bottom: var(--spacing-sm);
+@media (max-width: 480px) { /* Very small mobile screens */
+  .expect-content {
+    gap: var(--spacing-lg); /* Slightly reduced gap */
   }
-  .expect-heading {
-    font-size: clamp(1.8rem, 6vw, 2.2rem);
-    margin-bottom: var(--spacing-md);
+  .slideshow-box {
+    /* Use calc for consistent sizing relative to viewport */
+    width: calc(100% - var(--spacing-xl) * 2); /* Accounting for section padding */
+    padding-bottom: calc(100% - var(--spacing-xl) * 2);
+    --slideshow-base-width: calc(100vw - var(--spacing-xl) * 2);
+    --slideshow-radius: calc(var(--slideshow-base-width) / 2);
+    perspective: 600px;
   }
-  .expect-description {
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-lg);
-  }
-  .expect-btn {
-    font-size: 0.9rem;
-    padding: 10px 24px;
+  .slide-panel {
+    width: 80%;
+    padding-bottom: 80%;
   }
 }
 
