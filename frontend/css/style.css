@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 :root {
-  --color-primary: #FF6A3D;         /* Orange/Coral - Main accent */
-  --color-secondary: #FFC857;       /* Yellow/Gold - Highlight, headings */
-  --color-accent: #ffffff;         /* White - General text, CTA text */
-  --color-background: #0B0F4B;     /* Deep Blue - Main background */
-  --color-text-light: #f0f0f0;      /* Off-white for paragraphs */
-  --color-text-muted: #aaa;        /* Light Gray - For utility links */
-  --color-text-dark: #000000;       /* Black */
-  --color-form-bg: #101973;       /* Slightly lighter dark blue for the form card background */
-  --color-input-bg: #F5F5F5;       /* Light Gray for input fields */
+  --color-primary: #FF6A3D;
+  --color-secondary: #FFC857;
+  --color-accent: #ffffff;
+  --color-background: #0B0F4B;
+  --color-text-light: #f0f0f0;
+  --color-text-muted: #aaa;
+  --color-text-dark: #000000;
+  --color-form-bg: #101973;
+  --color-input-bg: #F5F5F5;
 
-  /* Spacing variables (can be adjusted) */
+
   --spacing-xs: 10px;
   --spacing-sm: 20px;
   --spacing-md: 30px;
@@ -20,10 +20,10 @@
   --spacing-xxl: 120px;
   --padding-section: 4rem 0;
 
-  /* Other common variables */
+
   --border-radius-sm: 10px;
   --border-radius-md: 15px;
-  --font-family-primary: 'Arial', sans-serif; /* Example font */
+  --font-family-primary: 'Arial', sans-serif;
   --font-size-base: 1rem;
   --line-height-base: 1.6;
   --max-width-container: 1000px;
@@ -45,13 +45,13 @@ body {
   color: var(--color-text-light);
   line-height: 1.8;
   font-size: 18px;
-  padding-top: 120px; /* Approximate combined height of two header bars */
+  padding-top: 120px;
 }
 body.no-scroll {
   overflow: hidden;
 }
 .container {
-  max-width: 1200px; /* Increased max-width for header content to match Amplitude's feel */
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -78,17 +78,17 @@ a:hover {
   color: var(--color-secondary);
 }
 
-/* --- Header & Navigation (retained with top-utility-link changes) --- */
+
 .main-header {
   background-color: var(--color-background);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; /* Ensure header is above other content */
+  z-index: 1000;
 }
 
-/* --- Top Bar Styles --- */
+
 .header-top-bar {
   background-color: var(--color-background);
   padding: 8px 0;
@@ -99,13 +99,13 @@ a:hover {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 var(--spacing-md); /* Consistent padding for content */
+  padding: 0 var(--spacing-md);
 }
 
 .top-utility-nav {
   display: flex;
   gap: var(--spacing-md);
-  align-items: center; /* Vertically align items */
+  align-items: center;
 }
 
 .top-utility-link {
@@ -115,15 +115,15 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 5px;
-  white-space: nowrap; /* Prevent phone number from wrapping */
+  white-space: nowrap;
 }
 
 .top-utility-link:hover {
   color: var(--color-secondary);
 }
 
-/* Make Contact Us more prominent - applies to .top-utility-link.top-utility-button */
-.top-utility-link.top-utility-button { /* More specific selector */
+
+.top-utility-link.top-utility-button {
   background-color: var(--color-primary);
   color: var(--color-accent);
   padding: 6px 15px;
@@ -134,7 +134,7 @@ a:hover {
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  /* Override default link color for this button */
+
   color: var(--color-accent) !important;
 }
 
@@ -144,12 +144,12 @@ a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* --- Main Navigation Styles --- */
+
 .main-nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px; /* Base padding */
+  padding: 15px 20px;
 }
 
 .logo {
@@ -163,7 +163,7 @@ a:hover {
   text-decoration: none;
   flex-shrink: 0;
   margin-right: var(--spacing-md);
-  white-space: nowrap; /* Prevent logo text from wrapping */
+  white-space: nowrap;
   transition: color 0.3s ease;
 }
 
@@ -188,9 +188,9 @@ a:hover {
 .nav-links-and-cta {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg); /* Space between nav links and CTA button */
+  gap: var(--spacing-lg);
   flex-grow: 1;
-  justify-content: flex-end; /* Push content to the right */
+  justify-content: flex-end;
 }
 
 .nav-links {
@@ -211,7 +211,7 @@ a:hover {
   padding: 8px 0;
   position: relative;
   transition: color 0.3s ease, transform 0.2s ease;
-  white-space: nowrap; /* Prevent nav links from wrapping */
+  white-space: nowrap;
 }
 
 .nav-links li a.nav-link::after {
@@ -236,7 +236,7 @@ a:hover {
   transform: translateY(-2px);
 }
 
-/* Buy on Amazon CTA Button */
+
 .header-cta-button {
   padding: 10px 25px;
   font-size: 1rem;
@@ -244,10 +244,10 @@ a:hover {
   background-color: var(--color-primary);
   color: var(--color-accent);
   transition: background-color 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0; /* Prevent button from shrinking */
-  text-decoration: none; /* Ensure it doesn't look like a link */
+  flex-shrink: 0;
+  text-decoration: none;
   text-align: center;
-  white-space: nowrap; /* Prevent button text from wrapping */
+  white-space: nowrap;
 }
 
 .header-cta-button:hover {
@@ -255,15 +255,15 @@ a:hover {
   transform: translateY(-2px);
 }
 
-/* Hamburger Icon Base Styles (Hidden by default on desktop) */
+
 .hamburger {
-  display: none; /* Hidden by default on desktop */
+  display: none;
   cursor: pointer;
   padding: 10px;
-  z-index: 1001; /* Ensure it's above other elements if needed */
+  z-index: 1001;
   background: none;
   border: none;
-  /* Visually make it a button without default styling */
+
   outline: none;
 }
 
@@ -272,18 +272,18 @@ a:hover {
   width: 28px;
   height: 3px;
   margin: 6px auto;
-  background-color: var(--color-accent); /* Color of the three lines */
-  transition: all 0.3s ease-in-out; /* Smooth transition for animation */
+  background-color: var(--color-accent);
+  transition: all 0.3s ease-in-out;
   border-radius: 2px;
 }
 
-/* Hamburger menu animation for close icon */
+
 .hamburger.is-active .bar:nth-child(1) {
   transform: translateY(9px) rotate(45deg);
 }
 
 .hamburger.is-active .bar:nth-child(2) {
-  opacity: 0; /* Middle bar fades out */
+  opacity: 0;
 }
 
 .hamburger.is-active .bar:nth-child(3) {
@@ -291,137 +291,137 @@ a:hover {
 }
 
 
-/* =============================================================== */
-/* Responsive Styles (Media Queries) */
-/* =============================================================== */
 
-@media (max-width: 992px) { /* Tablet and smaller screens */
+
+
+
+@media (max-width: 992px) {
 
   .header-top-bar-content {
-    justify-content: center; /* Center top bar content on smaller screens */
+    justify-content: center;
     padding: 0 var(--spacing-sm);
   }
 
   .top-utility-nav {
-    flex-wrap: wrap; /* Allow items to wrap if screen is very narrow */
+    flex-wrap: wrap;
     justify-content: center;
     gap: var(--spacing-sm);
   }
 
   .top-utility-link, .top-utility-link.top-utility-button {
     font-size: 0.8rem;
-    padding: 4px 8px; /* Smaller padding for button in top bar */
+    padding: 4px 8px;
   }
 
   .main-nav-container {
-    padding: 10px 15px; /* Adjust main nav padding */
+    padding: 10px 15px;
   }
 
   .logo {
-    font-size: 1.5rem; /* Smaller logo text */
+    font-size: 1.5rem;
     gap: 8px;
   }
 
   .header-logo-image {
-    width: 60px; /* Smaller logo image */
+    width: 60px;
     height: 60px;
   }
 
-  /* Hide desktop nav links and CTA, show hamburger */
-  .nav-links-and-cta {
-    display: flex; /* Keep flex to manage layout internally */
-    flex-direction: column; /* Stack vertically for mobile menu */
-    align-items: flex-start; /* Align items to the start of the column */
-    gap: 0; /* Reset gap as items will be stacked */
 
-    /* Position the mobile menu off-screen initially */
+  .nav-links-and-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+
+
     position: absolute;
-    top: 100%; /* Position below the main header */
+    top: 100%;
     left: 0;
     width: 100%;
-    background-color: color-mix(in srgb, var(--color-background) 80%, black); /* Slightly darker background for menu */
+    background-color: color-mix(in srgb, var(--color-background) 80%, black);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     padding: 20px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    transform: translateX(100%); /* Start off-screen to the right */
-    transition: transform 0.4s ease-out; /* Smooth slide-in transition */
-    overflow-y: auto; /* Enable scrolling for many links */
-    max-height: calc(100vh - 120px); /* Limit height to viewport minus header height */
-    z-index: 999; /* Ensure menu is below hamburger but above page content */
+    transform: translateX(100%);
+    transition: transform 0.4s ease-out;
+    overflow-y: auto;
+    max-height: calc(100vh - 120px);
+    z-index: 999;
   }
 
   .nav-links {
-    flex-direction: column; /* Stack nav links vertically */
-    width: 100%; /* Take full width of parent (.nav-links-and-cta) */
-    padding: 0; /* Reset list padding */
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
     margin: 0;
   }
 
   .nav-links li {
-    width: 100%; /* Each list item takes full width */
-    text-align: center; /* Center align text */
+    width: 100%;
+    text-align: center;
   }
 
   .nav-links li a.nav-link {
-    padding: 15px 20px; /* More padding for clickable area */
-    display: block; /* Make the entire link clickable */
-    font-size: 1.1rem; /* Slightly larger text in menu */
+    padding: 15px 20px;
+    display: block;
+    font-size: 1.1rem;
     letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separator between links */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .nav-links li:last-child a.nav-link {
-    border-bottom: none; /* No border for the last link */
+    border-bottom: none;
   }
 
   .nav-links li a.nav-link::after {
-    height: 2px; /* Thinner underline */
-    bottom: 5px; /* Adjust position */
+    height: 2px;
+    bottom: 5px;
   }
 
   .nav-links li a.nav-link:hover,
   .nav-links li a.nav-link.active {
-    background-color: rgba(255, 255, 255, 0.08); /* Highlight active/hovered link */
-    color: var(--color-primary); /* Change color on hover/active */
-    transform: none; /* Remove translateY on hover in mobile menu */
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-primary);
+    transform: none;
   }
 
   .header-cta-button {
-    /* Style for CTA button when it's inside the mobile menu */
-    margin: 20px auto; /* Center button and add space */
-    width: calc(100% - 40px); /* Adjust width to fit padding */
-    max-width: 250px; /* Limit max width for very wide screens */
+
+    margin: 20px auto;
+    width: calc(100% - 40px);
+    max-width: 250px;
     text-align: center;
     padding: 12px 20px;
     font-size: 1.0rem;
   }
 
-  /* JavaScript will toggle this class to open the menu */
+
   .nav-links-and-cta.is-open {
-    transform: translateX(0); /* Slide in from the right */
+    transform: translateX(0);
   }
 
   .hamburger {
-    display: block; /* Show hamburger icon on mobile */
+    display: block;
   }
 }
 
-@media (max-width: 600px) { /* Even smaller screens (e.g., mobile portrait) */
+@media (max-width: 600px) {
   .main-nav-container {
-    padding: 8px 10px; /* Reduce padding further */
+    padding: 8px 10px;
   }
 
   .logo {
-    font-size: 1.3rem; /* Even smaller logo text */
+    font-size: 1.3rem;
     gap: 5px;
   }
 
   .header-logo-image {
-    width: 50px; /* Even smaller logo image */
+    width: 50px;
     height: 50px;
   }
 
-  /* Ensure mobile menu stays legible */
+
   .nav-links li a.nav-link {
     font-size: 0.95rem;
     padding: 10px 15px;
@@ -433,7 +433,7 @@ a:hover {
   }
 }
 
-/* --- Hero Section Styling (retained from last update) --- */
+
 .hero-section {
   position: relative;
   min-height: calc(100vh - 120px);
@@ -516,7 +516,7 @@ a:hover {
 }
 
 
-/* --- Button Styling (retained from previous improvements) --- */
+
 .button {
   display: inline-block;
   padding: 12px 25px;
@@ -554,12 +554,12 @@ a:hover {
   font-size: 1.2rem;
 }
 
-.button--small { /* This won't be used directly in the hero now, but keep for other sections */
+.button--small {
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
 }
 
-/* Wobble Animation for Button (retained) */
+
 .button--wobble {
   animation: wobble 2s ease-in-out infinite;
   animation-delay: 1s;
@@ -574,17 +574,17 @@ a:hover {
   75% { transform: rotate(0deg) scale(1); }
 }
 
-/* Grow Animation for Button (retained and applied to new button) */
+
 .button--grow {
   transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 .button--grow:hover {
-  transform: scale(1.05); /* Grow slightly on hover */
-  box-shadow: 0 8px 20px rgba(255, 106, 61, 0.4); /* Glow effect matching primary color */
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 106, 61, 0.4);
 }
 
 
-/* --- Hero Section Styling (Now with Two Buttons) --- */
+
 .hero-section {
   position: relative;
   min-height: calc(100vh - 120px);
@@ -610,13 +610,13 @@ a:hover {
 
 .hero-text-content {
   flex: 1;
-  max-width: 600px; /* Adjusted max width for text content */
+  max-width: 600px;
   text-align: left;
-  /* Removed flex properties specific to containing the Kiara card */
+
 }
 
-.main-text-area { /* This wrapper now contains all primary text and buttons */
-  /* No flex properties needed here, it's the content within the hero-text-content */
+.main-text-area {
+
 }
 
 .hero-text-content h1 {
@@ -640,11 +640,11 @@ a:hover {
   margin-bottom: var(--spacing-xl);
 }
 
-.hero-action-buttons { /* New flex container for the buttons */
+.hero-action-buttons {
   display: flex;
-  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-  gap: var(--spacing-md); /* Space between buttons */
-  margin-top: var(--spacing-xl); /* Add some space above buttons if needed */
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
 }
 
 .hero-book-showcase {
@@ -672,12 +672,11 @@ a:hover {
 }
 
 
-/* --- Removed Kiara Advert Card Specific Styles --- */
-/* All styles related to .kiara-inline-advert-card, .advert-card__image-wrapper,
-   .advert-card__content, .advert-card__title, .advert-card__description are removed. */
 
 
-/* --- Animations (ensure consistent delays) --- */
+
+
+
 .animate-fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -690,7 +689,7 @@ a:hover {
 .hero-book-showcase.animate-fade-in {
   animation-delay: 1s;
 }
-/* No more animation-delay for the Kiara card, as it's just a button within hero-text-content */
+
 
 
 @keyframes fadeInSlideUp {
@@ -705,21 +704,21 @@ a:hover {
 }
 
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 1024px) {
   .hero-content-wrapper {
-    flex-direction: column; /* Stack hero-text-content and hero-book-showcase */
+    flex-direction: column;
     gap: var(--spacing-xl);
   }
 
-  .hero-text-content { /* Now this whole text area is centered as it's the main flex item */
+  .hero-text-content {
     max-width: 700px;
     margin: 0 auto;
-    text-align: center; /* Center text within this section */
+    text-align: center;
   }
 
   .hero-action-buttons {
-    justify-content: center; /* Center buttons when stacked */
+    justify-content: center;
   }
 
   .hero-book-showcase {
@@ -759,7 +758,7 @@ a:hover {
     max-width: 300px;
   }
 
-  .hero-action-buttons .button { /* Smaller buttons on smaller screens */
+  .hero-action-buttons .button {
     padding: 0.7rem 1.5rem;
     font-size: 0.9rem;
   }
@@ -784,19 +783,19 @@ a:hover {
     max-width: 250px;
   }
   .hero-action-buttons {
-    flex-direction: column; /* Stack buttons vertically on very small screens */
-    align-items: center; /* Center stacked buttons */
+    flex-direction: column;
+    align-items: center;
   }
   .hero-action-buttons .button {
-    width: 100%; /* Make stacked buttons full width */
-    max-width: 250px; /* Or a max width */
+    width: 100%;
+    max-width: 250px;
   }
 }
-/* --- General Section Styling (reusable) --- */
+
 .content-section {
   padding: var(--padding-section);
-  background-color: var(--color-background); /* Using the main background color */
-  color: var(--color-text-light); /* Light text for dark background */
+  background-color: var(--color-background);
+  color: var(--color-text-light);
   font-family: var(--font-family-primary);
   line-height: var(--line-height-base);
   text-align: center;
@@ -808,10 +807,10 @@ a:hover {
   padding: 0 var(--spacing-md);
 }
 
-/* Section Title */
+
 .section-title {
   font-size: 2.8rem;
-  color: var(--color-secondary); /* Using secondary for section titles */
+  color: var(--color-secondary);
   margin-bottom: 2.5rem;
   position: relative;
   padding-bottom: 1rem;
@@ -825,29 +824,29 @@ a:hover {
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background-color: var(--color-primary); /* Primary color for title underline */
+  background-color: var(--color-primary);
   border-radius: 2px;
 }
 
-/* --- Introduction Section Specific Styling --- */
+
 .summary-content p {
   font-size: 1.15rem;
   margin-bottom: 1.5rem;
-  color: var(--color-text-light); /* Light text for summary paragraphs */
+  color: var(--color-text-light);
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .summary-content strong {
-  color: var(--color-primary); /* Primary color to highlight key terms */
+  color: var(--color-primary);
 }
 
-/* Read More Button */
+
 .read-more-button {
   display: inline-block;
-  background-color: var(--color-primary); /* Primary color for Read More button */
-  color: var(--color-accent); /* White text */
+  background-color: var(--color-primary);
+  color: var(--color-accent);
   padding: 0.8rem 1.8rem;
   border-radius: 5px;
   text-decoration: none;
@@ -858,26 +857,26 @@ a:hover {
 }
 
 .read-more-button:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 85%, black); /* Slightly darker on hover */
+  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
   transform: translateY(-2px);
 }
 
-/* --- Full Introduction Text (Hidden by Default) --- */
+
 .full-content-hidden {
   display: none;
   text-align: left;
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px dashed var(--color-text-muted); /* Muted color for dashed border */
+  border-top: 1px dashed var(--color-text-muted);
 }
 
 .full-content-hidden p {
   font-size: var(--font-size-base);
   margin-bottom: 1.2rem;
-  color: var(--color-text-muted); /* Muted text for full content to distinguish */
+  color: var(--color-text-muted);
 }
 
-/* --- Animation Utilities --- */
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -894,7 +893,7 @@ a:hover {
 }
 
 .delay-1 {
-  animation-delay: 0.5s; /* Adjusted delays slightly for hero cards */
+  animation-delay: 0.5s;
 }
 
 .delay-2 {
@@ -908,7 +907,7 @@ a:hover {
   animation-delay: 0.2s;
 }
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 768px) {
   .hero-titles h1 {
     font-size: 2.8rem;
@@ -956,7 +955,7 @@ a:hover {
   }
 }
 
-/* --- Call to Action Button --- */
+
 .cta-button {
   display: inline-block;
   padding: 15px 35px;
@@ -971,7 +970,7 @@ a:hover {
 }
 
 .cta-button:hover {
-  background-color: #e65a2d; /* Darker shade of primary */
+  background-color: #e65a2d;
   transform: translateY(-3px);
   color: var(--color-accent);
 }
@@ -982,94 +981,94 @@ a:hover {
 }
 
 .cta-button.secondary:hover {
-  background-color: #e6b44a; /* Darker shade of secondary */
+  background-color: #e6b44a;
   color: var(--color-text-dark);
 }
 
 
-/* --- Free Gift Section Specific Styling --- */
+
 .accent-bg {
-  background-color: var(--color-background); /* Using form background for a slightly different shade */
-  color: var(--color-accent); /* White text for contrast */
-  padding: var(--spacing-xxl) 0; /* More vertical padding for prominence */
+  background-color: var(--color-background);
+  color: var(--color-accent);
+  padding: var(--spacing-xxl) 0;
 }
 
 .free-gift-container {
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xl); /* Space between image and content */
-  text-align: left; /* Align text within its column */
+  gap: var(--spacing-xl);
+  text-align: left;
 }
 
 .free-gift-image-wrapper {
-  flex: 1; /* Allows image to take available space */
-  width: 350px; /* Minimum width before wrapping */
-  height: 350px; /* Max size for the image container */
-  padding: var(--spacing-sm); /* Padding around the image */
-  background-color: var(--color-background); /* Darker background for the image to stand out */
-  border-radius: 50%; /* Circular container */
-  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1), /* Subtle outer ring */
-  0 0 0 20px rgba(255, 255, 255, 0.05), /* Even subtler outer ring */
-  0 15px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+  flex: 1;
+  width: 350px;
+  height: 350px;
+  padding: var(--spacing-sm);
+  background-color: var(--color-background);
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1),
+  0 0 0 20px rgba(255, 255, 255, 0.05),
+  0 15px 30px rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Ensures image stays within circle */
+  overflow: hidden;
 }
 
 .spinning-wheel {
   width: 100%;
   height: auto;
-  border-radius: 50%; /* Keep image itself circular */
-  animation: spin 20s linear infinite; /* Spinning animation */
-  filter: drop-shadow(0 0 15px var(--color-secondary)); /* Glowing effect */
+  border-radius: 50%;
+  animation: spin 20s linear infinite;
+  filter: drop-shadow(0 0 15px var(--color-secondary));
 }
 
 .free-gift-content {
-  flex: 2; /* Allows content to take more space */
-  max-width: 600px; /* Limit content width for readability */
-  text-align: center; /* Center content within its column on smaller screens */
+  flex: 2;
+  max-width: 600px;
+  text-align: center;
 }
 
 .free-gift-content .section-title {
-  font-size: 3.5rem; /* Larger title for this prominent section */
+  font-size: 3.5rem;
   margin-bottom: 2rem;
-  color: var(--color-primary); /* Primary color for section title */
+  color: var(--color-primary);
 }
 
 .free-gift-content .section-title::after {
-  background-color: var(--color-secondary); /* Secondary color for underline */
+  background-color: var(--color-secondary);
 }
 
 .free-gift-content p {
-  font-size: 1.25rem; /* Larger, more inviting text */
+  font-size: 1.25rem;
   line-height: 1.8;
   margin-bottom: 2.5rem;
-  color: var(--color-text-light); /* Off-white text */
-  max-width: 700px; /* Max width for paragraphs */
+  color: var(--color-text-light);
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .free-gift-content strong {
-  color: var(--color-secondary); /* Highlighted text in secondary color */
+  color: var(--color-secondary);
 }
 
-/* Button enhancements (assuming these are shared button styles) */
+
 .button--large {
-  padding: 1rem 3rem; /* Larger padding for a more prominent CTA */
+  padding: 1rem 3rem;
   font-size: 1.2rem;
 }
 
-/* --- Animations --- */
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Ensure these base animations exist from previous code */
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -1100,22 +1099,22 @@ a:hover {
   animation-delay: 0.7s;
 }
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 900px) {
   .free-gift-container {
-    flex-direction: column; /* Stack image and content vertically */
+    flex-direction: column;
     text-align: center;
     gap: var(--spacing-xl);
   }
 
   .free-gift-image-wrapper {
-    max-width: 280px; /* Slightly smaller on medium screens */
+    max-width: 280px;
     padding: var(--spacing-sm);
   }
 
   .free-gift-content {
-    flex: auto; /* Reset flex-grow */
-    max-width: 100%; /* Use full width */
+    flex: auto;
+    max-width: 100%;
   }
 
   .free-gift-content .section-title {
@@ -1139,7 +1138,7 @@ a:hover {
 
   .free-gift-image-wrapper {
     min-width: 200px;
-    max-width: 250px; /* Even smaller on small screens */
+    max-width: 250px;
     padding: var(--spacing-xs);
   }
 
@@ -1158,42 +1157,42 @@ a:hover {
   }
 }
 #about-author {
-  background-color: var(--color-background); /* Ensure consistent dark background */
-  padding: var(--spacing-xxl) 0; /* More padding for emphasis */
+  background-color: var(--color-background);
+  padding: var(--spacing-xxl) 0;
 }
 
 .author-container {
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xl); /* Space between image and text */
-  text-align: left; /* Default text alignment */
+  gap: var(--spacing-xl);
+  text-align: left;
 }
 
 .author-image-wrapper {
   flex: 1;
-  min-width: 280px; /* Minimum width before wrapping */
-  max-width: 350px; /* Max size for the image container */
+  min-width: 280px;
+  max-width: 350px;
   position: relative;
   padding: var(--spacing-sm);
-  background-color: var(--color-form-bg); /* Card background for the image wrapper */
+  background-color: var(--color-form-bg);
   border-radius: var(--border-radius-md);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  text-align: center; /* Center image within its wrapper */
+  text-align: center;
 }
 
 .author-profile-img {
   width: 100%;
   height: auto;
-  border-radius: var(--border-radius-sm); /* Slightly rounded corners for the image */
-  display: block; /* Remove extra space below image */
+  border-radius: var(--border-radius-sm);
+  display: block;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }
 
 .author-image-wrapper:hover .author-profile-img {
-  transform: scale(1.03); /* Subtle zoom on hover */
+  transform: scale(1.03);
 }
 
 .author-social-links {
@@ -1210,29 +1209,29 @@ a:hover {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: var(--color-primary); /* Primary color for social icons */
-  color: var(--color-accent); /* White icon */
+  background-color: var(--color-primary);
+  color: var(--color-accent);
   font-size: 1.2rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .social-icon:hover {
-  background-color: var(--color-secondary); /* Secondary color on hover */
+  background-color: var(--color-secondary);
   transform: translateY(-3px);
 }
 
 .author-text {
-  flex: 2; /* Allows text to take more space */
-  max-width: 650px; /* Limit text width for readability */
-  padding-left: var(--spacing-lg); /* Space from the image */
-  text-align: center; /* Center text within its column on smaller screens */
+  flex: 2;
+  max-width: 650px;
+  padding-left: var(--spacing-lg);
+  text-align: center;
 }
 
 .author-text .section-title {
-  font-size: 3.2rem; /* Larger title for prominence */
+  font-size: 3.2rem;
   margin-bottom: 2rem;
-  text-align: center; /* Center align title */
+  text-align: center;
 }
 
 .author-text .section-title::after {
@@ -1244,18 +1243,18 @@ a:hover {
   font-size: 1.15rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
-  color: var(--color-text-light); /* Off-white text */
+  color: var(--color-text-light);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  text-align: left; /* Align paragraphs left within text block */
+  text-align: left;
 }
 
 .author-text p strong {
-  color: var(--color-secondary); /* Highlight key terms with secondary color */
+  color: var(--color-secondary);
 }
 
-/* --- Animation Utilities (ensure these are consistent across your CSS) --- */
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -1286,23 +1285,23 @@ a:hover {
   animation-delay: 0.7s;
 }
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 900px) {
   .author-container {
-    flex-direction: column; /* Stack image and text vertically */
-    text-align: center; /* Center overall content */
+    flex-direction: column;
+    text-align: center;
     gap: var(--spacing-xl);
   }
 
   .author-image-wrapper {
-    min-width: unset; /* Remove min-width to allow more flexibility */
-    max-width: 300px; /* Adjust max width for mobile */
+    min-width: unset;
+    max-width: 300px;
     margin-bottom: var(--spacing-lg);
   }
 
   .author-text {
-    padding-left: 0; /* Remove left padding when stacked */
-    max-width: 100%; /* Use full width */
+    padding-left: 0;
+    max-width: 100%;
   }
 
   .author-text .section-title {
@@ -1311,7 +1310,7 @@ a:hover {
 
   .author-text p {
     font-size: 1.05rem;
-    text-align: center; /* Center align paragraphs on smaller screens */
+    text-align: center;
   }
 }
 
@@ -1321,7 +1320,7 @@ a:hover {
   }
 
   .author-image-wrapper {
-    max-width: 250px; /* Smaller image on very small screens */
+    max-width: 250px;
   }
 
   .author-text .section-title {
@@ -1339,7 +1338,7 @@ a:hover {
   }
 }
 
-/* --- Animations --- */
+
 .animate-in {
   opacity: 0;
   transform: translateY(20px);
@@ -1368,7 +1367,7 @@ a:hover {
   }
 }
 
-/* --- Responsiveness --- */
+
 @media (max-width: 768px) {
   body {
     font-size: 16px;
@@ -1395,57 +1394,57 @@ a:hover {
     margin-bottom: 20px;
   }
 }
-/* --- Leave Review Section Specific Styling --- */
+
 .form-bg-section {
-  background-color: var(--color-background); /* Use the slightly lighter dark blue */
-  padding: var(--spacing-xl) 0; /* Generous padding */
+  background-color: var(--color-background);
+  padding: var(--spacing-xl) 0;
 }
 
 .review-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-xl); /* Space between title and content blocks */
+  gap: var(--spacing-xl);
 }
 
 .review-container .section-title {
-  font-size: 3.2rem; /* Make the main title larger */
-  margin-bottom: var(--spacing-md); /* Adjust margin */
-  color: var(--color-secondary); /* Keep primary for underline */
+  font-size: 3.2rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-secondary);
 }
 
 .review-container .section-title::after {
-  background-color: var(--color-primary); /* Primary for underline */
+  background-color: var(--color-primary);
 }
 
 .lead-paragraph {
-  font-size: 1.3rem; /* Larger font for the introductory thank you */
-  color: var(--color-text-light); /* Off-white text */
-  margin-bottom: var(--spacing-xl); /* More space below lead paragraph */
+  font-size: 1.3rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xl);
   max-width: 800px;
   line-height: 1.8;
 }
 
 .review-call-to-action {
-  background-color: var(--color-background); /* Deeper blue background for the review prompt */
+  background-color: var(--color-background);
   border-radius: var(--border-radius-md);
   padding: var(--spacing-xl);
   max-width: 900px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle light border */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
 }
 
 .review-call-to-action h3 {
   font-size: 2.2rem;
-  color: var(--color-primary); /* Primary color for the "favor" heading */
+  color: var(--color-primary);
   margin-bottom: var(--spacing-md);
 }
 
 .review-call-to-action p {
   font-size: 1.15rem;
   line-height: 1.7;
-  color: var(--color-text-light); /* Off-white text */
+  color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
   max-width: 700px;
   margin-left: auto;
@@ -1453,10 +1452,10 @@ a:hover {
 }
 
 .review-call-to-action p strong {
-  color: var(--color-secondary); /* Highlighted text in secondary color */
+  color: var(--color-secondary);
 }
 
-/* --- Button Enhancements --- */
+
 .button--primary {
   background-color: var(--color-primary);
   color: var(--color-accent);
@@ -1472,10 +1471,10 @@ a:hover {
   font-size: 1.2rem;
 }
 
-/* Wobble Animation for Button */
+
 .button--wobble {
   animation: wobble 2s ease-in-out infinite;
-  /* Delay the start of the wobble slightly so it's not immediate */
+
   animation-delay: 1s;
 }
 
@@ -1486,11 +1485,11 @@ a:hover {
   45% { transform: rotate(-2deg) scale(1.02); }
   60% { transform: rotate(2deg) scale(1.02); }
   75% { transform: rotate(0deg) scale(1); }
-  /* End at 75% to give a pause before repeating */
+
 }
 
 
-/* --- Animation Utilities (ensure these are consistent across your CSS) --- */
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -1521,7 +1520,7 @@ a:hover {
   animation-delay: 0.7s;
 }
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 768px) {
   .form-bg-section {
     padding: var(--spacing-xl) 0;
@@ -1572,12 +1571,12 @@ a:hover {
   }
 }
 footer {
-  background-color: var(--color-background); /* Deep blue background */
-  color: var(--color-text-light); /* Off-white text */
-  padding: var(--spacing-lg) 0 var(--spacing-sm) 0; /* Reduced top/bottom padding for compactness */
-  font-size: 0.85rem; /* Slightly smaller base font size for overall compactness */
+  background-color: var(--color-background);
+  color: var(--color-text-light);
+  padding: var(--spacing-lg) 0 var(--spacing-sm) 0;
+  font-size: 0.85rem;
   text-align: center;
-  border-top: 1px solid var(--color-form-bg); /* Subtle border matching card background */
+  border-top: 1px solid var(--color-form-bg);
 }
 
 .footer-content {
@@ -1585,27 +1584,27 @@ footer {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-sm); /* Reduced gap between flex items */
+  gap: var(--spacing-sm);
   max-width: var(--max-width-container);
   margin: 0 auto;
-  padding: 0 var(--spacing-sm); /* Horizontal padding */
+  padding: 0 var(--spacing-sm);
 }
 
 .footer-logo img {
-  max-width: 100px; /* Slightly reduced logo size */
+  max-width: 100px;
   height: auto;
   display: block;
-  /* Stylish Logo Effects */
-  border-radius: var(--border-radius-sm); /* Softly rounded corners */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), /* Soft shadow */
-  0 0 0 3px rgba(255, 255, 255, 0.05); /* Subtle border glow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4),
+  0 0 0 3px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .footer-logo img:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6),
-  0 0 0 5px var(--color-primary); /* More prominent glow with primary color */
+  0 0 0 5px var(--color-primary);
 }
 
 .footer-nav ul {
@@ -1615,7 +1614,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--spacing-md); /* Reduced space between nav items */
+  gap: var(--spacing-md);
 }
 
 .footer-nav a {
@@ -1633,7 +1632,7 @@ footer {
 
 .footer-social {
   display: flex;
-  gap: var(--spacing-sm); /* Reduced space between social icons */
+  gap: var(--spacing-sm);
   justify-content: center;
 }
 
@@ -1641,12 +1640,12 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 38px; /* Slightly smaller icon size */
+  width: 38px;
   height: 38px;
   border-radius: 50%;
   background-color: var(--color-form-bg);
   color: var(--color-text-light);
-  font-size: 1rem; /* Adjusted font size for icon */
+  font-size: 1rem;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -1656,18 +1655,18 @@ footer {
   color: var(--color-background);
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3),
-  0 0 0 3px rgba(255, 200, 87, 0.2); /* Subtle secondary glow */
+  0 0 0 3px rgba(255, 200, 87, 0.2);
 }
 
 .footer-bottom {
   flex-basis: 100%;
-  margin-top: var(--spacing-md); /* Reduced top margin */
-  padding-top: var(--spacing-sm); /* Reduced top padding */
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .footer-bottom p {
-  margin: 0.3rem 0; /* Tighter margins for copyright/credit lines */
+  margin: 0.3rem 0;
   color: var(--color-text-muted);
 }
 
@@ -1676,71 +1675,71 @@ footer {
 }
 
 
-/* --- Responsive Adjustments --- */
+
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
     text-align: center;
-    gap: var(--spacing-sm); /* Ensure elements are still close when stacked */
+    gap: var(--spacing-sm);
   }
 
   .footer-logo {
-    margin-bottom: var(--spacing-sm); /* Reduced margin */
+    margin-bottom: var(--spacing-sm);
   }
 
   .footer-nav {
-    margin-bottom: var(--spacing-sm); /* Reduced margin */
+    margin-bottom: var(--spacing-sm);
   }
 
   .footer-nav ul {
     flex-direction: column;
-    gap: var(--spacing-xs); /* Very close gap for stacked nav items */
+    gap: var(--spacing-xs);
   }
 
   .footer-social {
-    margin-bottom: var(--spacing-md); /* Keep a decent margin before bottom text */
+    margin-bottom: var(--spacing-md);
   }
 
   .footer-bottom {
-    margin-top: var(--spacing-sm); /* Further reduced margin for stacked */
-    padding-top: var(--spacing-xs); /* Further reduced padding */
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-xs);
   }
 }
 
 @media (max-width: 480px) {
   .footer-nav ul {
-    font-size: 0.8rem; /* Even smaller nav font on tiny screens */
+    font-size: 0.8rem;
   }
 
   .footer-social a {
     width: 35px;
     height: 35px;
-    font-size: 0.9rem; /* Smaller icons on tiny screens */
+    font-size: 0.9rem;
   }
 
   footer {
-    font-size: 0.8rem; /* Smallest base font for footer */
+    font-size: 0.8rem;
   }
 }
-/* --- New Contact Form Section Styling --- */
+
 .contact-form-container {
-  background-color: var(--color-background); /* Use a distinct background for the form section */
-  padding: var(--spacing-xxl) var(--spacing-md); /* Generous internal padding */
-  border-radius: var(--border-radius-md); /* Rounded corners for the container */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); /* Prominent shadow */
-  margin-top: var(--spacing-xl); /* Ensure separation from preceding content */
-  margin-bottom: var(--spacing-xl); /* Ensure separation from footer */
-  max-width: 800px; /* Limit form width for readability */
+  background-color: var(--color-background);
+  padding: var(--spacing-xxl) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  max-width: 800px;
 }
 
 .contact-form-container .section-title {
   font-size: 3.2rem;
-  color: var(--color-primary); /* Primary color for form title */
+  color: var(--color-primary);
   margin-bottom: var(--spacing-md);
 }
 
 .contact-form-container .section-title::after {
-  background-color: var(--color-secondary); /* Secondary color for underline */
+  background-color: var(--color-secondary);
 }
 
 .section-description {
@@ -1755,15 +1754,15 @@ footer {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md); /* Space between form groups */
-  align-items: center; /* Center form elements */
+  gap: var(--spacing-md);
+  align-items: center;
   width: 100%;
 }
 
 .form-group {
   width: 100%;
-  max-width: 600px; /* Max width for individual form fields */
-  text-align: left; /* Align labels left */
+  max-width: 600px;
+  text-align: left;
 }
 
 .form-group label {
@@ -1771,7 +1770,7 @@ footer {
   margin-bottom: 8px;
   font-size: 1rem;
   font-weight: bold;
-  color: var(--color-secondary); /* Highlight labels with secondary color */
+  color: var(--color-secondary);
 }
 
 .form-group input[type="text"],
@@ -1779,10 +1778,10 @@ footer {
 .form-group textarea {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid var(--color-background); /* Darker border */
+  border: 1px solid var(--color-background);
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-input-bg); /* Light background for inputs */
-  color: var(--color-text-dark); /* Dark text for inputs */
+  background-color: var(--color-input-bg);
+  color: var(--color-text-dark);
   font-size: 1rem;
   font-family: 'Lora', serif;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -1791,29 +1790,29 @@ footer {
 .form-group input[type="text"]::placeholder,
 .form-group input[type="email"]::placeholder,
 .form-group textarea::placeholder {
-  color: var(--color-text-muted); /* Muted placeholder text */
+  color: var(--color-text-muted);
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--color-primary); /* Primary color on focus */
-  box-shadow: 0 0 0 3px rgba(255, 106, 61, 0.3); /* Soft primary glow on focus */
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 106, 61, 0.3);
 }
 
 .form-group textarea {
-  resize: vertical; /* Allow vertical resizing */
-  min-height: 120px; /* Minimum height for textarea */
+  resize: vertical;
+  min-height: 120px;
 }
 
 .contact-form button[type="submit"] {
   margin-top: var(--spacing-md);
-  width: auto; /* Allow button to size naturally */
+  width: auto;
 }
 
 
-/* --- Animations (retained) --- */
+
 .animate-fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -1827,7 +1826,7 @@ footer {
   animation-delay: 1s;
 }
 
-/* Ensure the base animation is defined */
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -1840,7 +1839,7 @@ footer {
 }
 
 
-/* --- Responsive Adjustments (retained and adjusted) --- */
+
 @media (max-width: 1024px) {
   .header-top-bar-content {
     justify-content: center;
@@ -1888,7 +1887,7 @@ footer {
     font-size: 0.8rem;
   }
   .top-utility-link {
-    font-size: 0.85rem; /* Smaller phone number text */
+    font-size: 0.85rem;
   }
 
   .hero-section {
@@ -1935,8 +1934,8 @@ footer {
     font-size: 0.9rem;
   }
   .contact-form button[type="submit"] {
-    width: 100%; /* Make button full width on mobile */
-    max-width: 280px; /* Limit max width */
+    width: 100%;
+    max-width: 280px;
   }
 }
 

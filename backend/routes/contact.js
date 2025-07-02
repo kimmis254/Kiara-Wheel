@@ -3,12 +3,10 @@ const router = express.Router();
 const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
 
-// POST route to handle contact form submission
 router.post('/', async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   try {
-    // 1. Save message to MongoDB
     const newContact = new Contact({
       name,
       email,
@@ -17,19 +15,18 @@ router.post('/', async (req, res) => {
     });
     await newContact.save();
 
-    // 2. Send email notification
-    // Create a Nodemailer transporter using your Gmail SMTP settings
+
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // Use 'gmail' for Gmail, or specify host/port for others
+      service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Your email address from .env
-        pass: process.env.EMAIL_PASS  // Your app password from .env
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
     const mailOptions = {
-      from: `"${name}" <${email}>`, // Sender's name and email
-      to: process.env.EMAIL_USER, // Your email address to receive notifications
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_USER,
       subject: `New Contact Form Message: ${subject || 'No Subject'}`,
       html: `
         <p>You have a new message from your website contact form:</p>
@@ -52,7 +49,6 @@ router.post('/', async (req, res) => {
   } catch (error) {
     console.error('Error handling contact form submission:', error);
     if (error.name === 'ValidationError') {
-      // Mongoose validation error
       return res.status(400).json({ message: error.message });
     }
     res.status(500).json({ message: 'Server error. Please try again later.' });

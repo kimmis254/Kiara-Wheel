@@ -94,7 +94,7 @@
       <span data-star="4">&#9734;</span>
       <span data-star="5">&#9734;</span>
     </div>
-    <textarea id="reviewMessage" rows="4" placeholder="Leave your thoughts..."></textarea>
+    <label for="reviewMessage"></label><textarea id="reviewMessage" rows="4" placeholder="Leave your thoughts..."></textarea>
     <div class="review-buttons">
       <button id="submitReview">Submit Review</button>
       <button id="cancelReview" class="cancel-btn">Cancel</button>
@@ -141,7 +141,6 @@
       Charity: 'CHARITY INITIATIVES'
     };
 
-    // Sort categories (except Bliss) by total score descending
     const sortedCategories = Object.keys(categories)
       .filter(c => c !== 'Bliss')
       .sort((a, b) => {
@@ -169,7 +168,7 @@
       const divider = '━'.repeat(70);
 
       if (cat === 'Bliss' && acts.length === 0) {
-        return ''; // skip Bliss entirely if empty
+        return '';
       }
 
       const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
@@ -337,7 +336,6 @@
         const centerX = left + width / 2;
         const centerY = top + height / 2;
 
-        // Use cutout to estimate the inner hole radius
         const outerRadius = Math.min(width, height) / 2;
         const cutoutPct = parseFloat(chart.config._config.data.datasets[0].cutout || '30') / 100;
         const innerRadius = outerRadius * cutoutPct;
@@ -358,7 +356,6 @@
         ctx.fill();
         ctx.restore();
 
-        // Center Text
         ctx.save();
         ctx.font = 'bold 38px Inter, sans-serif';
         ctx.fillStyle = '#34D399';
@@ -422,7 +419,6 @@
       plugins: [ChartDataLabels, centerBlissPlugin]
     });
 
-    // save for debugging or future use
     window.kiaraCategoryScores = categoryScores;
   }
 
@@ -435,69 +431,57 @@
     const reviewMessageInput = document.getElementById('reviewMessage'); // Renamed for clarity
     const emailDisplay = document.getElementById('userEmailDisplay');
 
-    // Set the email display
     emailDisplay.textContent = `Sending feedback as: ${email}`;
 
-    // Show the modal and overlay
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
 
-    let rating = 0; // Initialize rating
+    let rating = 0;
 
-    // Reset selected stars when opening the modal
     stars.forEach(s => s.classList.remove('selected'));
-    reviewMessageInput.value = ''; // Clear message when opening
-    submitBtn.textContent = 'Submit Review'; // Reset button text
-    submitBtn.disabled = false; // Enable button
+    reviewMessageInput.value = '';
+    submitBtn.textContent = 'Submit Review';
+    submitBtn.disabled = false;
 
-    // Star Rating Click Handler
     stars.forEach(star => {
       star.onclick = () => {
         rating = parseInt(star.dataset.star);
-        stars.forEach(s => s.classList.remove('selected')); // Remove from all first
+        stars.forEach(s => s.classList.remove('selected'));
         for (let i = 1; i <= rating; i++) {
-          // Add 'selected' class to stars up to the chosen rating
           document.querySelector(`#starRating [data-star="${i}"]`).classList.add('selected');
         }
       };
     });
 
-    // Function to close and reset the modal
     const closeReviewModal = () => {
       modal.classList.add('hidden');
       overlay.classList.add('hidden');
-      reviewMessageInput.value = ''; // Clear review message
+      reviewMessageInput.value = '';
       rating = 0; // Reset rating
-      stars.forEach(s => s.classList.remove('selected')); // Remove selected class from stars
-      // Ensure button is reset to original state if modal is closed via cancel/overlay click
+      stars.forEach(s => s.classList.remove('selected'));
       submitBtn.textContent = 'Submit Review';
       submitBtn.disabled = false;
     };
 
-    // Submit Button Click Handler (Async for network request)
-    submitBtn.onclick = async () => { // Made the function async
+    submitBtn.onclick = async () => {
       if (rating === 0) {
         alert('Please select a star rating before submitting.');
         return;
       }
 
       const message = reviewMessageInput.value.trim();
-      const userEmail = email; // Use the email passed into the function
-
       const reviewData = {
-        userEmail: userEmail,
+        userEmail: email,
         rating: rating,
         message: message
       };
 
-      // Provide immediate feedback and disable button
       const originalButtonText = submitBtn.textContent;
       submitBtn.textContent = 'Submitting...';
       submitBtn.disabled = true;
 
       try {
-        // Send the review data to your Node.js backend
-        // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
+
         const response = await fetch(`${API_BASE_URL}/api/review`, {
           method: 'POST',
           headers: {
@@ -506,27 +490,23 @@
           body: JSON.stringify(reviewData),
         });
 
-        const result = await response.json(); // Parse the JSON response
+        const result = await response.json();
 
-        if (response.ok) { // Check if the response status is 2xx (success)
+        if (response.ok) {
           alert('Thank you for your valuable feedback!');
-          closeReviewModal(); // Close modal on success
+          closeReviewModal();
         } else {
-          // Handle errors from the backend
           alert(`Failed to submit review: ${result.message || 'Unknown error occurred.'}`);
         }
       } catch (error) {
-        // Handle network errors or other unexpected issues
         console.error('Error submitting review:', error);
         alert('An error occurred while submitting your review. Please try again later.');
       } finally {
-        // Always revert button state
         submitBtn.textContent = originalButtonText;
         submitBtn.disabled = false;
       }
     };
 
-    // Cancel Button and Overlay Click Handlers
     cancelBtn.onclick = closeReviewModal;
     overlay.onclick = closeReviewModal;
   }
@@ -550,8 +530,7 @@
 
     const hasBliss = resultData.categories?.Bliss?.length > 0;
     if (hasBliss) {
-      // Ensure the font used on canvas also supports emojis for the image
-      // Canvas's font support is OS-dependent, but Inter might work on some systems
+
       tempCtx.font = 'bold 32px Inter, "NotoColorEmoji-Regular"'; // Add Noto Color Emoji as fallback
       tempCtx.fillStyle = '#34D399';
       tempCtx.textAlign = 'center';
@@ -562,20 +541,16 @@
     const chartImage = tempCanvas.toDataURL('image/png');
     const doc = new jspdf.jsPDF('p', 'mm', 'a4');
 
-// --- Global Default Font Setup ---
-// It's good practice to set a default font. Assuming 'helvetica' is your main text font.
-    doc.setFont('helvetica', 'normal'); // Set a default font family and style
-    doc.setTextColor('#444'); // Default text color
 
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor('#444');
 
-// Title Page
     doc.setFontSize(26);
     doc.setTextColor('#0B0F4B');
     doc.setFont('helvetica', 'bold'); // Still bold for title
     doc.text("Your Kiara Wheel Results", 105, 30, null, null, 'center');
 
 
-// Intro Text with Emojis
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor('#444');
@@ -585,15 +560,11 @@ What you love, What you do well, What the world will pay for and What the world 
 
     const introLines = doc.splitTextToSize(introText, 180);
 
-// For text with emojis, temporarily switch to the emoji font
-// The splitTextToSize function uses the current font settings, so we apply NotoEmoji
-// for the entire intro text that contains emojis.
-    doc.setFont('NotoColorEmoji-Regular', 'normal'); // Use NotoEmoji for intro text
-    doc.setFontSize(12); // Keep the size for intro text
+    doc.setFont('NotoColorEmoji-Regular', 'normal');
+    doc.setFontSize(12);
     doc.text(introLines, 15, 40);
 
-// Switch back to helvetica for other elements that don't need emojis, or if this
-// font choice looks better for non-emoji text.
+
     doc.setFont('helvetica', 'normal');
 
 
@@ -610,19 +581,17 @@ What you love, What you do well, What the world will pay for and What the world 
     for (const acts of Object.values(categories)) {
       for (const a of acts) {
         if (typeof a.outcomeScore !== 'number') {
-          a.outcomeScore = [a.love, a.well, a.pay + a.world] // Corrected: pay + world in one go
+          a.outcomeScore = [a.love, a.well, a.pay + a.world]
             .filter(val => val >= 5)
             .reduce((sum, val) => sum + val, 0);
         }
       }
     }
 
-// Sort activities in each category by outcomeScore
     for (const [cat, acts] of Object.entries(categories)) {
       categories[cat] = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
     }
 
-// --- Updated Category Order Logic ---
     const allCategories = [];
 
     if (categories.Bliss?.length > 0) {
@@ -639,11 +608,11 @@ What you love, What you do well, What the world will pay for and What the world 
         })
     );
     const labelMapClean = {
-      Bliss: 'BLISS', // EMOJI ADDED
-      Career: 'MY CAREER OPPORTUNITIES', // EMOJI ADDED
-      Passion: 'WHAT I AM PASSIONATE ABOUT', // EMOJI ADDED
-      Volunteer: 'VOLUNTEERING OPTIONS', // EMOJI ADDED
-      Charity: 'CHARITY OPTIONS' // EMOJI ADDED
+      Bliss: 'BLISS',
+      Career: 'MY CAREER OPPORTUNITIES',
+      Passion: 'WHAT I AM PASSIONATE ABOUT',
+      Volunteer: 'VOLUNTEERING OPTIONS',
+      Charity: 'CHARITY OPTIONS'
     };
 
     let y = 20;
@@ -660,8 +629,7 @@ What you love, What you do well, What the world will pay for and What the world 
 
       doc.setFillColor(11, 15, 75);
       doc.setTextColor('#ffffff');
-      // For the category labels, use the emoji font
-      doc.setFont('NotoColorEmoji-Regular', 'bold'); // Use NotoEmoji for category label
+      doc.setFont('NotoColorEmoji-Regular', 'bold');
       doc.setFontSize(13);
       doc.rect(10, y, 190, 10, 'F');
       doc.text(`${label} (${acts.length} ${activityWord})`, 14, y + 7);
@@ -672,7 +640,6 @@ What you love, What you do well, What the world will pay for and What the world 
         const selected = [];
         const circleIds = [];
 
-        // EMOJIS ADDED TO SELECTED ARRAY STRINGS
         if (a.love >= 5) {
           selected.push('What you love');
           circleIds.push(1);
@@ -700,8 +667,8 @@ What you love, What you do well, What the world will pay for and What the world 
         const scoreLine = `- Score ${a.outcomeScore} out of 40, ${percent}%`;
         const intersectLine = `- ${circleIds.length} intersecting circles (${intersect})`;
 
-        doc.setFont('NotoColorEmoji-Regular', 'normal'); // Use NotoEmoji for activity details
-        doc.setFontSize(10); // Keep font size for details
+        doc.setFont('NotoColorEmoji-Regular', 'normal');
+        doc.setFontSize(10);
 
         const lines = [
           ...doc.splitTextToSize(`${title}`, 180),
@@ -709,7 +676,7 @@ What you love, What you do well, What the world will pay for and What the world 
           ...doc.splitTextToSize(details1Line, 180),
           ...(details2Line ? doc.splitTextToSize(details2Line, 180) : []),
           scoreLine,
-          intersectLine // This line specifically now has emojis
+          intersectLine
         ];
 
         const boxHeight = lines.length * 6 + 6;
@@ -722,7 +689,7 @@ What you love, What you do well, What the world will pay for and What the world 
         doc.setFillColor(248, 248, 248);
         doc.roundedRect(12, y, 185, boxHeight, 2, 2, 'S');
 
-        doc.setTextColor('#000'); // Black text for activity details
+        doc.setTextColor('#000');
         for (let j = 0; j < lines.length; j++) {
           doc.text(lines[j], 16, y + 10 + j * 6);
         }
@@ -734,16 +701,15 @@ What you love, What you do well, What the world will pay for and What the world 
     doc.save('kiara-wheel-results.pdf');
 
     async function uploadKiaraWheelImage(base64Image) {
-      const CLOUDINARY_CLOUD_NAME = 'dljc3haxx'; // REPLACE THIS
-      const CLOUDINARY_UPLOAD_PRESET = 'kiara_wheel_upload'; // REPLACE THIS (e.g., 'kiara_wheel_upload')
+      const CLOUDINARY_CLOUD_NAME = 'dljc3haxx';
+      const CLOUDINARY_UPLOAD_PRESET = 'kiara_wheel_upload';
 
-      // Cloudinary's upload URL format
       const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
       const formData = new FormData();
-      formData.append('file', base64Image); // The base64 string
+      formData.append('file', base64Image);
       formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-      formData.append('folder', 'kiara_wheels'); // Optional: specify a folder in Cloudinary
+      formData.append('folder', 'kiara_wheels');
 
       try {
         const response = await fetch(uploadUrl, {
@@ -757,22 +723,19 @@ What you love, What you do well, What the world will pay for and What the world 
         }
 
         const data = await response.json();
-        return data.secure_url; // This is the public URL of the uploaded image
+        return data.secure_url;
       } catch (error) {
         console.error('❌ Error uploading Kiara Wheel image to Cloudinary:', error);
         alert('Failed to upload Kiara Wheel image. It might not appear in the email, but the PDF will have it.');
-        return null; // Return null if upload fails
+        return null;
       }
     }
-    // EMAIL SENDING
-    const image = tempCanvas.toDataURL('image/jpeg', 0.5); // Your base64 image string
+    const image = tempCanvas.toDataURL('image/jpeg', 0.5);
 
-    // *** NEW: Upload image to Cloudinary before sending email ***
-    const kiaraWheelUrl = await uploadKiaraWheelImage(image); // Call the new upload function
+    const kiaraWheelUrl = await uploadKiaraWheelImage(image);
 
     const activitySummary = buildActivitySummaryHTML(categories, totalScoreAll);
 
-    // Construct payload for EmailJS
     let payload = {
       to_email: userEmail,
       user_name: userName,
@@ -787,21 +750,20 @@ What you love, What you do well, What the world will pay for and What the world 
       payload.message += "\n\nP.S. The Kiara Wheel image could not be embedded directly. Please check the attached PDF for your full results!";
     }
 
-    // Admin copy payload
     const adminPayload = {
-      ...payload, // Spread the modified payload (including kiara_wheel_url if present)
-      to_email: 'kathanzuwayne2@gmail.com', // Your admin email
+      ...payload,
+      to_email: 'kathanzuwayne2@gmail.com',
       user_name: `ADMIN COPY for ${userName}`,
-      user_email: userEmail // Original user's email for admin reference
+      user_email: userEmail
     };
 
     try {
       await emailjs.send('service_8s4413i', 'template_qtxo6zf', payload);
       await emailjs.send('service_8s4413i', 'template_admin_copy', adminPayload);
 
-      doc.save('kiara-wheel-results.pdf'); // Save the PDF locally
+      doc.save('kiara-wheel-results.pdf');
       alert('✅ Wheel downloaded and emailed successfully!');
-      showReviewModal(userEmail); // 🔥 Trigger review only after success
+      showReviewModal(userEmail);
 
     } catch (err) {
       console.error('❌ EmailJS send error:', err);

@@ -4,14 +4,14 @@ const contactSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true // Remove whitespace from both ends
+    trim: true
   },
   email: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true, // Store emails in lowercase
-    match: [/.+@.+\..+/, 'Please enter a valid email address'] // Basic email regex validation
+    lowercase: true,
+    match: [/.+@.+\..+/, 'Please enter a valid email address']
   },
   subject: {
     type: String,

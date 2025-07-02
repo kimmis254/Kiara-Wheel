@@ -1,23 +1,23 @@
-/* ========== ROOT VARIABLES ========== */
-:root {
-  /* Colors */
-  --color-primary: #FF6A3D;         /* Orange/Coral - Main accent */
-  --color-secondary: #FFC857;       /* Yellow/Gold - Highlight, headings */
-  --color-accent: #ffffff;         /* White - General text, CTA text */
-  --color-background: #0B0F4B;     /* Deep Blue - Main background */
-  --color-text-light: #f0f0f0;      /* Off-white for paragraphs */
-  --color-text-muted: #aaa;        /* Light Gray - For utility links */
-  --color-text-dark: #000000;
-  --color-form-bg: #101973;       /* Slightly lighter dark blue for the form card background */
-  --color-input-bg: #F5F5F5;/* Black - For social icon text (when background is light) */
 
-  /* Fonts */
+:root {
+
+  --color-primary: #FF6A3D;
+  --color-secondary: #FFC857;
+  --color-accent: #ffffff;
+  --color-background: #0B0F4B;
+  --color-text-light: #f0f0f0;
+  --color-text-muted: #aaa;
+  --color-text-dark: #000000;
+  --color-form-bg: #101973;
+  --color-input-bg: #F5F5F5;
+
+
   --font-family-base: 'Inter', sans-serif;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Spacing */
+
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -25,13 +25,13 @@
   --spacing-xl: 64px;
   --spacing-xxl: 70px;
 
-  /* Border Radii */
+
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 10px;
   --border-radius-full: 50%;
 
-  /* Transitions */
+
   --transition-speed-fast: 0.2s;
   --transition-speed-normal: 0.3s;
   --transition-speed-slow: 0.5s;
@@ -43,7 +43,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* ========== BASE ========== */
+
 body {
   margin: 0;
   font-family: var(--font-family-base);
@@ -74,17 +74,17 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(2.2rem, 5vw, 3.5rem); /* Slightly smaller H1 */
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
   margin-bottom: var(--spacing-md);
 }
 
 p {
   color: var(--color-secondary);
-  font-size: 0.55rem; /* Slightly smaller paragraph font */
+  font-size: 0.55rem;
   max-width: 50ch;
 }
 
-/* ========== ANIMATIONS ========== */
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -109,19 +109,19 @@ p {
 .fade-in {
   animation: fadeInScaleUp 1s var(--transition-ease) forwards;
 }
-@keyframes fadeInSlideUp { /* Refined fadeIn for hero text */
+@keyframes fadeInSlideUp {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glowPulse { /* For the spin-image glow */
+@keyframes glowPulse {
   0% { box-shadow: 0 0 10px rgba(255, 200, 87, 0.4), 0 0 20px rgba(255, 106, 61, 0.2); }
   50% { box-shadow: 0 0 25px rgba(255, 200, 87, 0.8), 0 0 40px rgba(255, 106, 61, 0.4); }
   100% { box-shadow: 0 0 10px rgba(255, 200, 87, 0.4), 0 0 20px rgba(255, 106, 61, 0.2); }
 }
 
 
-/* ========== NAVBAR ========== */
+
 .navbar {
   display: flex;
   flex-wrap: wrap;
@@ -142,8 +142,8 @@ p {
 }
 
 .logo-circle {
-  width: 100px; /* Reduced logo circle size */
-  height: 100px; /* Reduced logo circle size */
+  width: 100px;
+  height: 100px;
   background: radial-gradient(circle, rgba(255, 200, 87, 0.2) 0%, rgba(255, 200, 87, 0) 70%);
   border-radius: var(--border-radius-full);
   overflow: hidden;
@@ -164,18 +164,18 @@ p {
   animation: spin 25s linear infinite reverse;
 }
 
-/* ========== NAV LINKS ========== */
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md); /* Reduced gap slightly */
+  gap: var(--spacing-md);
   flex-wrap: wrap;
 }
 
 .nav-links a {
   color: var(--color-accent);
   font-weight: var(--font-weight-semibold);
-  font-size: 1rem; /* Slightly smaller nav links */
+  font-size: 1rem;
   position: relative;
   transition: color var(--transition-speed-normal) var(--transition-ease);
 }
@@ -229,11 +229,11 @@ p {
   border-radius: var(--border-radius-md);
 }
 
-/* ========== UTILITY NAV ========== */
+
 .utility-nav {
   display: flex;
   gap: var(--spacing-md);
-  font-size: 0.8rem; /* Slightly smaller utility nav font */
+  font-size: 0.8rem;
 }
 .utility-nav a {
   color: var(--color-text-muted);
@@ -256,25 +256,25 @@ p {
   opacity: 1;
 }
 
-/* ========== CONTACT / SOCIAL ICONS ========== */
+
 .right-contact {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  font-size: 0.8rem; /* Slightly smaller contact/social text */
+  font-size: 0.8rem;
   color: var(--color-text-light);
 }
 
 .social-icon {
-  width: 36px; /* Slightly smaller social icons */
-  height: 36px; /* Slightly smaller social icons */
+  width: 36px;
+  height: 36px;
   background: var(--color-primary);
   color: var(--color-accent);
   border-radius: var(--border-radius-full);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem; /* Adjusted icon font size */
+  font-size: 1.2rem;
   box-shadow: 0 3px 10px rgba(255, 106, 61, 0.4);
   transition: background var(--transition-speed-normal) var(--transition-ease),
   transform var(--transition-speed-normal) var(--transition-ease),
@@ -289,10 +289,10 @@ p {
   outline: none;
 }
 
-/* ========== MENU TOGGLE & RESPONSIVE NAVIGATION ========== */
+
 .menu-toggle {
   display: none;
-  font-size: 2rem; /* Slightly smaller toggle icon */
+  font-size: 2rem;
   cursor: pointer;
   color: var(--color-secondary);
   transition: color var(--transition-speed-normal) var(--transition-ease),
@@ -338,7 +338,7 @@ p {
     left: 0;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    opacity: 0; /* Start fully transparent */
+    opacity: 0;
     pointer-events: none;
   }
 
@@ -354,7 +354,7 @@ p {
     width: 90%;
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: 0.95rem; /* Smaller font for mobile nav links */
+    font-size: 0.95rem;
   }
   .nav-links a:last-child {
     border-bottom: none;
@@ -369,7 +369,7 @@ p {
   }
 
   .navbar .logo-circle {
-    width: 80px; /* Even smaller logo for mobile */
+    width: 80px;
     height: 80px;
   }
   .navbar .logo-circle img {
@@ -377,7 +377,7 @@ p {
     max-height: 85%;
   }
 }
-/* ========== HERO SECTION ========== */
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -400,58 +400,58 @@ p {
   }
 }
 
-.spin-image-container { /* This is now the flex container for its children */
+.spin-image-container {
   display: flex;
-  flex-wrap: wrap; /* Allows wheels to wrap to the next line on smaller screens */
-  justify-content: center; /* Centers the wheels horizontally within the container */
-  align-items: center; /* Aligns them vertically if they have different heights */
-  gap: var(--spacing-lg); /* Provides consistent space between the wheels */
-  /* Adds space above the set of wheels */
-  /* Adds space below the set of wheels */
-  max-width: 1200px; /* Limits the overall width of the wheel section on very large screens */
-  /* Centers the container itself */
-  /* Centers the container itself */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+
+
+  max-width: 1200px;
+
+
   margin: var(--spacing-xl) auto;
 
-  /* Keep original positioning for hero-bg-pattern, but move z-index to the pattern itself */
-  position: relative; /* Keep relative for absolute positioning of hero-bg-pattern */
+
+  position: relative;
   perspective: 1000px;
-  /* Remove z-index: 1; from here as it might interfere with hero-bg-pattern */
+
 }
 
 .hero-bg-pattern {
-  position: absolute; /* Keeps it positioned relative to .spin-image-container */
+  position: absolute;
   width: 140%;
   height: 140%;
   opacity: 0.08;
   top: -20%;
   left: -20%;
-  z-index: 0; /* Ensure it's behind the images */
+  z-index: 0;
   animation: spin 60s linear infinite reverse;
   will-change: transform;
 }
 
 .spin-image {
-  /* Default size for spin images */
-  width: 250px; /* Reduced default size to allow more to fit horizontally */
+
+  width: 250px;
   height: 250px;
-  /* Using RGB variables for background and box-shadow consistency */
+
   background: radial-gradient(circle, rgba(var(--color-secondary-rgb), 0.1) 0%, rgba(var(--color-secondary-rgb), 0) 70%);
   border-radius: var(--border-radius-full);
-  display: flex; /* Keep flex for centering spin-icon */
+  display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border: 3px solid var(--color-secondary);
   box-shadow: 0 0 30px rgba(var(--color-secondary-rgb), 0.8),
   0 0 60px rgba(var(--color-primary-rgb), 0.4);
-  position: relative; /* Essential for its own z-index if needed, or if containing absolutely positioned elements */
-  z-index: 1; /* Ensure spin images are above the hero-bg-pattern */
+  position: relative;
+  z-index: 1;
   animation: glowPulse 4s infinite ease-in-out;
   transform: rotateY(15deg) rotateX(5deg);
   transition: transform 0.5s var(--transition-ease);
-  flex-shrink: 0; /* Prevents the images from shrinking excessively */
-  flex-grow: 0; /* Prevents the images from growing */
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .spin-image:hover {
@@ -467,17 +467,17 @@ p {
 }
 
 .spin-image.large-spin {
-  width: 350px; /* Larger size for this variant */
+  width: 350px;
   height: 350px;
   animation: spin 30s linear infinite;
 }
 
 .spin-image.no-spin {
   animation: none !important;
-  transform: rotateY(0deg) rotateX(0deg); /* Reset transform for static display */
+  transform: rotateY(0deg) rotateX(0deg);
 }
 
-/* --- Responsive Adjustments --- */
+
 
 @media (max-width: 1023px) {
   .spin-image-container {
@@ -496,8 +496,8 @@ p {
 @media (max-width: 768px) {
   .spin-image-container {
     gap: var(--spacing-sm);
-    /* For smaller screens, if you want them to stack if there are too many or they are too big */
-    /* flex-direction: column; */ /* Uncomment this if you want them to stack vertically on small screens */
+
+
   }
   .spin-image {
     width: 150px;
@@ -511,7 +511,7 @@ p {
 
 @media (max-width: 480px) {
   .spin-image-container {
-    gap: var(--spacing-xs); /* Even smaller gap for very tight spaces */
+    gap: var(--spacing-xs);
   }
   .spin-image {
     width: 120px;
@@ -526,7 +526,7 @@ p {
   max-width: 550px;
   z-index: 2;
   animation: fadeInSlideUp 1s var(--transition-ease) forwards;
-  font-size: 0.55rem; /* Smaller hero text content font */
+  font-size: 0.55rem;
   text-align: center;
 }
 
@@ -537,7 +537,7 @@ p {
 }
 
 .hero-heading {
-  font-size: clamp(2.2rem, 4.5vw, 3.2rem); /* Smaller heading font */
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
   color: var(--color-accent);
   margin-bottom: var(--spacing-sm);
   line-height: 1.15;
@@ -546,7 +546,7 @@ p {
 
 .hero-subtext {
   color: var(--color-secondary);
-  font-size: 1rem; /* Smaller subtext font */
+  font-size: 1rem;
   line-height: 1.6;
   margin-bottom: var(--spacing-md);
 }
@@ -568,9 +568,9 @@ p {
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: 10px 20px; /* Slightly reduced padding for smaller feel */
+  padding: 10px 20px;
   font-weight: var(--font-weight-semibold);
-  font-size: 0.85rem; /* Smaller button font */
+  font-size: 0.85rem;
   border-radius: var(--border-radius-md);
   transition: all var(--transition-speed-normal) var(--transition-ease);
   text-align: center;
@@ -620,91 +620,91 @@ p {
 
 .btn-icon {
   margin-left: var(--spacing-xs);
-  font-size: 1rem; /* Slightly smaller icon to match text changes */
+  font-size: 1rem;
 }
 
 
-/* ========== Social Proof ========== */
+
 .social-proof {
-  margin-top: var(--spacing-sm); /* Use variable for consistency */
-  font-size: 0.8rem; /* Slightly larger for readability */
-  color: var(--color-text-muted); /* Use consistent muted text color */
-  text-align: left; /* Generally social proof looks good centered if below hero */
-  opacity: 0.9; /* Subtle transparency */
-  animation: fadeIn 1.2s ease-out forwards; /* Add subtle fadeIn animation */
+  margin-top: var(--spacing-sm);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: left;
+  opacity: 0.9;
+  animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* ========== HOW IT WORKS SECTION ========== */
+
 .how-section {
-  padding: var(--spacing-xxl) 5%; /* Use larger spacing for overall section */
+  padding: var(--spacing-xxl) 5%;
   padding-top: calc(var(--spacing-xxl) * 1.5);
-  background: var(--color-background); /* Explicitly set background, even if it's the main background */
+  background: var(--color-background);
   text-align: center;
-  position: relative; /* For potential future background elements */
-  overflow: hidden; /* Ensure nothing spills out */
+  position: relative;
+  overflow: hidden;
 }
 
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 2.5rem); /* More powerful, responsive title */
-  color: var(--color-secondary); /* Use consistent gold color */
-  margin-bottom: var(--spacing-xl); /* Larger margin below title */
+  font-size: clamp(2rem, 4.5vw, 2.5rem);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xl);
   line-height: 1.2;
-  text-shadow: 0 0 15px rgba(255, 200, 87, 0.4); /* Stronger glow on title */
-  animation: fadeInSlideUp 1s var(--transition-ease) forwards; /* Use hero text animation for consistency */
+  text-shadow: 0 0 15px rgba(255, 200, 87, 0.4);
+  animation: fadeInSlideUp 1s var(--transition-ease) forwards;
 }
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: clamp(1.8rem, 6vw, 2.2rem); /* Adjusted font size for smaller screens */
+    font-size: clamp(1.8rem, 6vw, 2.2rem);
     margin-bottom: var(--spacing-lg);
   }
 }
 
 .steps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Min size slightly larger */
-  gap: var(--spacing-xl); /* Larger gap between steps */
-  padding: var(--spacing-md); /* Add some padding to the grid itself */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+  padding: var(--spacing-md);
 }
 
 .step {
-  background: rgba(11, 15, 75, 0.6); /* Semi-transparent background from your deep blue */
-  border-radius: var(--border-radius-md); /* Use consistent border radius */
-  padding: var(--spacing-lg); /* More internal padding */
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3), /* Deeper shadow for more lift */
-  0 0 20px rgba(255, 106, 61, 0.1); /* Very subtle primary color glow */
+  background: rgba(11, 15, 75, 0.6);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3),
+  0 0 20px rgba(255, 106, 61, 0.1);
   transition: transform var(--transition-speed-normal) var(--transition-ease),
   box-shadow var(--transition-speed-normal) var(--transition-ease),
-  background var(--transition-speed-normal) var(--transition-ease); /* Add background to transition */
-  animation: fadeInUp 1s ease forwards; /* Keep the fade-in animation */
-  will-change: transform, box-shadow; /* Optimize performance */
+  background var(--transition-speed-normal) var(--transition-ease);
+  animation: fadeInUp 1s ease forwards;
+  will-change: transform, box-shadow;
 }
 
 .step:hover {
-  transform: translateY(-15px) scale(1.03); /* More pronounced lift and slight scale */
-  background: rgba(11, 15, 75, 0.9); /* Opaque background on hover */
-  box-shadow: 0 15px 45px rgba(0,0,0,0.5), /* Even deeper shadow on hover */
-  0 0 30px rgba(255, 106, 61, 0.3); /* More visible primary color glow on hover */
+  transform: translateY(-15px) scale(1.03);
+  background: rgba(11, 15, 75, 0.9);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.5),
+  0 0 30px rgba(255, 106, 61, 0.3);
 }
 
 .step-icon {
-  font-size: 60px; /* Slightly larger icon */
-  margin-bottom: var(--spacing-md); /* Use consistent spacing */
-  padding: var(--spacing-md); /* Consistent padding */
+  font-size: 60px;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
   border-radius: var(--border-radius-full);
-  background: rgba(255, 255, 255, 0.05); /* Very light, transparent background for icon container */
+  background: rgba(255, 255, 255, 0.05);
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  position: relative; /* For the pseudo-element glow */
-  overflow: hidden; /* For potential background effects */
+  position: relative;
+  overflow: hidden;
 
-  /* Ensure pulseGlow is applied to the pseudo-element if we use it for a more controlled glow */
-  animation: pulseGlow 2s infinite alternate; /* Keep the pulse glow on the icon itself */
-  will-change: transform, box-shadow; /* Optimize performance */
+
+  animation: pulseGlow 2s infinite alternate;
+  will-change: transform, box-shadow;
 }
 
-/* Individual icon colors and glowing shadows */
+
 .glow-blue {
   box-shadow: 0 0 15px #36A2EB, inset 0 0 10px rgba(54, 162, 235, 0.5);
   color: #36A2EB;
@@ -718,44 +718,44 @@ p {
   color: #9b59b6;
 }
 .glow-orange {
-  box-shadow: 0 0 15px var(--color-primary), inset 0 0 10px rgba(255, 106, 61, 0.5); /* Use primary variable */
-  color: var(--color-primary); /* Use primary variable */
+  box-shadow: 0 0 15px var(--color-primary), inset 0 0 10px rgba(255, 106, 61, 0.5);
+  color: var(--color-primary);
 }
 
-/* Animation for the step card content itself, not just the card */
+
 .desc-card {
-  font-size: 0.95rem; /* Slightly larger for readability */
-  color: var(--color-text-light); /* Use consistent light text color */
+  font-size: 0.95rem;
+  color: var(--color-text-light);
   line-height: 1.6;
-  margin-top: var(--spacing-sm); /* Add space above text */
+  margin-top: var(--spacing-sm);
 }
 
-/* Animations (Ensure these are defined in your main animation block) */
-/* Re-using previous animations, ensure they are in your :root or a global animations section */
-/* @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } */
-/* @keyframes pulseGlow { 0% { transform: scale(1); box-shadow: inherit; } 100% { transform: scale(1.1); box-shadow: 0 0 25px currentColor; } } */
-/* Make sure pulseGlow explicitly scales the box-shadow for a proper glow pulse */
+
+
+
+
+
 @keyframes pulseGlow {
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); } /* Subtle pulse */
+  50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
-/* Add a specific glow animation if you want the box-shadow to pulse */
+
 @keyframes pulseShadow {
   0% { box-shadow: var(--initial-shadow); }
   50% { box-shadow: var(--pulsing-shadow); }
   100% { box-shadow: var(--initial-shadow); }
 }
 
-/* If you want icons to have a separate pulsing shadow effect */
-/* You would apply these as a custom property + animation */
+
+
 .step-icon.glow-blue { --initial-shadow: 0 0 15px #36A2EB; --pulsing-shadow: 0 0 25px #36A2EB; animation: pulseShadow 2s infinite alternate, pulseGlow 2s infinite alternate; }
 .step-icon.glow-green { --initial-shadow: 0 0 15px #28a745; --pulsing-shadow: 0 0 25px #28a745; animation: pulseShadow 2s infinite alternate, pulseGlow 2s infinite alternate; }
 .step-icon.glow-purple { --initial-shadow: 0 0 15px #9b59b6; --pulsing-shadow: 0 0 25px #9b59b6; animation: pulseShadow 2s infinite alternate, pulseGlow 2s infinite alternate; }
 .step-icon.glow-orange { --initial-shadow: 0 0 15px var(--color-primary); --pulsing-shadow: 0 0 25px var(--color-primary); animation: pulseShadow 2s infinite alternate, pulseGlow 2s infinite alternate; }
 
-/* ========== CAROUSEL SECTION (Further Improved & Smaller Container) ========== */
+
 .carousel-section {
   background: var(--color-background);
   padding: var(--spacing-xxl) 5%;
@@ -787,7 +787,7 @@ p {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.6),
   0 0 30px rgba(255, 200, 87, 0.3);
   border: 2px solid rgba(255, 200, 87, 0.4);
-  padding-bottom: 32.85%; /* For a 16:9 aspect ratio - adjust if your images are different */
+  padding-bottom: 32.85%;
   height: 0;
   transition: box-shadow 0.5s var(--transition-ease), border-color 0.5s var(--transition-ease);
 }
@@ -840,8 +840,8 @@ p {
   position: absolute;
   bottom: var(--spacing-lg);
   left: 50%;
-  transform: translateX(-50%) translateY(20px); /* Start slightly below and hidden */
-  opacity: 0; /* Hidden by default */
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
   background: rgba(0, 0, 0, 0.85);
   color: var(--color-accent);
   padding: var(--spacing-md) var(--spacing-lg);
@@ -854,14 +854,14 @@ p {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 106, 61, 0.2);
-  transition: opacity 0.5s var(--transition-ease), transform 0.5s var(--transition-ease); /* Apply transition to opacity and transform */
-  z-index: 5; /* Ensure caption is above other elements within the container */
+  transition: opacity 0.5s var(--transition-ease), transform 0.5s var(--transition-ease);
+  z-index: 5;
 }
 
-/* This is the new rule for showing the caption on carousel-container hover */
+
 .carousel-container:hover .carousel-caption {
-  opacity: 1; /* Make visible */
-  transform: translateX(-50%) translateY(0); /* Slide up to original position */
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 
@@ -963,10 +963,10 @@ p {
     bottom: var(--spacing-xs);
     padding: var(--spacing-sm);
     width: 95%;
-    transform: translateX(-50%) translateY(10px); /* Adjust initial position for mobile */
+    transform: translateX(-50%) translateY(10px);
   }
 
-  /* This is the new rule for showing the caption on carousel-container hover for mobile */
+
   .carousel-container:hover .carousel-caption {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
@@ -998,13 +998,13 @@ p {
   }
 }
 
-/* ========== EXPECT SECTION ========== */
+
 .expect-section {
   background: var(--color-background);
   padding: var(--spacing-xxl) 5%;
-  text-align: center; /* Still center text within the section */
+  text-align: center;
   position: relative;
-  overflow: hidden; /* Keep this to ensure nothing spills out */
+  overflow: hidden;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1015,27 +1015,27 @@ p {
 
 .expect-content {
   display: flex;
-  /* Default: ROW for desktop (slideshow next to text) */
+
   flex-direction: row;
-  /* Space out items, push text box to one side and slideshow to another */
-  justify-content: center; /* Adjust to space-around or space-between if you have more than two main items */
-  align-items: center; /* Vertically align items in the middle */
-  gap: var(--spacing-xxl); /* Gap between the slideshow and text box */
-  max-width: 1200px; /* Limit content width on very large screens */
-  margin: 0 auto; /* Center the content container itself */
+
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-xxl);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* --- Slideshow Container for 3D Effect --- */
+
 .slideshow-box {
   position: relative;
-  width: 400px; /* Base width for desktop carousel */
+  width: 400px;
   height: 0;
-  padding-bottom: 400px; /* Make it square for the circle images */
-  max-width: 45%; /* Allow it to shrink, occupy max 45% of parent */
-  flex-shrink: 0; /* Prevents it from shrinking too much */
-  flex-grow: 0; /* Prevents it from growing too much */
+  padding-bottom: 400px;
+  max-width: 45%;
+  flex-shrink: 0;
+  flex-grow: 0;
 
-  margin-top: var(--spacing-xl); /* Adjust margins for desktop layout */
+  margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
 
   overflow: visible;
@@ -1045,14 +1045,14 @@ p {
   perspective: 1200px;
   perspective-origin: center center;
 
-  --slideshow-base-width: 400px; /* Matches the new width property */
+  --slideshow-base-width: 400px;
   --slideshow-radius: calc(var(--slideshow-base-width) / 2);
   --rotate-angle: 45deg;
   --translate-z-val: calc(var(--slideshow-radius) * 1.8);
 }
 
 
-/* --- Slideshow Track for 3D Rotation --- */
+
 .slideshow-track {
   position: absolute;
   top: 0;
@@ -1064,14 +1064,14 @@ p {
   will-change: transform;
 }
 
-/* --- Individual Slide Panels --- */
+
 .slide-panel {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 70%; /* Size of each slide relative to slideshow-box */
+  width: 70%;
   height: 0;
-  padding-bottom: 70%; /* Make it square for a perfect circle wrapper */
+  padding-bottom: 70%;
   transform-style: preserve-3d;
   transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out, z-index 0.4s step-end;
   will-change: transform, opacity;
@@ -1082,7 +1082,7 @@ p {
   z-index: 1;
 }
 
-/* --- Wrapper for Circular Image --- */
+
 .slide-circle-wrapper {
   position: absolute;
   top: 0;
@@ -1105,7 +1105,7 @@ p {
   display: block;
 }
 
-/* --- States for 3D Carousel (managed by JS) --- */
+
 .slide-panel.active {
   transform: translate(-50%, -50%) rotateY(0deg) translateZ(var(--translate-z-val));
   opacity: 1;
@@ -1201,30 +1201,30 @@ p {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* --- Text Box and Button --- */
+
 .text-box {
   max-width: 550px;
-  text-align: left; /* Align text to the left when next to slideshow */
+  text-align: left;
   animation: fadeInSlideUp 1.2s var(--transition-ease) forwards;
   will-change: transform, opacity;
-  /* Allow text-box to grow/shrink based on content but not too much */
+
   flex-grow: 1;
   flex-shrink: 1;
-  min-width: 300px; /* Ensures it has a minimum width on desktop */
+  min-width: 300px;
 }
 
 .highlight-text {
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem); /* Ensure responsiveness for highlight text */
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
   margin-bottom: var(--spacing-sm);
 }
 
 .expect-heading {
-  font-size: clamp(2.5rem, 6vw, 3.5rem); /* Responsive heading size */
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
   margin-bottom: var(--spacing-md);
 }
 
 .expect-description {
-  font-size: clamp(1rem, 2vw, 1.1rem); /* Responsive description size */
+  font-size: clamp(1rem, 2vw, 1.1rem);
   margin-bottom: var(--spacing-lg);
   line-height: 1.6;
 }
@@ -1232,49 +1232,49 @@ p {
 .expect-btn {
   font-size: clamp(1rem, 2vw, 1.1rem);
   padding: 12px 28px;
-  /* Add button specific styles if not already defined */
+
 }
 
 
-/* --- Mobile Adjustments (Stacking) --- */
-@media (max-width: 1023px) { /* Breakpoint for stacking content */
+
+@media (max-width: 1023px) {
   .expect-content {
-    flex-direction: column; /* Stack slideshow and text vertically */
-    gap: var(--spacing-xl); /* Gap between stacked items */
-    text-align: center; /* Center align all content when stacked */
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    text-align: center;
   }
 
   .text-box {
-    text-align: center; /* Center text when stacked */
-    max-width: 600px; /* Adjust max-width for text-box when stacked */
+    text-align: center;
+    max-width: 600px;
   }
 
   .slideshow-box {
-    width: 90%; /* Make slideshow wider on mobile for better visibility */
-    padding-bottom: 90%; /* Keep it square */
-    /* Adjust base width for mobile perspective calculations */
-    --slideshow-base-width: 90vw; /* Use viewport width for better responsiveness */
+    width: 90%;
+    padding-bottom: 90%;
+
+    --slideshow-base-width: 90vw;
     --slideshow-radius: calc(var(--slideshow-base-width) / 2);
-    perspective: 800px; /* Adjust perspective for smaller screens */
-    --rotate-angle: 40deg; /* Slightly less rotation for compact view */
-    --translate-z-val: calc(var(--slideshow-radius) * 0.9); /* Closer to viewer */
+    perspective: 800px;
+    --rotate-angle: 40deg;
+    --translate-z-val: calc(var(--slideshow-radius) * 0.9);
   }
 
   .slide-nav-arrow.prev {
-    left: var(--spacing-md); /* Bring arrows closer to the box */
+    left: var(--spacing-md);
   }
   .slide-nav-arrow.next {
-    right: var(--spacing-md); /* Bring arrows closer to the box */
+    right: var(--spacing-md);
   }
 }
 
-@media (max-width: 768px) { /* Further adjustments for smaller tablets and phones */
+@media (max-width: 768px) {
   .expect-section {
     padding: var(--spacing-xl) 5%;
   }
 
   .slideshow-box {
-    width: 95%; /* Make it almost full width on smaller phones */
+    width: 95%;
     padding-bottom: 95%;
   }
 
@@ -1297,13 +1297,13 @@ p {
   }
 }
 
-@media (max-width: 480px) { /* Very small mobile screens */
+@media (max-width: 480px) {
   .expect-content {
-    gap: var(--spacing-lg); /* Slightly reduced gap */
+    gap: var(--spacing-lg);
   }
   .slideshow-box {
-    /* Use calc for consistent sizing relative to viewport */
-    width: calc(100% - var(--spacing-xl) * 2); /* Accounting for section padding */
+
+    width: calc(100% - var(--spacing-xl) * 2);
     padding-bottom: calc(100% - var(--spacing-xl) * 2);
     --slideshow-base-width: calc(100vw - var(--spacing-xl) * 2);
     --slideshow-radius: calc(var(--slideshow-base-width) / 2);
@@ -1315,7 +1315,7 @@ p {
   }
 }
 
-/* Original global styles for .expect-section, .highlight-text, .expect-heading, etc. remain the same */
+
 .highlight-text {
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   color: var(--color-primary);
@@ -1374,29 +1374,29 @@ p {
   border-radius: var(--border-radius-md);
 }
 
-/* Basic Animations */
+
 @keyframes fadeInSlideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== TESTIMONIAL SECTION - FURTHER IMPROVED ========== */
+
 .testimonial-section {
-  background: var(--color-background); /* Dark background for contrast */
+  background: var(--color-background);
   padding: var(--spacing-xxl) 5%;
   text-align: center;
-  color: var(--color-text-light); /* Light text on dark background */
-  position: relative; /* For potential absolute positioned elements */
-  overflow: hidden; /* Prevent overflow issues with animations */
+  color: var(--color-text-light);
+  position: relative;
+  overflow: hidden;
 
-  /* Optional: Add a subtle textured background */
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  isolation: isolate; /* Creates a new stacking context */
+  isolation: isolate;
 }
 
-/* Add a pseudo-element for a subtle overlay or background glow */
+
 .testimonial-section::before {
   content: '';
   position: absolute;
@@ -1404,22 +1404,22 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(255, 200, 87, 0.05) 0%, transparent 50%); /* Subtle central glow */
+  background: radial-gradient(circle at center, rgba(255, 200, 87, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
 
 
 .testimonial-title {
-  font-size: clamp(2rem, 4.5vw, 2.5rem);  /* Slightly larger, more impactful title */
+  font-size: clamp(2rem, 4.5vw, 2.5rem);
   color: var(--color-secondary);
   margin-bottom: var(--spacing-xl);
-  text-shadow: 0 0 20px rgba(255, 200, 87, 0.7), 0 0 40px rgba(255, 200, 87, 0.4); /* More pronounced glow */
+  text-shadow: 0 0 20px rgba(255, 200, 87, 0.7), 0 0 40px rgba(255, 200, 87, 0.4);
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
-  letter-spacing: 1px; /* Add subtle letter spacing */
-  position: relative; /* For potential underline/decorative elements */
-  z-index: 1; /* Ensure title is above pseudo-elements */
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
 }
 
 
@@ -1428,74 +1428,74 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--spacing-lg); /* Consistent gap */
-  margin-top: var(--spacing-lg); /* Add some space from title */
-  z-index: 1; /* Ensure grid is above section pseudo-elements */
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  z-index: 1;
   position: relative;
 }
 
 .testimonial-card {
-  background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(240,240,240,0.95)); /* Subtle gradient background */
+  background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(240,240,240,0.95));
   padding: var(--spacing-lg) var(--spacing-md);
   border-radius: var(--border-radius-lg);
-  box-shadow: 0 12px 35px rgba(0,0,0,0.2), 0 6px 15px rgba(0,0,0,0.1); /* Deeper shadow */
-  max-width: 330px; /* Slightly adjusted max-width */
-  flex: 1 1 290px; /* Slightly adjusted flex-basis */
-  transition: all var(--transition-speed-normal) var(--transition-ease); /* All properties for smoother animation */
+  box-shadow: 0 12px 35px rgba(0,0,0,0.2), 0 6px 15px rgba(0,0,0,0.1);
+  max-width: 330px;
+  flex: 1 1 290px;
+  transition: all var(--transition-speed-normal) var(--transition-ease);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(255, 200, 87, 0.3); /* Slightly stronger border */
-  position: relative; /* For avatar glow or quote effects */
-  overflow: hidden; /* Ensure anything within stays contained if doing more complex effects */
+  border: 1px solid rgba(255, 200, 87, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
 .testimonial-card:hover {
-  transform: translateY(-15px) scale(1.03); /* More pronounced lift and scale */
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.2); /* Even stronger shadow on hover */
-  border-color: var(--color-primary); /* Highlight border on hover */
-  background: linear-gradient(145deg, rgba(255,255,255,1), rgba(245,245,245,0.98)); /* Slightly brighter on hover */
+  transform: translateY(-15px) scale(1.03);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.2);
+  border-color: var(--color-primary);
+  background: linear-gradient(145deg, rgba(255,255,255,1), rgba(245,245,245,0.98));
 }
 
 .testimonial-avatar {
-  width: 100px; /* Larger avatar */
+  width: 100px;
   height: 100px;
   border-radius: var(--border-radius-full);
   object-fit: cover;
   margin-bottom: var(--spacing-md);
-  border: 4px solid var(--color-primary); /* Thicker primary border */
-  box-shadow: 0 0 0 5px rgba(255, 92, 29, 0.4), 0 0 20px rgba(255, 92, 29, 0.6); /* Pronounced glow */
+  border: 4px solid var(--color-primary);
+  box-shadow: 0 0 0 5px rgba(255, 92, 29, 0.4), 0 0 20px rgba(255, 92, 29, 0.6);
   transition: transform var(--transition-speed-normal) var(--transition-ease), box-shadow var(--transition-speed-normal) var(--transition-ease);
 }
 
 .testimonial-card:hover .testimonial-avatar {
-  transform: scale(1.05); /* Avatar scales slightly on card hover */
-  box-shadow: 0 0 0 5px var(--color-secondary), 0 0 25px var(--color-secondary); /* Glow changes color on hover */
+  transform: scale(1.05);
+  box-shadow: 0 0 0 5px var(--color-secondary), 0 0 25px var(--color-secondary);
 }
 
 
 blockquote {
-  font-size: clamp(1.05rem, 1.9vw, 1.2rem); /* Slightly larger quote text */
+  font-size: clamp(1.05rem, 1.9vw, 1.2rem);
   font-style: italic;
   color: var(--color-text-dark);
   margin: var(--spacing-md) 0 var(--spacing-lg);
   position: relative;
-  line-height: 1.7; /* Improved readability */
+  line-height: 1.7;
   padding: 0 var(--spacing-sm);
-  text-align: center; /* Ensure quote is centered */
+  text-align: center;
 }
 
 blockquote::before {
-  font-size: clamp(3rem, 5.5vw, 4.5rem); /* Larger, more dominant quote marks */
+  font-size: clamp(3rem, 5.5vw, 4.5rem);
   color: var(--color-primary);
   position: absolute;
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%) translateY(-30px); /* Adjust vertical and horizontal position */
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
   top: 0;
   font-weight: var(--font-weight-bold);
   line-height: 1;
   z-index: 0;
-  opacity: 0.2; /* Make them subtle background elements */
+  opacity: 0.2;
   pointer-events: none;
   transition: opacity 0.3s var(--transition-ease);
 }
@@ -1504,20 +1504,20 @@ blockquote::after {
   font-size: clamp(3rem, 5.5vw, 4.5rem);
   color: var(--color-primary);
   position: absolute;
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%) translateY(30px); /* Adjust vertical and horizontal position */
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
   bottom: 0;
   font-weight: var(--font-weight-bold);
   line-height: 1;
   z-index: 0;
-  opacity: 0.2; /* Make them subtle background elements */
+  opacity: 0.2;
   pointer-events: none;
   transition: opacity 0.3s var(--transition-ease);
 }
 
 .testimonial-card:hover blockquote::before,
 .testimonial-card:hover blockquote::after {
-  opacity: 0.4; /* Quote marks become slightly more visible on hover */
+  opacity: 0.4;
 }
 
 
@@ -1549,22 +1549,22 @@ blockquote::after {
   background: var(--color-primary);
   color: var(--color-accent);
   border: none;
-  padding: 15px 22px; /* Even larger buttons for better click target */
-  margin: 0 var(--spacing-md); /* More space between buttons */
+  padding: 15px 22px;
+  margin: 0 var(--spacing-md);
   border-radius: var(--border-radius-full);
-  font-size: 1.6rem; /* Larger icon size */
+  font-size: 1.6rem;
   cursor: pointer;
   transition: all var(--transition-speed-normal) var(--transition-ease);
-  box-shadow: 0 6px 20px rgba(255, 92, 29, 0.5), 0 2px 8px rgba(0,0,0,0.1); /* Deeper shadow */
+  box-shadow: 0 6px 20px rgba(255, 92, 29, 0.5), 0 2px 8px rgba(0,0,0,0.1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* For potential inner animations */
+  overflow: hidden;
   position: relative;
-  isolation: isolate; /* Ensures z-index and stacking context for pseudo-elements */
+  isolation: isolate;
 }
 
-/* Add subtle active/glow effect on button */
+
 .testimonial-navigation button::before {
   content: '';
   position: absolute;
@@ -1572,7 +1572,7 @@ blockquote::after {
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 255, 255, 0.2); /* White radial glow */
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.4s var(--transition-ease), height 0.4s var(--transition-ease);
@@ -1585,18 +1585,18 @@ blockquote::after {
 }
 
 .testimonial-navigation button:hover {
-  background: #ff7e58; /* Slightly lighter primary on hover */
-  transform: translateY(-5px) scale(1.08); /* More significant lift and scale */
-  box-shadow: 0 10px 30px rgba(255, 92, 29, 0.7), 0 4px 12px rgba(0,0,0,0.2); /* More intense shadow */
+  background: #ff7e58;
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 10px 30px rgba(255, 92, 29, 0.7), 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .testimonial-navigation button:active {
-  transform: translateY(0) scale(0.95); /* Stronger press down effect */
+  transform: translateY(0) scale(0.95);
   box-shadow: 0 2px 10px rgba(255, 92, 29, 0.3);
 }
 
 
-/* Media Queries */
+
 @media (max-width: 768px) {
   .testimonial-title {
     font-size: clamp(2rem, 6vw, 3rem);
@@ -1615,7 +1615,7 @@ blockquote::after {
     padding: var(--spacing-md) var(--spacing-sm);
     max-width: 90%;
     flex-basis: 100%;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08); /* Adjusted shadow for mobile */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08);
   }
   .testimonial-avatar {
     width: 80px;
@@ -1630,14 +1630,14 @@ blockquote::after {
   blockquote::before,
   blockquote::after {
     font-size: clamp(2.5rem, 8vw, 3rem);
-    transform: translateX(-50%) translateY(-20px); /* Adjust position for mobile */
+    transform: translateX(-50%) translateY(-20px);
     top: 0;
-    bottom: unset; /* Reset bottom */
+    bottom: unset;
   }
   blockquote::after {
-    transform: translateX(-50%) translateY(20px); /* Adjust position for mobile */
+    transform: translateX(-50%) translateY(20px);
     bottom: 0;
-    top: unset; /* Reset top */
+    top: unset;
   }
   .testimonial-rating {
     font-size: 1.1rem;
@@ -1669,55 +1669,55 @@ blockquote::after {
 }
 
 
-/* ====== Form Page - UPDATED ====== */
+
 .form-section {
-  background: var(--color-background); /* Using CSS variable for background */
-  color: var(--color-text-light); /* Using CSS variable for text color */
-  padding: var(--spacing-xxl) 5%; /* Generous responsive padding */
-  max-width: 1400px; /* Increased max-width for a more spacious layout on large screens */
-  margin: 0 auto; /* Centers the form section on the page */
+  background: var(--color-background);
+  color: var(--color-text-light);
+  padding: var(--spacing-xxl) 5%;
+  max-width: 1400px;
+  margin: 0 auto;
   text-align: center;
   position: relative;
-  overflow: hidden; /* Important for containing pseudo-elements or animations */
+  overflow: hidden;
 
 }
 
 
 .form-title {
-  font-size: clamp(2.8rem, 5.5vw, 3.8rem); /* Larger, responsive font size for impact */
+  font-size: clamp(2.8rem, 5.5vw, 3.8rem);
   margin-bottom: var(--spacing-sm);
-  color: var(--color-secondary); /* Using secondary brand color */
-  text-shadow: 0 0 25px rgba(255, 200, 87, 0.8), 0 0 10px rgba(255, 200, 87, 0.4); /* Enhanced glow effect */
+  color: var(--color-secondary);
+  text-shadow: 0 0 25px rgba(255, 200, 87, 0.8), 0 0 10px rgba(255, 200, 87, 0.4);
   font-weight: var(--font-weight-bold);
   line-height: 1.1;
   letter-spacing: 0.5px;
   position: relative;
-  z-index: 1; /* Ensures title is above any pseudo-elements */
+  z-index: 1;
 }
 
 .form-subtext {
-  color: var(--color-primary); /* Using primary brand color for emphasis */
-  font-size: clamp(1.1rem, 2vw, 1.4rem); /* Responsive font size */
-  margin-bottom: var(--spacing-xl); /* Increased spacing for better separation */
-  text-shadow: 0 0 8px rgba(255, 92, 29, 0.4); /* Subtle shadow */
+  color: var(--color-primary);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  margin-bottom: var(--spacing-xl);
+  text-shadow: 0 0 8px rgba(255, 92, 29, 0.4);
   line-height: 1.5;
   position: relative;
   z-index: 1;
-  /* --- NEW: For centering the block of text --- */
-  max-width: 750px; /* Constrains the width of the subtext block */
-  margin-left: auto; /* Centers the subtext block itself */
-  margin-right: auto; /* Centers the subtext block itself */
+
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
 
 }
 
 .kiara-form {
-  background: linear-gradient(160deg, var(--color-form-bg), #0E166A); /* Subtle gradient for depth */
-  border-radius: var(--border-radius-lg); /* Consistent border-radius */
-  padding: var(--spacing-lg); /* Generous padding inside the form */
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.15); /* Deeper, layered shadow */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
-  max-width: 900px; /* Limits form width for readability */
-  margin: 0 auto; /* Centers the form within its parent section */
+  background: linear-gradient(160deg, var(--color-form-bg), #0E166A);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
 }
@@ -1726,104 +1726,104 @@ blockquote::after {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--spacing-lg); /* Consistent gap between form groups */
-  margin-bottom: var(--spacing-lg); /* Consistent margin below rows */
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Aligns label/input to the left */
-  flex: 1 1 250px; /* Allows groups to grow/shrink, with a base of 250px */
-  min-width: 200px; /* Prevents inputs from becoming too narrow */
+  align-items: flex-start;
+  flex: 1 1 250px;
+  min-width: 200px;
 }
 
 .form-group label {
-  margin-bottom: var(--spacing-xs); /* Small margin below label */
-  color: var(--color-text-light); /* Light text for labels */
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-light);
   font-weight: var(--font-weight-semibold);
-  font-size: clamp(1rem, 1.6vw, 1.1rem); /* Responsive label font size */
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1); /* Subtle text shadow */
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
 }
 
 .form-group input,
 .form-group select {
-  padding: var(--spacing-sm) var(--spacing-md); /* Balanced padding inside inputs */
-  border: 1px solid var(--color-input-bg); /* Light border matching background */
-  border-radius: var(--border-radius-md); /* Consistent border-radius */
-  width: 100%; /* Ensures input takes full available width */
-  background-color: var(--color-input-bg); /* Light background for inputs */
-  font-size: clamp(1rem, 1.6vw, 1.1rem); /* Responsive input font size */
-  color: var(--color-text-dark); /* Dark text color for inputs */
-  transition: all var(--transition-speed-fast) var(--transition-ease); /* Smooth transitions for focus/hover */
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Subtle inset shadow for depth */
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-input-bg);
+  border-radius: var(--border-radius-md);
+  width: 100%;
+  background-color: var(--color-input-bg);
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  color: var(--color-text-dark);
+  transition: all var(--transition-speed-fast) var(--transition-ease);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  outline: none; /* Remove default browser outline */
-  border-color: var(--color-primary); /* Primary color border on focus */
-  box-shadow: 0 0 0 3px rgba(255, 92, 29, 0.3), inset 0 1px 3px rgba(0,0,0,0.15); /* Ring glow and deeper inset shadow */
-  background-color: var(--color-accent); /* Brighter background on focus */
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 92, 29, 0.3), inset 0 1px 3px rgba(0,0,0,0.15);
+  background-color: var(--color-accent);
 }
 
 .activity-label {
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-sm);
-  font-size: clamp(1.1rem, 1.8vw, 1.3rem); /* Responsive font size */
-  color: var(--color-secondary); /* Highlight color for activity label */
-  text-align: left; /* Ensures label aligns with the grid below */
-  width: 100%; /* Takes full width to control alignment */
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  color: var(--color-secondary);
+  text-align: left;
+  width: 100%;
 }
 
 .activity-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm); /* Consistent gap between rows */
-  width: 100%; /* Ensures the grid container takes full width */
+  gap: var(--spacing-sm);
+  width: 100%;
 }
 
 .rating-labels {
   display: grid;
-  /* First column for activity name, then 4 columns for ratings. minmax ensures minimum size. */
+
   grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
   gap: var(--spacing-sm);
   align-items: center;
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-dark); /* Dark text on light background */
-  background: var(--color-input-bg); /* Light background for the header row */
+  color: var(--color-text-dark);
+  background: var(--color-input-bg);
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--border-radius-md);
-  font-size: clamp(0.85rem, 1.5vw, 1rem); /* Responsive font size */
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .activity-row {
   display: grid;
-  grid-template-columns: 1fr repeat(4, minmax(30px, 1fr)); /* Matches header grid for alignment */
+  grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
   gap: var(--spacing-sm);
-  align-items: center; /* Vertically align content within the row */
-  margin-bottom: var(--spacing-xs); /* Small margin between activity rows */
-  padding: var(--spacing-xs) 0; /* Slight padding for visual breathing room */
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
 }
 
-.activity-row label { /* Style for the activity name label within the row */
+.activity-row label {
   font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-  color: var(--color-text-light); /* Light text for activity names */
+  color: var(--color-text-light);
   font-weight: var(--font-weight-regular);
   text-align: left;
-  padding-left: var(--spacing-md); /* Indent activity name for better visual structure */
+  padding-left: var(--spacing-md);
 }
 
-.activity-row input, /* Assuming this applies to numeric inputs for ratings */
+.activity-row input,
 .activity-row select {
-  padding: var(--spacing-xs); /* Smaller padding for concise inputs in the grid */
-  border-radius: var(--border-radius-sm); /* Smaller border-radius */
-  border: 1px solid var(--color-input-bg); /* Light border */
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-input-bg);
   font-size: 0.95rem;
-  background: var(--color-accent); /* White background for the inputs/selects */
-  color: var(--color-text-dark); /* Dark text for inputs */
+  background: var(--color-accent);
+  color: var(--color-text-dark);
   text-align: center;
   transition: all var(--transition-speed-fast) var(--transition-ease);
 }
@@ -1832,59 +1832,59 @@ blockquote::after {
 .activity-row select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(255, 92, 29, 0.2); /* Subtle glow on focus */
+  box-shadow: 0 0 0 2px rgba(255, 92, 29, 0.2);
 }
 
-/* Common button styling for shared properties */
+
 .form-button {
   padding: 12px 24px;
   border: none;
-  font-size: clamp(1rem, 1.8vw, 1.1rem); /* Responsive button text size */
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
   border-radius: var(--border-radius-md);
   cursor: pointer;
   transition: all var(--transition-speed-normal) var(--transition-ease);
   font-weight: var(--font-weight-semibold);
-  display: inline-flex; /* Allows for easy icon alignment */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none; /* Important for anchor tags used as buttons */
+  text-decoration: none;
 }
 
-/* Specific styling for #add-activity button */
+
 #add-activity {
-  background: var(--color-input-bg); /* Light background for 'Add' button */
-  color: var(--color-text-dark); /* Dark text */
-  margin-top: var(--spacing-lg); /* Space above the button */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
+  background: var(--color-input-bg);
+  color: var(--color-text-dark);
+  margin-top: var(--spacing-lg);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 #add-activity:hover {
-  background: #dcdcdc; /* Slightly darker on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
+  background: #dcdcdc;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Specific styling for #submit-form button */
+
 #submit-form {
-  background: var(--color-primary); /* Primary brand color for submit */
-  color: var(--color-accent); /* White text */
-  margin-top: var(--spacing-lg); /* Space above */
-  margin-left: var(--spacing-md); /* Space from adjacent buttons (like Add Activity) */
-  box-shadow: 0 6px 15px rgba(255, 92, 29, 0.5); /* Stronger glow shadow */
+  background: var(--color-primary);
+  color: var(--color-accent);
+  margin-top: var(--spacing-lg);
+  margin-left: var(--spacing-md);
+  box-shadow: 0 6px 15px rgba(255, 92, 29, 0.5);
 }
 
 #submit-form:hover {
-  background: #e65a2a; /* Slightly darker primary on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
-  box-shadow: 0 8px 20px rgba(255, 92, 29, 0.7); /* Even stronger shadow on hover */
+  background: #e65a2a;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 92, 29, 0.7);
 }
 
 #submit-form:active {
-  transform: translateY(0); /* "Press down" effect */
-  box-shadow: 0 2px 5px rgba(255, 92, 29, 0.2); /* Muted shadow on active */
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(255, 92, 29, 0.2);
 }
 
-/* Specific styling for .add-activity-btn (if used separately from #add-activity) */
+
 .add-activity-btn {
   display: inline-block;
   background-color: transparent;
@@ -1907,9 +1907,9 @@ blockquote::after {
   box-shadow: 0 3px 8px rgba(255, 92, 29, 0.4);
 }
 
-/* Specific styling for .submit-btn (if used separately from #submit-form) */
+
 .submit-btn {
-  padding: 14px 30px; /* Slightly larger padding for this variant */
+  padding: 14px 30px;
   background-color: var(--color-primary);
   color: var(--color-accent);
   font-weight: var(--font-weight-bold);
@@ -1925,7 +1925,7 @@ blockquote::after {
 }
 
 .submit-btn i {
-  margin-left: var(--spacing-sm); /* Adjusted margin for consistency */
+  margin-left: var(--spacing-sm);
 }
 
 .submit-btn:hover {
@@ -1939,10 +1939,10 @@ blockquote::after {
   box-shadow: 0 2px 5px rgba(255, 92, 29, 0.2);
 }
 
-/* Media Queries for Responsiveness */
+
 @media (max-width: 768px) {
   .form-section {
-    padding: var(--spacing-xl) 3%; /* Adjust padding for smaller screens */
+    padding: var(--spacing-xl) 3%;
   }
 
   .form-title {
@@ -1955,25 +1955,25 @@ blockquote::after {
   }
 
   .kiara-form {
-    padding: var(--spacing-md); /* Smaller padding for form on mobile */
+    padding: var(--spacing-md);
   }
 
   .form-row {
-    flex-direction: column; /* Stack form groups vertically */
-    gap: var(--spacing-md); /* Smaller gap when stacked */
+    flex-direction: column;
+    gap: var(--spacing-md);
     margin-bottom: var(--spacing-md);
   }
 
   .form-group {
-    flex: 1 1 100%; /* Take full width */
-    max-width: 100%; /* Ensure it doesn't exceed parent */
-    align-items: center; /* Center labels and inputs for a clean look on mobile */
+    flex: 1 1 100%;
+    max-width: 100%;
+    align-items: center;
   }
 
   .form-group label {
     font-size: clamp(0.9rem, 3vw, 1rem);
-    width: 100%; /* Ensure label takes full width for text-align control */
-    text-align: left; /* Keep labels left-aligned above inputs */
+    width: 100%;
+    text-align: left;
   }
 
   .form-group input,
@@ -1984,13 +1984,13 @@ blockquote::after {
 
   .activity-label {
     font-size: clamp(1rem, 3.5vw, 1.2rem);
-    text-align: center; /* Center activity label on mobile */
+    text-align: center;
   }
 
   .rating-labels,
   .activity-row {
-    grid-template-columns: 1fr repeat(4, minmax(20px, 1fr)); /* Adjust grid columns for smaller screens */
-    gap: var(--spacing-xs); /* Smaller gap for mobile grid */
+    grid-template-columns: 1fr repeat(4, minmax(20px, 1fr));
+    gap: var(--spacing-xs);
   }
   .rating-labels {
     font-size: 0.8rem;
@@ -1999,7 +1999,7 @@ blockquote::after {
 
   .activity-row label {
     font-size: 0.9rem;
-    padding-left: var(--spacing-xs); /* Less indent on mobile */
+    padding-left: var(--spacing-xs);
   }
 
   .activity-row input,
@@ -2008,7 +2008,7 @@ blockquote::after {
     padding: var(--spacing-xs);
   }
 
-  /* Adjust button sizes for mobile */
+
   .form-button, #add-activity, #submit-form, .add-activity-btn, .submit-btn {
     padding: 10px 20px;
     font-size: clamp(0.9rem, 3.5vw, 1rem);
@@ -2018,235 +2018,235 @@ blockquote::after {
 
 @media (max-width: 480px) {
   .form-section {
-    padding: var(--spacing-lg) 2%; /* Further reduce padding on very small screens */
+    padding: var(--spacing-lg) 2%;
   }
 
   .kiara-form {
-    padding: var(--spacing-sm); /* Minimal padding for the form container */
+    padding: var(--spacing-sm);
   }
 }
 
 
 
-/* --- Contact Container & Social Icons --- */
+
 .contact-container {
   display: flex;
-  align-items: center; /* Ensures vertical alignment */
-  gap: var(--spacing-sm); /* Consistent gap between social icons and contact text */
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .social {
-  background-color: var(--color-input-bg); /* Using a light background variable */
-  color: var(--color-text-dark); /* Dark text/icon color */
-  border-radius: var(--border-radius-full); /* Perfect circle */
+  background-color: var(--color-input-bg);
+  color: var(--color-text-dark);
+  border-radius: var(--border-radius-full);
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem; /* Larger icon size */
-  transition: all var(--transition-speed-fast) var(--transition-ease); /* Smooth transitions */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  font-size: 1.2rem;
+  transition: all var(--transition-speed-fast) var(--transition-ease);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .social:hover {
-  background-color: var(--color-primary); /* Brand color on hover */
-  color: var(--color-accent); /* White text/icon on hover */
-  transform: translateY(-3px) scale(1.05); /* Lift and slight enlarge */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Deeper shadow */
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .social:active {
-  transform: translateY(0) scale(0.98); /* Press down effect */
+  transform: translateY(0) scale(0.98);
 }
 
 .contact {
-  color: var(--color-primary); /* Consistent with navigation link color */
+  color: var(--color-primary);
   text-align: right;
-  font-size: clamp(0.9rem, 1.5vw, 1rem); /* Responsive font size */
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: var(--font-weight-semibold);
 }
 
 
-/* --- Main Content Area (General) --- */
+
 .main {
-  padding: var(--spacing-lg); /* Consistent padding */
+  padding: var(--spacing-lg);
   position: relative;
-  flex: 1; /* For flexbox layouts, allows it to grow */
-  /* Ensure parent of .main has display:flex and flex-direction:column for flex:1 to work */
+  flex: 1;
+
 }
 
 
-/* --- Activity/Rating Sections (from previous context, re-applying style guide) --- */
+
 .activity {
-  font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive font size for activity titles */
-  margin-bottom: var(--spacing-lg); /* Consistent margin */
-  color: var(--color-secondary); /* Highlight color */
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-secondary);
   font-weight: var(--font-weight-bold);
-  text-align: center; /* Assuming this is a section title */
+  text-align: center;
 }
 
 .row {
   display: flex;
   align-items: center;
-  margin-bottom: var(--spacing-lg); /* Consistent margin */
-  gap: var(--spacing-md); /* Gap between label and boxes */
+  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .label {
-  width: clamp(180px, 20vw, 250px); /* Responsive width for labels */
-  font-size: clamp(1rem, 1.8vw, 1.2rem); /* Responsive font size */
-  color: var(--color-text-dark); /* Assuming this is on a light background */
+  width: clamp(180px, 20vw, 250px);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: var(--color-text-dark);
   font-weight: var(--font-weight-semibold);
 }
 
 .boxes {
   display: flex;
-  gap: var(--spacing-sm); /* Consistent gap between boxes */
+  gap: var(--spacing-sm);
 }
 
 .box {
-  width: 28px; /* Slightly larger boxes for better clickability */
+  width: 28px;
   height: 28px;
-  background-color: var(--color-input-bg); /* Light background for unselected boxes */
-  border: 1px solid var(--color-text-dark); /* Subtle border for definition */
-  border-radius: var(--border-radius-sm); /* Slight rounded corners */
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-text-dark);
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
-  transition: all var(--transition-speed-fast) var(--transition-ease); /* Smooth transition */
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Subtle inset shadow */
+  transition: all var(--transition-speed-fast) var(--transition-ease);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .box:hover {
-  transform: scale(1.08); /* Slight enlargement on hover */
-  box-shadow: 0 0 0 2px var(--color-primary); /* Outline on hover */
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px var(--color-primary);
 }
 
 .box.active {
-  background-color: var(--color-primary); /* Primary color for active box */
-  border-color: var(--color-primary); /* Solid border */
-  box-shadow: 0 0 0 2px var(--color-primary), 0 0 10px rgba(255, 92, 29, 0.6); /* Glow for active */
-  transform: scale(1.05); /* Stays slightly enlarged when active */
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary), 0 0 10px rgba(255, 92, 29, 0.6);
+  transform: scale(1.05);
 }
 
 
-/* --- Next Activity Button/Indicator --- */
+
 .next-activity {
   position: absolute;
-  right: var(--spacing-lg); /* Consistent spacing from right */
+  right: var(--spacing-lg);
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
-  color: var(--color-accent); /* White text/icon */
-  font-size: clamp(0.9rem, 1.5vw, 1rem); /* Responsive font size */
+  color: var(--color-accent);
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: var(--font-weight-semibold);
 }
 
 .next-activity .circle {
-  width: 60px; /* Slightly larger circle */
+  width: 60px;
   height: 60px;
-  background-color: var(--color-primary); /* Primary brand color */
-  border-radius: var(--border-radius-full); /* Perfect circle */
-  font-size: 2.5rem; /* Larger icon/arrow inside circle */
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-full);
+  font-size: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto var(--spacing-xs); /* Center circle, small margin below */
-  box-shadow: 0 5px 15px rgba(255, 92, 29, 0.6); /* Strong glow shadow */
+  margin: 0 auto var(--spacing-xs);
+  box-shadow: 0 5px 15px rgba(255, 92, 29, 0.6);
   transition: all var(--transition-speed-normal) var(--transition-ease);
 }
 
 .next-activity .circle:hover {
-  background-color: #e65a2a; /* Darker primary on hover */
-  transform: scale(1.1); /* Enlarge circle on hover */
+  background-color: #e65a2a;
+  transform: scale(1.1);
   box-shadow: 0 8px 25px rgba(255, 92, 29, 0.8);
 }
 
 
-/* --- Call to Action Button --- */
+
 .cta-button {
   background-color: var(--color-primary);
-  color: var(--color-text-dark); /* Dark text on orange background */
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Responsive, larger font size */
-  padding: var(--spacing-md) var(--spacing-lg); /* Consistent padding */
+  color: var(--color-text-dark);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
-  border-radius: var(--border-radius-md); /* Consistent border-radius */
+  border-radius: var(--border-radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 360px; /* Slightly wider max-width */
+  max-width: 360px;
   width: 100%;
   cursor: pointer;
   font-weight: var(--font-weight-bold);
-  text-decoration: none; /* In case it's an anchor tag */
+  text-decoration: none;
   transition: all var(--transition-speed-normal) var(--transition-ease);
-  box-shadow: 0 6px 15px rgba(255, 92, 29, 0.5); /* Glow shadow */
+  box-shadow: 0 6px 15px rgba(255, 92, 29, 0.5);
 }
 
 .cta-button:hover {
-  background-color: #e65a2a; /* Darker primary on hover */
-  transform: translateY(-4px) scale(1.02); /* Lift and slight enlarge */
+  background-color: #e65a2a;
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 10px 25px rgba(255, 92, 29, 0.8);
 }
 
 .cta-button .arrow {
-  background-color: var(--color-text-dark); /* Dark background for arrow circle */
-  color: var(--color-accent); /* White arrow icon */
-  width: 36px; /* Slightly larger arrow circle */
+  background-color: var(--color-text-dark);
+  color: var(--color-accent);
+  width: 36px;
   height: 36px;
-  margin-left: var(--spacing-md); /* Consistent margin */
+  margin-left: var(--spacing-md);
   border-radius: var(--border-radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem; /* Larger arrow icon */
+  font-size: 1.4rem;
   transition: all var(--transition-speed-normal) var(--transition-ease);
 }
 
 .cta-button:hover .arrow {
-  background-color: var(--color-accent); /* White arrow background on hover */
-  color: var(--color-primary); /* Orange arrow on hover */
+  background-color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 
-/* --- Rating Help Row (from previous context) --- */
+
 .rating-help-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 equal columns */
-  gap: var(--spacing-sm); /* Consistent gap */
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-sm);
   align-items: center;
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem); /* Responsive font size */
-  color: var(--color-text-dark); /* Dark text */
-  background: var(--color-input-bg); /* Light background */
-  padding: var(--spacing-xs) var(--spacing-sm); /* Consistent padding */
-  border-radius: var(--border-radius-md); /* Consistent border-radius */
-  margin-bottom: var(--spacing-sm); /* Consistent margin */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Subtle shadow */
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  color: var(--color-text-dark);
+  background: var(--color-input-bg);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 
-/* --- Media Queries --- */
+
 @media (max-width: 768px) {
   .row {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-sm); /* Reduce gap when stacked */
+    gap: var(--spacing-sm);
   }
   .label {
-    width: 100%; /* Take full width on small screens */
-    margin-bottom: var(--spacing-xs); /* Small margin below label */
+    width: 100%;
+    margin-bottom: var(--spacing-xs);
   }
   .boxes {
-    width: 100%; /* Ensure boxes align nicely below label */
-    justify-content: flex-start; /* Align boxes to the left */
+    width: 100%;
+    justify-content: flex-start;
   }
   .next-activity {
-    position: static; /* Remove absolute positioning */
-    transform: none; /* Remove transform */
-    margin-top: var(--spacing-lg); /* Add margin from content above */
-    margin-bottom: var(--spacing-lg); /* Add margin below */
+    position: static;
+    transform: none;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
   }
   .next-activity .circle {
-    margin: 0 auto var(--spacing-xs); /* Recenter circle */
+    margin: 0 auto var(--spacing-xs);
   }
   .cta-button {
     font-size: clamp(1rem, 3.5vw, 1.2rem);

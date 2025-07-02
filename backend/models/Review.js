@@ -1,13 +1,12 @@
-// models/Review.js
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  userEmail: { // Assuming you might want to store the email associated with the review
+  userEmail: {
     type: String,
     trim: true,
     lowercase: true,
     match: [/.+@.+\..+/, 'Please enter a valid email address'],
-    required: false // Make this true if email is mandatory for reviews
+    required: false
   },
   rating: {
     type: Number,
@@ -18,7 +17,7 @@ const reviewSchema = new mongoose.Schema({
   message: {
     type: String,
     trim: true,
-    maxlength: 1000 // Limit review message length
+    maxlength: 1000
   },
   createdAt: {
     type: Date,

@@ -1,9 +1,7 @@
-// routes/session.js
 const express = require('express');
 const router = express.Router();
 const Session = require('../models/Session');
 
-// POST /api/session — Save user details and rated activities
 router.post('/', async (req, res) => {
   const { name, age, gender, activities } = req.body;
 
@@ -36,7 +34,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /api/session/:id — Fetch session by ID
 router.get('/:id', async (req, res) => {
   try {
     const session = await Session.findById(req.params.id).lean();

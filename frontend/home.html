@@ -12,9 +12,7 @@
 </head>
 <body>
 
-<!-- Full Header Navbar -->
 <header class="navbar fade-in">
-  <!-- Logo Section -->
   <div class="logo">
     <a href="home.html" class="logo-circle">
       <img
@@ -26,10 +24,8 @@
     </a>
   </div>
 
-  <!-- Mobile Menu Toggle -->
   <div class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu">&#9776;</div>
 
-  <!-- Main Navigation -->
   <nav class="nav-links" id="nav-links">
     <a href="home.html">Home</a>
     <a href="create.html">Kiara Wheel</a>
@@ -40,7 +36,6 @@
     <a href="create.html" class="nav-cta">Start Now</a>
   </nav>
 
-  <!-- Contact + Social -->
   <div class="right-contact">
     <div class="social-icon" tabindex="0" role="button" aria-label="Website globe icon">🌐</div>
     <span class="contact-text">+254 745 738 345</span>
@@ -49,12 +44,10 @@
 
 <main class="hero">
   <div class="spin-image-container">
-    <!-- First Wheel (static) -->
     <div class="spin-image no-spin">
       <img src="assets/kiara whell.png" alt="Discover Passion" class="spin-icon" />
     </div>
 
-    <!-- Second Wheel (large) -->
     <div class="spin-image large-spin">
       <img src="assets/kiara.png" alt="Visualize Purpose" class="spin-icon" />
     </div>
@@ -181,7 +174,6 @@
   <p class="tagline">🌟 Discover your passion. Shape your future.</p>
 </section>
 
-<!-- FontAwesome Icons -->
 <script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
 
 
@@ -228,7 +220,7 @@
     </div>
   </div>
 </section>
-<!-- Testimonials Section -->
+
 <section id="testimonial-section" class="testimonial-section">
   <h2 class="testimonial-title">What People Are Saying</h2>
 
@@ -315,7 +307,7 @@
     const slides = document.querySelectorAll(".carousel-slide");
     const dots = document.querySelectorAll(".dot");
     let currentIndex = 0;
-    const intervalTime = 2500; // change slide every 4 seconds
+    const intervalTime = 2500;
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
@@ -329,7 +321,6 @@
       showSlide(currentIndex);
     }
 
-    // Start automatic sliding
     setInterval(nextSlide, intervalTime);
   });
 </script>
@@ -433,7 +424,6 @@
   let currentSlide = 0;
   let slideInterval;
 
-  // Show specific slide
   function showSlide(index) {
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === index);
@@ -442,29 +432,24 @@
     currentSlide = index;
   }
 
-  // Auto play slides
   function startAutoPlay() {
     slideInterval = setInterval(() => {
       showSlide((currentSlide + 1) % slides.length);
     }, 4000); // Change every 4s
   }
 
-  // Pause slideshow
   function pauseAutoPlay() {
     clearInterval(slideInterval);
   }
 
-  // Start initially
   startAutoPlay();
 
-  // Dots click
   dots.forEach(dot => {
     dot.addEventListener('click', e => {
       showSlide(parseInt(dot.dataset.index));
     });
   });
 
-  // Swipe Gestures for Mobile
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -481,11 +466,9 @@
 
   function handleSwipe() {
     if (touchEndX < touchStartX - 50) {
-      // Swipe left
       showSlide((currentSlide + 1) % slides.length);
     }
     if (touchEndX > touchStartX + 50) {
-      // Swipe right
       showSlide((currentSlide - 1 + slides.length) % slides.length);
     }
   }
@@ -501,22 +484,19 @@
     const prevArrow = slideshowBox.querySelector('.slide-nav-arrow.prev');
     const nextArrow = slideshowBox.querySelector('.slide-nav-arrow.next');
 
-    // Configuration
-    const TOTAL_SLIDES = slidePanels.length; // Number of available slides
-    const VISIBLE_SLIDES = 3; // How many slides are visible at once (active, prev, next)
+    const TOTAL_SLIDES = slidePanels.length;
+    const VISIBLE_SLIDES = 3;
 
-    let currentIndex = 0; // The index of the currently active (center) slide
+    let currentIndex = 0;
 
-    // Function to update slide positions based on currentIndex
     function updateSlidePositions() {
       slidePanels.forEach((panel, index) => {
         panel.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next'); // Clear existing classes
-        panel.style.zIndex = 1; // Reset z-index
+        panel.style.zIndex = 1;
 
         let positionClass = '';
         let relativeIndex = index - currentIndex;
 
-        // Handle wrapping around for a continuous loop
         if (relativeIndex > TOTAL_SLIDES / 2) {
           relativeIndex -= TOTAL_SLIDES;
         } else if (relativeIndex < -TOTAL_SLIDES / 2) {
@@ -526,16 +506,16 @@
         if (relativeIndex === 0) {
           positionClass = 'active';
           panel.style.zIndex = 5;
-        } else if (relativeIndex === 1) { // Next slide to the right
+        } else if (relativeIndex === 1) {
           positionClass = 'next';
           panel.style.zIndex = 4;
-        } else if (relativeIndex === -1) { // Previous slide to the left
+        } else if (relativeIndex === -1) {
           positionClass = 'prev';
           panel.style.zIndex = 4;
-        } else if (relativeIndex > 1) { // Further right
+        } else if (relativeIndex > 1) {
           positionClass = 'far-next';
           panel.style.zIndex = 1;
-        } else if (relativeIndex < -1) { // Further left
+        } else if (relativeIndex < -1) {
           positionClass = 'far-prev';
           panel.style.zIndex = 1;
         }
@@ -546,7 +526,6 @@
       });
     }
 
-    // Navigation functions
     function showNextSlide() {
       currentIndex = (currentIndex + 1) % TOTAL_SLIDES;
       updateSlidePositions();
@@ -557,11 +536,9 @@
       updateSlidePositions();
     }
 
-    // Event Listeners for Arrows
     nextArrow.addEventListener('click', showNextSlide);
     prevArrow.addEventListener('click', showPrevSlide);
 
-    // Initial setup
     updateSlidePositions();
   });
 </script>

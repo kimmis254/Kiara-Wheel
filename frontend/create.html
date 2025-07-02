@@ -96,7 +96,6 @@
 
 
 
-<!-- Footer Section -->
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-contact">
@@ -146,7 +145,6 @@
   const loadingIndicator = document.getElementById('loadingIndicator');
   const loadingOverlay = document.getElementById('loadingOverlay');
 
-  // Functions to show/hide the loading indicator
   function showLoading() {
     loadingIndicator.classList.remove('hidden');
     loadingOverlay.classList.remove('hidden');
@@ -165,11 +163,9 @@
     const addBtn = document.getElementById('add-activity');
     let activityCount = 0;
 
-    // Get references to loading indicator elements
     const loadingIndicator = document.getElementById('loadingIndicator');
     const loadingOverlay = document.getElementById('loadingOverlay');
 
-    // Functions to show/hide the loading indicator
     function showLoading() {
       loadingIndicator.classList.remove('hidden');
       loadingOverlay.classList.remove('hidden');
@@ -220,7 +216,6 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Show loading indicator immediately
       showLoading();
 
       try {
@@ -230,7 +225,7 @@
 
         if (!name || !age || !gender) {
           alert('Please complete all personal info.');
-          return; // Exit if validation fails
+          return;
         }
 
         const activities = [];
@@ -276,7 +271,6 @@
         console.error('❌ Network/server error during form submission:', err);
         alert('Server error. Please try again later.');
       } finally {
-        // Hide loading indicator regardless of success or failure
         hideLoading();
       }
     });

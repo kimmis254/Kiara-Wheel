@@ -30,7 +30,8 @@ function generateWheel(activities) {
 
     if (!match?.mainCategory) {
       console.warn(`⚠️ No outcome match for activity: "${name}" with yesMap:`, yesMap);
-      return; // skip unmatched
+      return;
+
     }
 
     const result = {

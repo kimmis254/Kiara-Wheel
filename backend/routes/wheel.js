@@ -4,7 +4,6 @@ const Session = require('../models/Session');
 const WheelResult = require('../models/WheelResult');
 const { generateWheel } = require('../services/wheelService');
 
-// POST /api/wheel/generate — handles session + wheel logic together
 router.post('/generate', async (req, res) => {
   try {
     const { name, age, gender, activities } = req.body;
@@ -29,16 +28,13 @@ router.post('/generate', async (req, res) => {
       }
     }
 
-    // Save session
     const session = await Session.create({ name, age, gender, activities });
 
-    // Generate categorized results
     const wheelData = generateWheel(activities);
     if (!wheelData || !wheelData.sectionsData) {
       return res.status(500).json({ error: 'Wheel generation failed' });
     }
 
-    // Filter out unmatched outcomes (null or no mainCategory)
     const enrichedActivities = wheelData.sectionsData
       .filter(a => !!a.outcomeCategory) // only valid outcomes
       .map((a, i) => ({

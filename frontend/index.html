@@ -187,20 +187,19 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
 
-    // --- Scroll Animation for Sections --- //
     const sections = document.querySelectorAll('.animate-section');
 
     const observerOptions = {
-      root: null, // observes intersections relative to the viewport
+      root: null,
       rootMargin: '0px',
-      threshold: 0.1 // trigger when 10% of the element is visible
+      threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target); // Stop observing once animated
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -209,7 +208,6 @@
       observer.observe(section);
     });
 
-    // --- Smooth Scrolling for the Hero Button --- //
     const heroButton = document.querySelector('.hero .cta-button');
     if(heroButton) {
       heroButton.addEventListener('click', function(e) {
@@ -292,12 +290,12 @@
   document.addEventListener('DOMContentLoaded', () => {
 
     const hamburger = document.querySelector('.hamburger');
-    const navLinksAndCta = document.querySelector('.nav-links-and-cta'); // IMPORTANT: Target this element
+    const navLinksAndCta = document.querySelector('.nav-links-and-cta');
 
-    if (hamburger && navLinksAndCta) { // Check if elements exist
+    if (hamburger && navLinksAndCta) {
       hamburger.addEventListener('click', () => {
-        navLinksAndCta.classList.toggle('is-open'); // Toggles the menu's visibility
-        hamburger.classList.toggle('is-active');    // Toggles the hamburger icon's animation
+        navLinksAndCta.classList.toggle('is-open');
+        hamburger.classList.toggle('is-active');
       });
 
       navLinksAndCta.querySelectorAll('a.nav-link, .header-cta-button').forEach(link => {
@@ -314,9 +312,8 @@
 
     if (contactForm) {
       contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent the default form submission (page reload)
+        e.preventDefault();
 
-        // Get form data
         const formData = {
           name: document.getElementById('name').value,
           email: document.getElementById('email').value,
@@ -324,19 +321,14 @@
           message: document.getElementById('message').value,
         };
 
-        // Get the submit button and store its original text
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
 
-        // Provide immediate feedback to the user and disable the button
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
 
         try {
-          // Send the form data to your Node.js backend
-          // IMPORTANT: Replace 'http://localhost:5000' with your actual backend URL
-          // If your frontend and backend are on the same domain/port after deployment,
-          // you might just use '/api/contact'
+
           const response = await fetch(`${API_BASE_URL}/api/contact`, {
             method: 'POST',
             headers: {
@@ -345,21 +337,19 @@
             body: JSON.stringify(formData),
           });
 
-          const result = await response.json(); // Parse the JSON response from the backend
+          const result = await response.json();
 
-          if (response.ok) { // Check if the response status is 2xx (success)
+          if (response.ok) {
             alert('Message sent successfully! We will get back to you soon.');
-            contactForm.reset(); // Clear the form fields
+            contactForm.reset();
           } else {
-            // Handle errors sent from the backend
             alert(`Failed to send message: ${result.message || 'Unknown error occurred.'}`);
           }
         } catch (error) {
-          // Handle network errors or other unexpected issues
+
           console.error('Error submitting form:', error);
           alert('An error occurred while sending your message. Please try again later.');
         } finally {
-          // Revert button text and enable it, regardless of success or failure
           submitButton.textContent = originalButtonText;
           submitButton.disabled = false;
         }
