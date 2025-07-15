@@ -158,6 +158,20 @@
           <p>Set clear goals and move confidently toward your purpose.</p>
         </div>
       </div>
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Take Action">
+        <img src="assets/pic4kiara.png" class="carousel-image" alt="Achieve goals faster with clear direction" loading="lazy" />
+        <div class="carousel-caption">
+          <h3>Purposeful Progress</h3>
+          <p>Clarify your objectives and move forward with intention. Your goals await your action.</p>
+        </div>
+      </div>
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Take Action">
+        <img src="assets/pic5kiara.png" class="carousel-image" alt="Achieve goals faster with clear direction" loading="lazy" />
+        <div class="carousel-caption">
+          <h3>Unlock Your Potential</h3>
+          <p>Transform your ambitions into accomplishments. The power to create is within you.</p>
+        </div>
+      </div>
 
     </div>
 
@@ -169,6 +183,8 @@
     <span class="dot active" data-slide="0"></span>
     <span class="dot" data-slide="1"></span>
     <span class="dot" data-slide="2"></span>
+    <span class="dot" data-slide="3"></span>
+    <span class="dot" data-slide="4"></span>
   </div>
 
   <p class="tagline">🌟 Discover your passion. Shape your future.</p>
@@ -296,7 +312,7 @@
   });
 
   function startAutoSlide() {
-    interval = setInterval(nextSlide, 4000); // 4 seconds
+    interval = setInterval(nextSlide, 4000);
   }
 
   startAutoSlide();
@@ -435,7 +451,7 @@
   function startAutoPlay() {
     slideInterval = setInterval(() => {
       showSlide((currentSlide + 1) % slides.length);
-    }, 4000); // Change every 4s
+    }, 4000);
   }
 
   function pauseAutoPlay() {
@@ -491,7 +507,7 @@
 
     function updateSlidePositions() {
       slidePanels.forEach((panel, index) => {
-        panel.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next'); // Clear existing classes
+        panel.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
         panel.style.zIndex = 1;
 
         let positionClass = '';

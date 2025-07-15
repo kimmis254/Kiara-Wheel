@@ -199,7 +199,7 @@
       }).join('\n\n');
 
       return `🔹 **${label}** (${acts.length} ${activityWord})\n${divider}\n${activityList}`;
-    }).filter(Boolean).join('\n\n\n'); // filter out empty Bliss
+    }).filter(Boolean).join('\n\n\n');
   }
 
   function showActivities() {
@@ -234,7 +234,7 @@
       const sectionPct = globalTotal > 0 ? Math.round((sectionScore / globalTotal) * 100) : 0;
 
       if (cat === 'Bliss') {
-        if (!categories.hasOwnProperty('Bliss')) return ''; // skip rendering if Bliss category not present
+        if (!categories.hasOwnProperty('Bliss')) return '';
         if (acts.length === 0) {
           return `<div class="activity-section"><h3>${label}</h3><p>🌱 You haven’t found your Bliss yet — keep exploring!</p></div>`;
         }
@@ -340,7 +340,7 @@
         const cutoutPct = parseFloat(chart.config._config.data.datasets[0].cutout || '30') / 100;
         const innerRadius = outerRadius * cutoutPct;
 
-        const glowRadius = innerRadius * 0.95; // slightly inside the hole
+        const glowRadius = innerRadius * 0.95;
         const now = Date.now();
         const time = (now % 2000) / 1000;
         const alpha = 0.2 + 0.3 * Math.abs(Math.sin(time * Math.PI));
@@ -428,7 +428,7 @@
     const stars = document.querySelectorAll('#starRating span');
     const submitBtn = document.getElementById('submitReview');
     const cancelBtn = document.getElementById('cancelReview');
-    const reviewMessageInput = document.getElementById('reviewMessage'); // Renamed for clarity
+    const reviewMessageInput = document.getElementById('reviewMessage');
     const emailDisplay = document.getElementById('userEmailDisplay');
 
     emailDisplay.textContent = `Sending feedback as: ${email}`;
@@ -457,7 +457,7 @@
       modal.classList.add('hidden');
       overlay.classList.add('hidden');
       reviewMessageInput.value = '';
-      rating = 0; // Reset rating
+      rating = 0;
       stars.forEach(s => s.classList.remove('selected'));
       submitBtn.textContent = 'Submit Review';
       submitBtn.disabled = false;
@@ -531,11 +531,11 @@
     const hasBliss = resultData.categories?.Bliss?.length > 0;
     if (hasBliss) {
 
-      tempCtx.font = 'bold 32px Inter, "NotoColorEmoji-Regular"'; // Add Noto Color Emoji as fallback
+      tempCtx.font = 'bold 32px Inter, "NotoColorEmoji-Regular"';
       tempCtx.fillStyle = '#34D399';
       tempCtx.textAlign = 'center';
       tempCtx.textBaseline = 'middle';
-      tempCtx.fillText(' BLISS ', tempCanvas.width / 2, tempCanvas.height / 2); // EMOJI ADDED
+      tempCtx.fillText(' BLISS ', tempCanvas.width / 2, tempCanvas.height / 2);
     }
 
     const chartImage = tempCanvas.toDataURL('image/png');
@@ -547,7 +547,7 @@
 
     doc.setFontSize(26);
     doc.setTextColor('#0B0F4B');
-    doc.setFont('helvetica', 'bold'); // Still bold for title
+    doc.setFont('helvetica', 'bold');
     doc.text("Your Kiara Wheel Results", 105, 30, null, null, 'center');
 
 
@@ -556,7 +556,7 @@
     doc.setTextColor('#444');
     const introText = `Hi ${userName}, here’s your custom Kiara Wheel!
 Thank you for completing Kiara Wheel. We’ve analyzed your activity ratings and generated your personalized Kiara Wheel based on
-What you love, What you do well, What the world will pay for and What the world needs.`; // EMOJIS ADDED
+What you love, What you do well, What the world will pay for and What the world needs.`;
 
     const introLines = doc.splitTextToSize(introText, 180);
 
@@ -574,7 +574,6 @@ What you love, What you do well, What the world will pay for and What the world 
     doc.addPage();
 
 
-// Activity Data
     const categories = resultData.categories || {};
     const allActivities = Object.values(categories).flat();
     const totalScoreAll = allActivities.reduce((sum, a) => sum + a.love + a.well + a.pay + a.world, 0);
@@ -771,7 +770,6 @@ What you love, What you do well, What the world will pay for and What the world 
     }
   });
 
-  // 🟢 EmailJS Init
   emailjs.init('oBelMPyBkq3aJB_-D');
   window.onload = () => setTimeout(loadResults, 100);
 

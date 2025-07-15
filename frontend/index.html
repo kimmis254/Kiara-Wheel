@@ -226,20 +226,16 @@
   });
   document.addEventListener("DOMContentLoaded", function() {
 
-    // --- Hamburger Menu Logic --- //
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     const links = document.querySelectorAll('.nav-links li');
 
     hamburger.addEventListener('click', () => {
-      // Toggle Nav
       navLinks.classList.toggle('active');
 
-      // Hamburger Animation
       hamburger.classList.toggle('active');
     });
 
-    // Close menu when a link is clicked
     links.forEach(link => {
       link.addEventListener('click', () => {
         if (navLinks.classList.contains('active')) {
@@ -268,16 +264,16 @@
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navLinksAndCta = document.querySelector('.nav-links-and-cta');
-    const navLinks = document.querySelectorAll('.nav-link'); // Select individual nav links
+    const navLinks = document.querySelectorAll('.nav-link');
 
     if (hamburger && navLinksAndCta) {
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navLinksAndCta.classList.toggle('active');
-        document.body.classList.toggle('no-scroll'); // Optional: prevent scrolling when menu is open
+        document.body.classList.toggle('no-scroll');
       });
 
-      // Close menu when a nav link is clicked (for smooth scrolling)
+
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           hamburger.classList.remove('active');
