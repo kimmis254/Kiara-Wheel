@@ -78,6 +78,9 @@ a:hover {
   color: var(--color-secondary);
 }
 
+section[id] {
+  scroll-margin-top: 100px;
+}
 
 .main-header {
   background-color: var(--color-background);
