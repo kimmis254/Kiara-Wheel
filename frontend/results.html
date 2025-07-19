@@ -157,18 +157,18 @@
     if (categories.Bliss?.length > 0) allCategories.push('Bliss');
     allCategories.push(...sortedCategories);
 
-    let globalIndex = 1;
-
     return allCategories.map(cat => {
       const acts = categories[cat] || [];
       if (cat === 'Bliss' && acts.length === 0) return '';
 
       const label = categoryLabelMap[cat] || cat.toUpperCase();
       const activityWord = acts.length === 1 ? 'activity' : 'activities';
-      const divider = '━'.repeat(70);
+      const divider = '─'.repeat(70);
+      const sectionHeader = `${label.toUpperCase()} (${acts.length} ${activityWord})`;
+
       const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
 
-      const activityList = sortedActs.map((a) => {
+      const activityList = sortedActs.map((a, index) => {
         const selected = [];
         if (a.love >= 5) selected.push('❤️ What you love');
         if (a.well >= 5) selected.push('💪 What you do well');
@@ -182,20 +182,21 @@
           : '—';
 
         const lines = [
-          `${globalIndex++}. ${a.name} — ${a.outcomeSubCategory}`,
-          a.extra ? `- ${a.extra}` : '',
-          `- ${a.details1}`,
-          ...(a.details2 && a.details2 !== 'N/A' ? [`- ${a.details2}`] : []),
-          `📊 Score: ${score} out of 40 (${percent}%)`,
-          `🔄 Intersections: ${intersections}`
+          `${index + 1}. ${a.name} — ${a.outcomeSubCategory}`,
+          a.extra ? `   - ${a.extra}` : '',
+          `   - ${a.details1}`,
+          ...(a.details2 && a.details2 !== 'N/A' ? [`   - ${a.details2}`] : []),
+          `   📊 Score: ${score} out of 40 (${percent}%)`,
+          `   🔄 Intersections: ${intersections}`
         ];
 
         return lines.filter(Boolean).join('\n');
-      }).join('\n\n');
+      }).join(`\n\n${'-'.repeat(40)}\n\n`);
 
-      return `🔹 ${label} (${acts.length} ${activityWord})**\n${divider}\n${activityList}`;
+      return `${sectionHeader}\n${divider}\n\n${activityList}`;
     }).filter(Boolean).join('\n\n\n');
   }
+
 
   function showActivities() {
     const container = document.getElementById('activitiesDisplay');
@@ -204,14 +205,12 @@
     const categories = resultData.categories;
     const categoryTotals = {};
     let globalTotal = 0;
-    let globalActivityCount = 1; // 🟡 Global numbering across all categories
 
-    // Compute outcomeScore per activity + section totals
+    // Calculate totals and outcomeScores
     for (const [cat, acts] of Object.entries(categories)) {
       let sectionScore = 0;
       for (const a of acts) {
-        a.outcomeScore = [a.love, a.well, a.pay, a.world]
-          .reduce((sum, val) => sum + val, 0); // ✅ Ensure /40 scale
+        a.outcomeScore = [a.love, a.well, a.pay, a.world].reduce((sum, val) => sum + val, 0);
         sectionScore += a.outcomeScore;
       }
       categoryTotals[cat] = sectionScore;
@@ -225,53 +224,50 @@
 
     const html = categoryOrder.map(cat => {
       const acts = categories[cat] || [];
-      const label = (labelMap[cat] || cat).toUpperCase(); // ✅ CAPS label
+      const label = (labelMap[cat] || cat).toUpperCase();
       const sectionScore = categoryTotals[cat] || 0;
       const sectionPct = globalTotal > 0 ? Math.round((sectionScore / globalTotal) * 100) : 0;
 
-      if (cat === 'Bliss') {
-        if (!categories.hasOwnProperty('Bliss')) return '';
-        if (acts.length === 0) {
-          return `
-          <div class="activity-section">
-            <h3 class="category-title">${label}</h3>
-            <p>🌱 You haven’t found your Bliss yet — keep exploring!</p>
-          </div>`;
-        }
+      let activityHtml = '';
+      if (acts.length > 0) {
+        const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
+
+        activityHtml = sortedActs.map((a, index) => {
+          const selected = [];
+          const circleIds = [];
+
+          if (a.love >= 5) { selected.push('❤️ What you love'); circleIds.push(1); }
+          if (a.well >= 5) { selected.push('💪 What you do well'); circleIds.push(2); }
+          if (a.pay >= 5)  { selected.push('💰 What the world will pay for'); circleIds.push(3); }
+          if (a.world >= 5){ selected.push('🌍 What the world needs'); circleIds.push(4); }
+
+          const circleCount = circleIds.length;
+          const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
+          const intersectText = selected.join(', ') || '—';
+
+          const lines = [
+            `<h4>${index + 1}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>`,
+            a.extra ? `<p>- ${a.extra}</p>` : '',
+            a.details1 ? `<p>- ${a.details1}</p>` : '',
+            a.details2 && a.details2 !== 'N/A' ? `<p>- ${a.details2}</p>` : '',
+            `<p><strong>📊 Score:</strong> ${a.outcomeScore} out of 40 (${percent}%)</p>`,
+            `<p><strong>🔄 ${circleCount} Intersecting circle${circleCount !== 1 ? 's' : ''}</strong> (${intersectText})</p>`
+          ].filter(Boolean).join('\n');
+
+          return `<div class="activity-card">\n${lines}\n</div>`;
+        }).join('');
+      } else if (cat === 'Bliss') {
+        activityHtml = `
+        <div class="activity-card">
+          <p>🌱 You haven’t found your Bliss yet — but your journey is just beginning.<br>Keep exploring your passions and purpose!</p>
+        </div>`;
       }
-
-      const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
-
-      const cards = sortedActs.map((a) => {
-        const selected = [];
-        const circleIds = [];
-
-        if (a.love >= 5) { selected.push('❤️ What you love'); circleIds.push(1); }
-        if (a.well >= 5) { selected.push('💪 What you do well'); circleIds.push(2); }
-        if (a.pay >= 5)  { selected.push('💰 What the world will pay for'); circleIds.push(3); }
-        if (a.world >= 5){ selected.push('🌍 What the world needs'); circleIds.push(4); }
-
-        const circleCount = circleIds.length;
-        const percent = ((a.outcomeScore / 40) * 100).toFixed(0); // ✅ Percent of 40 max
-        const intersectText = selected.join(', ') || '—';
-
-        const lines = [
-          `<h4>${globalActivityCount++}. ${a.name} — <span>${a.outcomeSubCategory}</span></h4>`,
-          a.extra ? `<p>- ${a.extra}</p>` : '',
-          a.details1 ? `<p>- ${a.details1}</p>` : '',
-          a.details2 && a.details2 !== 'N/A' ? `<p>- ${a.details2}</p>` : '',
-          `<p><strong>📊 Score:</strong> ${a.outcomeScore} out of 40 (${percent}%)</p>`,
-          `<p><strong>🔄 ${circleCount} Intersecting circle${circleCount !== 1 ? 's' : ''}</strong> (${intersectText})</p>`
-        ].filter(Boolean).join('\n');
-
-        return `<div class="activity-card">\n${lines}\n</div>`;
-      }).join('');
 
       return `
       <div class="activity-section">
         <h3 class="category-title">${label}</h3>
-        <div class="category-subinfo">Total: ${sectionScore} | ${sectionPct}%</div>
-        <div class="activity-grid-cards">${cards}</div>
+        <div class="category-subinfo"><strong>Total:</strong> ${sectionScore} | <strong>${sectionPct}%</strong></div>
+        <div class="activity-grid-cards">${activityHtml}</div>
       </div>`;
     }).filter(Boolean).join('');
 
@@ -617,20 +613,19 @@ What you love, What you do well, What the world will pay for and What the world 
     };
 
     let y = 20;
-    let globalActivityCount = 1;
 
     for (const cat of allCategories) {
       const acts = categories[cat] || [];
       const label = (labelMapClean[cat] || cat).toUpperCase();
       const activityWord = acts.length === 1 ? "activity" : "activities";
 
-      // ⬇ Add category title bar
       if (y + 20 > 280) {
         doc.addPage();
         y = 20;
       }
 
-      doc.setFillColor(11, 15, 75); // Deep blue
+      // 🔷 Category Header Bar
+      doc.setFillColor(10, 25, 90); // Dark blue
       doc.setTextColor('#ffffff');
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
@@ -638,12 +633,10 @@ What you love, What you do well, What the world will pay for and What the world 
       doc.text(`${label} (${acts.length} ${activityWord})`, 14, y + 8);
       y += 18;
 
-      for (let i = 0; i < acts.length; i++) {
-        const a = acts[i];
+      let localActivityCount = 1;
 
+      for (const a of acts) {
         const selected = [];
-        const circleIds = [];
-
         if (a.love >= 5) selected.push('What you love');
         if (a.well >= 5) selected.push('What you do well');
         if (a.pay >= 5) selected.push('What the world will pay for');
@@ -653,7 +646,7 @@ What you love, What you do well, What the world will pay for and What the world 
         const percent = ((a.outcomeScore / 40) * 100).toFixed(0);
 
         const lines = [
-          `${globalActivityCount++}. ${a.name} – ${a.outcomeSubCategory}`,
+          `${localActivityCount++}. ${a.name} – ${a.outcomeSubCategory}`,
           ...(a.extra ? [`- ${a.extra}`] : []),
           `- ${a.details1}`,
           ...(a.details2 && a.details2 !== 'N/A' ? [`- ${a.details2}`] : []),
@@ -661,31 +654,33 @@ What you love, What you do well, What the world will pay for and What the world 
           `- ${selected.length} intersecting circle${selected.length !== 1 ? 's' : ''} (${intersect})`
         ];
 
-        const textLines = lines.flatMap(line => doc.splitTextToSize(line, 180));
-        const boxHeight = textLines.length * 6 + 10;
+        const textLines = lines.flatMap(line => doc.splitTextToSize(line, 178));
+        const boxHeight = textLines.length * 6 + 12;
 
         if (y + boxHeight > 270) {
           doc.addPage();
           y = 20;
         }
 
-        doc.setFillColor(245, 248, 255);  // light blue-ish card
-        doc.setDrawColor(180, 200, 220);  // light border
+        // 🟦 Activity Card Box
+        doc.setDrawColor(160, 180, 200);        // Subtle gray-blue border
+        doc.setFillColor(252, 254, 255);        // Soft white-blue background
         doc.roundedRect(12, y, 185, boxHeight, 3, 3, 'FD');
 
+        doc.setTextColor('#333');
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(10);
-        doc.setTextColor('#333');
 
         textLines.forEach((line, j) => {
           doc.text(line, 16, y + 10 + j * 6);
         });
 
-        y += boxHeight + 6;
+        y += boxHeight + 8;
       }
 
-      y += 10;
+      y += 12; // space between categories
     }
+
 
     doc.save('kiara-wheel-results.pdf');
 
