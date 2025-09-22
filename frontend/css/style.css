@@ -1056,10 +1056,6 @@ section[id] {
   margin-right: auto;
 }
 
-.free-gift-content strong {
-  color: var(--color-secondary);
-}
-
 
 .button--large {
   padding: 1rem 3rem;
@@ -1229,7 +1225,7 @@ section[id] {
   flex: 2;
   max-width: 650px;
   padding-left: var(--spacing-lg);
-  text-align: center;
+  text-align: left;
 }
 
 .author-text .section-title {
@@ -1314,7 +1310,7 @@ section[id] {
 
   .author-text p {
     font-size: 1.05rem;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -1455,9 +1451,6 @@ section[id] {
   margin-right: auto;
 }
 
-.review-call-to-action p strong {
-  color: var(--color-secondary);
-}
 
 
 .button--primary {
@@ -1480,6 +1473,9 @@ section[id] {
   animation: wobble 2s ease-in-out infinite;
 
   animation-delay: 1s;
+}
+.brand-name{
+  color: var(--color-primary);
 }
 
 @keyframes wobble {
