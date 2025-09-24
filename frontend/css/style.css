@@ -1426,13 +1426,8 @@ section[id] {
 }
 
 .review-call-to-action {
-  background-color: var(--color-background);
-  border-radius: var(--border-radius-md);
-  padding: var(--spacing-xl);
-  max-width: 900px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  text-align: center;
+
+  text-align: left;
 }
 
 .review-call-to-action h3 {
@@ -1474,9 +1469,7 @@ section[id] {
 
   animation-delay: 1s;
 }
-.brand-name{
-  color: var(--color-primary);
-}
+
 
 @keyframes wobble {
   0%, 100% { transform: rotate(0deg) scale(1); }
