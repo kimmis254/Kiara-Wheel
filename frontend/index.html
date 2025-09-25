@@ -74,7 +74,33 @@
   </div>
 </section>
 
+<div id="book-preorder-popup" class="popup-overlay">
+  <div class="popup-content">
+    <span class="close-button" onclick="closePopup()">&times;</span>
+    <div class="popup-header">
+      <h2>Coming Soon to Amazon!</h2>
+    </div>
+    <p>The book, **The Mindset to Overcome**, is launching on Amazon soon!</p>
+    <p>Pre-order your copy and be the first to know when it's live.</p>
 
+    <form id="book-preorder-form" class="popup-form" action="https://formspree.io/f/xanpndjg" method="POST">
+      <label for="preorder-name">Name:</label>
+      <input type="text" id="preorder-name" name="preorder-name" required>
+
+      <label for="preorder-email">Email:</label>
+      <input type="email" id="preorder-email" name="preorder-email" required>
+
+      <label for="preorder-mobile">Mobile:</label>
+      <input type="tel" id="preorder-mobile" name="preorder-mobile">
+
+      <label for="preorder-books">Number of Books:</label>
+      <input type="number" id="preorder-books" name="preorder-books" min="1" value="1" required>
+
+      <button type="submit" class="button button--primary" id="submit-button">Pre-order Now</button>
+    </form>
+    <p class="popup-footer">We'll notify you as soon as the book launches!</p>
+  </div>
+</div>
 
   <section id="introduction" class="content-section animate-section">
     <div class="container">
@@ -427,6 +453,101 @@
           submitButton.disabled = false;
         }
       });
+    }
+  });
+  // Function to show the popup
+  function showPopup() {
+    const overlay = document.getElementById('book-preorder-popup');
+    const content = document.querySelector('.popup-content');
+
+    overlay.style.display = 'flex';
+
+    setTimeout(() => {
+      overlay.classList.add('show');
+      content.classList.add('show');
+    }, 10);
+  }
+
+  // Function to close the popup
+  function closePopup() {
+    const overlay = document.getElementById('book-preorder-popup');
+    const content = document.querySelector('.popup-content');
+
+    overlay.classList.remove('show');
+    content.classList.remove('show');
+
+    overlay.addEventListener('transitionend', () => {
+      overlay.style.display = 'none';
+    }, { once: true });
+  }
+
+  // Attach event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    const buyButtonHero = document.querySelector('a.button--wobble');
+    const buyButtonHeader = document.querySelector('a.header-cta-button');
+
+    if (buyButtonHero) {
+      buyButtonHero.addEventListener('click', (event) => {
+        event.preventDefault();
+        showPopup();
+      });
+    }
+
+    // Add the event listener for the new "Buy on Amazon" button in the header
+    if (buyButtonHeader) {
+      buyButtonHeader.addEventListener('click', (event) => {
+        event.preventDefault();
+        showPopup();
+      });
+    }
+  });
+
+  // Close popup when clicking the close button or outside
+  document.getElementById('book-preorder-popup').addEventListener('click', (event) => {
+    if (event.target.id === 'book-preorder-popup' || event.target.classList.contains('close-button')) {
+      closePopup();
+    }
+  });
+
+  // Update form submission to use AJAX
+  document.getElementById('book-preorder-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
+    const submitButton = document.getElementById('submit-button');
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        const successMessage = document.createElement('p');
+        successMessage.textContent = 'Thank you! We have your pre-order info and will notify you when the book launches.';
+        successMessage.style.color = 'var(--color-text-light)';
+        document.querySelector('.popup-content').appendChild(successMessage);
+
+        setTimeout(() => {
+          closePopup();
+        }, 5000);
+      } else {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Pre-order Now';
+        alert('Oops! Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Pre-order Now';
+      alert('Oops! A network error occurred. Please check your connection and try again.');
+      console.error(error);
     }
   });
 </script>
