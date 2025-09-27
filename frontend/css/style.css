@@ -1973,6 +1973,9 @@ footer {
     font-size: 0.85rem;
   }
 }
+.popup-overlay{
+  display: none;
+}
 /* Update the CSS for the popup overlay */
 #book-preorder-popup {
   position: fixed;

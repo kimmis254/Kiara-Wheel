@@ -83,22 +83,21 @@
     <p>The book, <strong class="brand-name">The Mindset to Overcome Using the 7 Priceless Gifts<sup>™</sup></strong>, is launching on Amazon soon!</p>
     <p>Pre-order your copy and be the first to know when it's live.</p>
 
-    <form id="book-preorder-form" class="popup-form" action="https://formspree.io/f/xanpndjg" method="POST">
+    <form id="book-preorder-form" class="popup-form" >
       <label for="preorder-name">Name:</label>
-      <input type="text" id="preorder-name" name="preorder-name" required>
+      <input type="text" id="preorder-name" name="entry.1771126468" required>
 
       <label for="preorder-email">Email:</label>
-      <input type="email" id="preorder-email" name="preorder-email" required>
+      <input type="email" id="preorder-email" name="entry.859884745" required>
 
       <label for="preorder-mobile">Mobile:</label>
-      <input type="tel" id="preorder-mobile" name="preorder-mobile">
+      <input type="tel" id="preorder-mobile" name="entry.314459595" required>
 
       <label for="preorder-books">Number of Books:</label>
-      <input type="number" id="preorder-books" name="preorder-books" min="1" value="1" required>
+      <input type="number" id="preorder-books" name="entry.1413401354" min="1" value="1" required>
 
       <button type="submit" class="button button--primary" id="submit-button">Pre-order Now</button>
     </form>
-    <p class="popup-footer">We'll notify you as soon as the book launches!</p>
   </div>
 </div>
 
@@ -510,44 +509,52 @@
   });
 
   // Update form submission to use AJAX
-  document.getElementById('book-preorder-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const data = new FormData(form);
+  const form = document.getElementById('book-preorder-form');
+
+  // Add a submit event listener to the form
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // This stops the page from reloading
+
     const submitButton = document.getElementById('submit-button');
 
+    // Disable the button to prevent multiple submissions
     submitButton.disabled = true;
     submitButton.textContent = 'Submitting...';
 
+    // Get the form data
+    const formData = new FormData(form);
+
+    // The Google Forms URL for submission
+    const googleFormsUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeKmp4HLb1tfKJi-WPeyyzqcy4PFoSUJXjUVqUt0gn_pOZrVQ/formResponse';
+
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch(googleFormsUrl, {
         method: 'POST',
-        body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
+        body: formData,
+        mode: 'no-cors' // Use 'no-cors' to prevent CORS errors with Google Forms
       });
 
-      if (response.ok) {
+      // We can't check the response status with 'no-cors', so assume success
+      if (response) {
+        // Hide the form and show a success message
         form.style.display = 'none';
+
         const successMessage = document.createElement('p');
-        successMessage.textContent = 'Thank you! We have your pre-order info and will notify you when the book launches.';
+        successMessage.textContent = 'Thank you for your pre-order! We will notify you when the book is available on Amazon.';
         successMessage.style.color = 'var(--color-text-light)';
         document.querySelector('.popup-content').appendChild(successMessage);
 
+        // Close the popup after a few seconds
         setTimeout(() => {
           closePopup();
         }, 5000);
-      } else {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Pre-order Now';
-        alert('Oops! Something went wrong. Please try again.');
       }
     } catch (error) {
+      // Handle any network errors
+      console.error('Error submitting form:', error);
+      alert('An error occurred. Please try again later.');
       submitButton.disabled = false;
       submitButton.textContent = 'Pre-order Now';
-      alert('Oops! A network error occurred. Please check your connection and try again.');
-      console.error(error);
     }
   });
 </script>
