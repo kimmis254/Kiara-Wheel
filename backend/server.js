@@ -12,7 +12,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5000',
   'https://kiara-wheel-5trf.onrender.com',
-  'https://www.the7pricelessgifts.com/'
+  'https://www.the7pricelessgifts.com'
 ];
 
 app.use(cors({
