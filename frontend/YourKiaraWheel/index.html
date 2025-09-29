@@ -206,6 +206,7 @@
     const categoryTotals = {};
     let globalTotal = 0;
 
+    // Precompute outcomeScores + category totals
     for (const [cat, acts] of Object.entries(categories)) {
       let sectionScore = 0;
       for (const a of acts) {
@@ -216,10 +217,12 @@
       globalTotal += sectionScore;
     }
 
+    // Sort categories by total score, excluding Bliss
     const sortedCategories = Object.keys(categories)
       .filter(c => c !== 'Bliss')
       .sort((a, b) => (categoryTotals[b] || 0) - (categoryTotals[a] || 0));
 
+    // Final order: Bliss first, then others
     const categoryOrder = ['Bliss', ...sortedCategories];
 
     const html = categoryOrder.map(cat => {
@@ -258,10 +261,11 @@
           return `<div class="activity-card">\n${lines}\n</div>`;
         }).join('');
       } else if (cat === 'Bliss') {
+        // Show fallback ONLY if Bliss has NO activities
         activityHtml = `
-      <div class="activity-card">
-        <p>🌱 You haven’t found your Bliss yet — but your journey is just beginning.<br>Keep exploring your passions and purpose!</p>
-      </div>`;
+        <div class="activity-card">
+          <p>🌱 You haven’t found your Bliss yet — but your journey is just beginning.<br>Keep exploring your passions and purpose!</p>
+        </div>`;
       }
 
       return `
