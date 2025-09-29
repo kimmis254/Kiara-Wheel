@@ -120,6 +120,7 @@
   let wheelChart, resultData;
   const canvas = document.getElementById('kiaraWheel');
   const ctx = canvas?.getContext('2d');
+  const blissText = document.getElementById('blissText');
   const sessionId = new URLSearchParams(window.location.search).get('sessionId');
   const API_BASE_URL = 'https://the-7-priceless-gifts.onrender.com';
 
@@ -131,33 +132,103 @@
     Charity: 'Charity\nOptions'
   };
 
-  function normalize(label) {
-    const lower = label.toLowerCase();
-    if (lower.includes('bliss')) return 'Bliss';
-    if (lower.includes('career')) return 'Career';
-    if (lower.includes('passion')) return 'Passion';
-    if (lower.includes('volunteer')) return 'Volunteer';
-    if (lower.includes('charity')) return 'Charity';
-    return label;
+  function buildActivitySummaryHTML(categories, totalScoreAll) {
+    const categoryLabelMap = {
+      Bliss: 'BLISS',
+      Career: 'CAREER OPPORTUNITIES',
+      Passion: 'PASSIONS & INTERESTS',
+      Volunteer: 'VOLUNTEERING PATHS',
+      Charity: 'CHARITY INITIATIVES'
+    };
+
+    const sortedCategories = Object.keys(categories)
+      .filter(c => c !== 'Bliss')
+      .sort((a, b) => {
+        const scoreA = categories[a].reduce((sum, act) =>
+          sum + [act.love, act.well, act.pay, act.world]
+            .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        const scoreB = categories[b].reduce((sum, act) =>
+          sum + [act.love, act.well, act.pay, act.world]
+            .filter(v => v >= 5).reduce((s, v) => s + v, 0), 0);
+        return scoreB - scoreA;
+      });
+
+    const allCategories = [];
+    if (categories.Bliss?.length > 0) allCategories.push('Bliss');
+    allCategories.push(...sortedCategories);
+
+    return allCategories.map(cat => {
+      const acts = categories[cat] || [];
+      if (cat === 'Bliss' && acts.length === 0) return '';
+
+      const label = categoryLabelMap[cat] || cat.toUpperCase();
+      const activityWord = acts.length === 1 ? 'activity' : 'activities';
+      const divider = '─'.repeat(70);
+      const sectionHeader = `${label.toUpperCase()} (${acts.length} ${activityWord})`;
+
+      const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
+
+      const activityList = sortedActs.map((a, index) => {
+        const selected = [];
+        if (a.love >= 5) selected.push('❤️ What you love');
+        if (a.well >= 5) selected.push('💪 What you do well');
+        if (a.pay >= 5) selected.push('💰 What the world will pay for');
+        if (a.world >= 5) selected.push('🌍 What the world needs');
+
+        const score = a.love + a.well + a.pay + a.world;
+        const percent = ((score / 40) * 100).toFixed(0);
+        const intersections = selected.length > 0
+          ? `${selected.length} (${selected.join(', ')})`
+          : '—';
+
+        const lines = [
+          `${index + 1}. ${a.name} — ${a.outcomeSubCategory}`,
+          a.extra ? `   - ${a.extra}` : '',
+          `   - ${a.details1}`,
+          ...(a.details2 && a.details2 !== 'N/A' ? [`   - ${a.details2}`] : []),
+          `   📊 Score: ${score} out of 40 (${percent}%)`,
+          `   🔄 Intersections: ${intersections}`
+        ];
+
+        return lines.filter(Boolean).join('\n');
+      }).join(`\n\n${'-'.repeat(40)}\n\n`);
+
+      return `${sectionHeader}\n${divider}\n\n${activityList}`;
+    }).filter(Boolean).join('\n\n\n');
   }
 
-  function showActivities(categoryScores, totalScore) {
+
+  function showActivities() {
     const container = document.getElementById('activitiesDisplay');
     if (!container || !resultData || !resultData.categories) return;
 
     const categories = resultData.categories;
+    const categoryTotals = {};
+    let globalTotal = 0;
+
+    // Calculate totals and outcomeScores
+    for (const [cat, acts] of Object.entries(categories)) {
+      let sectionScore = 0;
+      for (const a of acts) {
+        a.outcomeScore = [a.love, a.well, a.pay, a.world].reduce((sum, val) => sum + val, 0);
+        sectionScore += a.outcomeScore;
+      }
+      categoryTotals[cat] = sectionScore;
+      globalTotal += sectionScore;
+    }
 
     const sortedCategories = Object.keys(categories)
-      .sort((a, b) => (categoryScores[b] || 0) - (categoryScores[a] || 0));
+      .filter(c => c !== 'Bliss')
+      .sort((a, b) => (categoryTotals[b] || 0) - (categoryTotals[a] || 0));
+    const categoryOrder = ['Bliss', ...sortedCategories];
 
-    const html = sortedCategories.map(cat => {
+    const html = categoryOrder.map(cat => {
       const acts = categories[cat] || [];
-      const label = (labelMap[normalize(cat)] || cat).toUpperCase();
-      const sectionScore = categoryScores[cat] || 0;
-      const sectionPct = totalScore > 0 ? Math.round((sectionScore / totalScore) * 100) : 0;
+      const label = (labelMap[cat] || cat).toUpperCase();
+      const sectionScore = categoryTotals[cat] || 0;
+      const sectionPct = globalTotal > 0 ? Math.round((sectionScore / globalTotal) * 100) : 0;
 
       let activityHtml = '';
-
       if (acts.length > 0) {
         const sortedActs = [...acts].sort((a, b) => b.outcomeScore - a.outcomeScore);
 
@@ -185,25 +256,30 @@
 
           return `<div class="activity-card">\n${lines}\n</div>`;
         }).join('');
-      } else if (normalize(cat) === 'Bliss') {
+      } else if (cat === 'Bliss') {
         activityHtml = `
-      <div class="activity-card">
-        <p>🌱 You haven’t found your Bliss yet — but your journey is just beginning.<br>Keep exploring your passions and purpose!</p>
-      </div>`;
+        <div class="activity-card">
+          <p>🌱 You haven’t found your Bliss yet — but your journey is just beginning.<br>Keep exploring your passions and purpose!</p>
+        </div>`;
       }
 
       return `
-    <div class="activity-section">
-      <h3 class="category-title">${label}</h3>
-      <div class="category-subinfo"><strong>Total:</strong> ${sectionScore} | <strong>${sectionPct}%</strong></div>
-      <div class="activity-grid-cards">${activityHtml}</div>
-    </div>`;
+      <div class="activity-section">
+        <h3 class="category-title">${label}</h3>
+        <div class="category-subinfo"><strong>Total:</strong> ${sectionScore} | <strong>${sectionPct}%</strong></div>
+        <div class="activity-grid-cards">${activityHtml}</div>
+      </div>`;
     }).filter(Boolean).join('');
 
     container.innerHTML = html || '<p>No activities to show.</p>';
   }
 
+
+
   async function loadResults() {
+    let lastPulseTime = Date.now();
+    let flickerDirection = 1;
+
     if (!sessionId) return alert("Missing session ID");
 
     const res = await fetch(`${API_BASE_URL}/api/result/${sessionId}`);
@@ -211,24 +287,39 @@
 
     resultData = await res.json();
     const categories = resultData.categories || {};
-
     const categoryScores = {};
-    let totalScore = 0;
+    let total = 0;
 
     Object.entries(categories).forEach(([cat, acts]) => {
-      let sum = 0;
-      acts.forEach(a => {
-        a.outcomeScore = [a.love, a.well, a.pay, a.world].reduce((s, v) => s + v, 0);
-        sum += a.outcomeScore;
-      });
+      const sum = acts.reduce((s, a) => {
+        const sc = [a.love, a.well, a.pay, a.world].filter(v => v >= 5).reduce((x, v) => x + v, 0);
+        total += sc;
+        return s + sc;
+      }, 0);
       categoryScores[cat] = sum;
-      totalScore += sum;
     });
 
     const rawLabels = Object.keys(categoryScores);
+
+    const normalize = label =>
+      label.toLowerCase().includes('bliss') ? 'Bliss' :
+        label.toLowerCase().includes('career') ? 'Career' :
+          label.toLowerCase().includes('passion') ? 'Passion' :
+            label.toLowerCase().includes('volunteer') ? 'Volunteer' :
+              label.toLowerCase().includes('charity') ? 'Charity' :
+                label;
+
+    const labelMap = {
+      Bliss: 'Bliss',
+      Career: 'My\nCareer Opportunities',
+      Passion: 'What I am\nPassionate\nAbout',
+      Volunteer: 'Volunteering\nOptions',
+      Charity: 'Charity\nOptions'
+    };
+
     const labels = rawLabels.map(label => labelMap[normalize(label)] || label);
     const data = rawLabels.map(cat => categoryScores[cat]);
-    const hasBliss = categories['Bliss'] && categories['Bliss'].length > 0;
+    const hasBliss = rawLabels.some(label => label.toLowerCase().startsWith('bliss'));
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#5ADF80'];
 
     if (wheelChart) wheelChart.destroy();
@@ -275,6 +366,7 @@
       }
     };
 
+
     wheelChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -287,7 +379,13 @@
       },
       options: {
         plugins: {
-          centerText: { enabled: hasBliss },
+          centerText: {
+            enabled: hasBliss,
+            text: 'BLISS',
+            fontSize: 36,
+            fontFamily: 'Arial',
+            color: '#34D399'
+          },
           tooltip: {
             callbacks: {
               label: context => {
@@ -295,9 +393,9 @@
                 const cat = rawLabels[idx];
                 const acts = categories[cat] || [];
                 const score = categoryScores[cat];
-                const pct = totalScore > 0 ? Math.round((score / totalScore) * 100) : 0;
+                const pct = Math.round((score / total) * 100);
                 const actNames = acts.map(a => `– ${a.name}`).join('\n');
-                return `${labelMap[normalize(cat)] || cat}: ${score} pts (${pct}%)\n${actNames}`;
+                return `${labelMap[cat] || cat}: ${score} pts (${pct}%)\n${actNames}`;
               }
             }
           },
@@ -305,13 +403,13 @@
             color: '#fff',
             font: { weight: 'bold', size: 14 },
             formatter: (val, ctx) => {
-              const pct = totalScore > 0 ? Math.round((val / totalScore) * 100) : 0;
+              const pct = Math.round((val / total) * 100);
               return `${labels[ctx.dataIndex]}\n${pct}%`;
             }
           },
           legend: { display: false }
         },
-        onClick: () => showActivities(categoryScores, totalScore),
+        onClick: () => showActivities(),
         onHover: (e, items) => {
           canvas.style.cursor = items.length ? 'pointer' : 'default';
         }
@@ -319,10 +417,8 @@
       plugins: [ChartDataLabels, centerBlissPlugin]
     });
 
-    // Initial display of activities
-    showActivities(categoryScores, totalScore);
+    window.kiaraCategoryScores = categoryScores;
   }
-
 
   function showReviewModal(email) {
     const modal = document.getElementById('reviewModal');
