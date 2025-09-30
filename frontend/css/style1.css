@@ -1792,40 +1792,52 @@ blockquote {
   width: 100%;
 }
 
+/* Updated: reduced padding and font sizes for a more compact look */
+.activity-label {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  font-size: clamp(1rem, 1.6vw, 1.2rem); /* Slightly reduced font size */
+  color: var(--color-secondary);
+  text-align: left;
+  width: 100%;
+}
+
 .activity-grid {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
   width: 100%;
+  /* No changes here, as this is a flex container */
 }
 
+/* Updated: simplified grid and reduced spacing */
 .rating-labels {
   display: grid;
-
   grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
   gap: var(--spacing-sm);
   align-items: center;
   font-weight: var(--font-weight-bold);
   color: var(--color-text-dark);
   background: var(--color-input-bg);
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md); /* Reduced top/bottom padding */
   border-radius: var(--border-radius-md);
-  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  font-size: clamp(0.75rem, 1.3vw, 0.9rem); /* Reduced font size */
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
+/* Updated: simplified grid and reduced spacing */
 .activity-row {
   display: grid;
   grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
   gap: var(--spacing-sm);
   align-items: center;
   margin-bottom: var(--spacing-xs);
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-xxs) 0; /* Reduced top/bottom padding */
 }
 
 .activity-row label {
-  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  font-size: clamp(0.85rem, 1.4vw, 1rem); /* Reduced font size */
   color: var(--color-text-light);
   font-weight: var(--font-weight-regular);
   text-align: left;
@@ -1834,10 +1846,10 @@ blockquote {
 
 .activity-row input,
 .activity-row select {
-  padding: var(--spacing-xs);
+  padding: var(--spacing-xxs); /* Reduced padding inside inputs */
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--color-input-bg);
-  font-size: 0.95rem;
+  font-size: 0.85rem; /* Reduced font size */
   background: var(--color-accent);
   color: var(--color-text-dark);
   text-align: center;
@@ -2003,19 +2015,24 @@ blockquote {
     text-align: center;
   }
 
+  /* Updated: simplified grid and removed padding */
   .rating-labels,
   .activity-row {
-    grid-template-columns: 1fr repeat(4, minmax(20px, 1fr));
+    grid-template-columns: 1fr repeat(4, 1fr);
     gap: var(--spacing-xs);
   }
   .rating-labels {
-    font-size: 0.8rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.7rem;
+    padding: 0;
+  }
+  .activity-row {
+    padding: 0;
+    margin: 0;
   }
 
   .activity-row label {
     font-size: 0.9rem;
-    padding-left: var(--spacing-xs);
+    padding-left: 0;
   }
 
   .activity-row input,
@@ -2041,7 +2058,6 @@ blockquote {
     padding: var(--spacing-sm);
   }
 }
-
 
 
 
