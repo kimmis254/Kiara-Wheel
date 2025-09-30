@@ -557,6 +557,13 @@ p {
   line-height: 1.6;
   margin-bottom: var(--spacing-md);
 }
+.hero-subtext1 {
+  color: var(--color-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 200, 87, 0.2);
+}
 
 .cta-buttons {
   display: flex;
