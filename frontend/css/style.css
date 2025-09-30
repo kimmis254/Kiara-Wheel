@@ -2112,6 +2112,49 @@ footer {
 .popup-form .button--primary:active {
   transform: translateY(0);
 }
+@media (max-width: 768px) {
+  /* ... (rest of the media query code) ... */
+
+  /* Updated: Make the popup content more accommodating on smaller screens */
+  .popup-content {
+    max-width: 95%; /* Allow it to take up a bit more width */
+    padding: 2rem 1.5rem; /* Reduce padding for a more compact form */
+  }
+
+  /* Updated: Ensure labels are clearly visible and spaced out */
+  .popup-form label {
+    margin-top: 1rem;
+    margin-bottom: 0.3rem; /* Slightly reduced margin below labels */
+    font-size: 0.95rem; /* A little smaller for readability */
+  }
+
+  /* Updated: Make input fields and the button more compact */
+  .popup-form input[type="text"],
+  .popup-form input[type="email"],
+  .popup-form input[type="tel"],
+  .popup-form input[type="number"] {
+    padding: 0.6rem; /* Reduced padding inside the inputs */
+    margin-bottom: 0.8rem; /* Reduced space between inputs */
+  }
+
+  .popup-form .button--primary {
+    width: 100%;
+    padding: 0.8rem; /* Reduced button padding */
+    font-size: 1rem; /* Reduced button font size */
+    margin-top: 1rem; /* Reduced margin above the button */
+  }
+}
+
+/* Optional: Additional changes for very small screens */
+@media (max-width: 480px) {
+  .popup-content {
+    padding: 1.5rem 1rem; /* Even more compact on the smallest screens */
+  }
+
+  .popup-header h2 {
+    font-size: 1.5rem; /* Smaller title */
+  }
+}
 /* ======================== */
 /* Testimonial Section CSS  */
 /* ======================== */

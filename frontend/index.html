@@ -84,7 +84,9 @@
     <p>The book, <strong class="brand-name">The Mindset to Overcome Using The 7 Priceless Gifts<sup>™</sup></strong>, is launching on Amazon soon!</p>
     <p>Pre-order your copy and be the first to know when it's live.</p>
 
-    <form id="book-preorder-form" class="popup-form" action ="https://docs.google.com/forms/d/e/1FAIpQLSeKmp4HLb1tfKJi-WPeyyzqcy4PFoSUJXjUVqUt0gn_pOZrVQ/viewform" method="POST" target="_blank">
+    <form id="book-preorder-form" class="popup-form"
+          action="https://docs.google.com/forms/d/1sCqUbyMduOL8G7ITS3tajxqcesmjONPez3N51-gqgbU/formResponse"
+          method="POST" target="hidden_iframe" onsubmit="handleThankYou();">
       <label for="preorder-name">Name:</label>
       <input type="text" id="preorder-name" name="entry.1771126468" required>
 
@@ -98,7 +100,16 @@
       <input type="number" id="preorder-books" name="entry.1413401354" min="1" value="1" required>
 
       <button type="submit" class="button button--primary" id="submit-button">Pre-order Now</button>
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
     </form>
+    <script>
+      function handleThankYou() {
+        setTimeout(() => {
+          alert("✅ Thank you for pre-ordering!");
+          closePopup();
+        }, 100);
+      }
+    </script>
   </div>
 </div>
 
