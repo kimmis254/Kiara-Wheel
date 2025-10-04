@@ -1805,20 +1805,11 @@ blockquote {
   background-color: var(--color-accent);
 }
 
+/* Default: Desktop / Tablet first */
 .activity-label {
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-sm);
-  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-  color: var(--color-secondary);
-  text-align: left;
-  width: 100%;
-}
-
-/* Updated: reduced padding and font sizes for a more compact look */
-.activity-label {
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-sm);
-  font-size: clamp(1rem, 1.6vw, 1.2rem); /* Slightly reduced font size */
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   color: var(--color-secondary);
   text-align: left;
   width: 100%;
@@ -1829,37 +1820,34 @@ blockquote {
   flex-direction: column;
   gap: var(--spacing-sm);
   width: 100%;
-  /* No changes here, as this is a flex container */
 }
 
-/* Updated: simplified grid and reduced spacing */
-.rating-labels {
+.rating-labels,
+.activity-row {
   display: grid;
-  grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
+  grid-template-columns: 1fr repeat(4, minmax(40px, 1fr));
   gap: var(--spacing-sm);
   align-items: center;
+}
+
+.rating-labels {
   font-weight: var(--font-weight-bold);
   color: var(--color-text-dark);
   background: var(--color-input-bg);
-  padding: var(--spacing-xs) var(--spacing-md); /* Reduced top/bottom padding */
+  padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--border-radius-md);
-  font-size: clamp(0.75rem, 1.3vw, 0.9rem); /* Reduced font size */
+  font-size: clamp(0.75rem, 1.3vw, 0.9rem);
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-/* Updated: simplified grid and reduced spacing */
 .activity-row {
-  display: grid;
-  grid-template-columns: 1fr repeat(4, minmax(30px, 1fr));
-  gap: var(--spacing-sm);
-  align-items: center;
   margin-bottom: var(--spacing-xs);
-  padding: var(--spacing-xxs) 0; /* Reduced top/bottom padding */
+  padding: var(--spacing-xxs) 0;
 }
 
 .activity-row label {
-  font-size: clamp(0.85rem, 1.4vw, 1rem); /* Reduced font size */
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
   color: var(--color-text-light);
   font-weight: var(--font-weight-regular);
   text-align: left;
@@ -1868,10 +1856,10 @@ blockquote {
 
 .activity-row input,
 .activity-row select {
-  padding: var(--spacing-xxs); /* Reduced padding inside inputs */
+  padding: var(--spacing-xxs);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--color-input-bg);
-  font-size: 0.85rem; /* Reduced font size */
+  font-size: 0.85rem;
   background: var(--color-accent);
   color: var(--color-text-dark);
   text-align: center;
@@ -1883,6 +1871,54 @@ blockquote {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(255, 92, 29, 0.2);
+}
+
+.form-button,
+#add-activity,
+#submit-form,
+.add-activity-btn,
+.submit-btn {
+  padding: 10px 20px;
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  margin-top: var(--spacing-md);
+}
+
+/* ✅ Responsive tweaks: mobile devices */
+@media (max-width: 768px) {
+  .rating-labels,
+  .activity-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* still works */
+    gap: var(--spacing-xs);
+  }
+
+  .rating-labels {
+    font-size: 0.7rem;
+    padding: var(--spacing-xxs);
+  }
+
+  .activity-row {
+    padding: var(--spacing-xxs);
+    margin: 0;
+  }
+
+  .activity-row label {
+    font-size: 0.85rem;
+    padding-left: var(--spacing-sm);
+  }
+
+  .activity-row input,
+  .activity-row select {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs);
+  }
+
+  .form-section {
+    padding: var(--spacing-md) 4%;
+  }
+
+  .kiara-form {
+    padding: var(--spacing-sm);
+  }
 }
 
 
@@ -1988,6 +2024,15 @@ blockquote {
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(255, 92, 29, 0.2);
 }
+.rating-help-row {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr); /* match .rating-labels and .activity-row */
+  gap: var(--spacing-xs);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 4px 0;
+  color: var(--color-text-light);
+}
 
 
 @media (max-width: 768px) {
@@ -2072,14 +2117,43 @@ blockquote {
 }
 
 @media (max-width: 480px) {
-  .form-section {
-    padding: var(--spacing-lg) 2%;
+  .rating-labels,
+  .rating-help-row,
+  .activity-row {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: 2px;
+    align-items: center;
+    width: 100%;
   }
 
-  .kiara-form {
-    padding: var(--spacing-sm);
+  .activity-row input:first-child {
+    font-size: 0.6rem;
+    padding: 2px 4px;
+    height: 28px;
+    line-height: 1.2;
+  }
+
+  .activity-row {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 30px; /* shrink entire row */
+  }
+
+  .activity-row input,
+  .activity-row select {
+    height: 28px;
+    padding: 2px 4px;
+    font-size: 0.65rem;
+    line-height: 1.1;
+  }
+  .rating-labels,
+  .rating-help-row {
+    padding: 2px 0;
+    font-size: 0.6rem;
   }
 }
+
 
 
 
