@@ -568,7 +568,35 @@ section[id] {
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .book-caption-overlay {
 
+    /* 1. Reduce Font Size */
+    font-size: 0.9rem; /* Smaller, but still readable */
+
+    /* 2. Slightly increase the width to use more available space on narrow screens */
+    width: 90%;
+
+    /* 3. Adjust vertical spacing if needed for mobile layout */
+    bottom: -15px; /* Pull it slightly closer to the image on mobile */
+
+    /* 4. Reduce Padding */
+    padding: 6px 10px;
+  }
+}
+
+/* --- SMALLER PHONES (Screens 480px and below) --- */
+@media (max-width: 480px) {
+  .book-caption-overlay {
+
+    /* Further reduction for small phones */
+    font-size: 0.7rem;
+
+    /* Ensure it doesn't get cut off on tiny screens */
+    width: 95%;
+    bottom: -25px;
+  }
+}
 
 .button {
   display: inline-block;
