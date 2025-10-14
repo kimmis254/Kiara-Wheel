@@ -90,6 +90,7 @@ section[id] {
   left: 0;
   width: 100%;
   z-index: 1000;
+  flex-wrap: nowrap;
 }
 
 
@@ -154,6 +155,7 @@ section[id] {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
+  margin-left: 30px;
 }
 
 .logo {
@@ -245,8 +247,8 @@ section[id] {
 
 
 .header-cta-button {
-  padding: 10px 25px;
-  font-size: 0.9rem;
+  padding: 8px 15px;
+  font-size: 0.8rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-primary);
   color: var(--color-accent);
@@ -257,6 +259,7 @@ section[id] {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-right: 20px;
 }
 
 .header-cta-button:hover {
@@ -503,11 +506,18 @@ section[id] {
 .hero-book-showcase {
   flex: 1;
   max-width: 500px;
-  display: flex;
+  display: flex; /* Keep flex for potential centering of the overall block */
   justify-content: center;
   align-items: center;
+
+  /* CRITICAL CHANGE: This makes it a positioning context for children */
+  position: relative;
+
+  /* Ensure text isn't directly stacking with flex, as it will be absolute */
+  flex-direction: column; /* Can keep this, but the absolute text won't be affected */
 }
 
+/* Existing styles for the image (keep them) */
 .book-cover-main {
   width: 100%;
   height: auto;
@@ -522,6 +532,40 @@ section[id] {
   transform: scale(1.03) rotateY(3deg);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
   0 0 0 10px rgba(255, 106, 61, 0.2);
+}
+
+/* NEW STYLES FOR THE OVERLAY CAPTION TEXT */
+.book-caption-overlay {
+  position: absolute;
+
+  /* ADJUSTMENT 1: Make it lower (increase bottom value) */
+  bottom: -20px;
+
+  /* ADJUSTMENT 2: Set a reduced width and center it horizontally */
+  width: 80%;           /* Set to 80% of the container width */
+  left: 50%;            /* Start at the center */
+  transform: translateX(-50%); /* Shift back by half its own width to truly center */
+  right: auto;          /* Reset the right property */
+
+  text-align: center;
+
+  /* STYLING ADJUSTMENTS: Use website colors for background and text */
+  font-size: 1.1rem;
+  color: var(--color-primary); /* White text for contrast */
+  font-style: italic;
+  font-weight: 500;
+
+  /* Use a subtle background color that matches the website's dark/primary tone */
+  background-color: rgba(11, 15, 75, 0.9); /* Using --color-background with opacity */
+  /* OR use the primary color with less opacity for emphasis: */
+  /* background-color: rgba(255, 106, 61, 0.8); */
+
+  padding: 8px 15px; /* Increase padding for a bolder look */
+
+  /* Optional: Add slight rounded corners to the overlay box */
+  border-radius: var(--border-radius-sm);
+
+  pointer-events: none;
 }
 
 

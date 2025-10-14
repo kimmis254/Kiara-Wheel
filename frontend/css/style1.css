@@ -406,7 +406,7 @@ p {
 
 .spin-image-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   gap: var(--spacing-lg);
@@ -2121,39 +2121,55 @@ blockquote {
   .rating-help-row,
   .activity-row {
     display: grid;
-    grid-template-columns: 2fr repeat(4, 1fr);
-    gap: 2px;
+    /* 5 columns: 2 parts for Activity, 1 part each for the 4 ratings */
+    grid-template-columns: 1fr repeat(4, 1fr);
+    gap: 4px;
+    /* Vertically center content */
     align-items: center;
     width: 100%;
+    margin: 0;
   }
 
-  .activity-row input:first-child {
+  /* --- Styles for Header and Help Text (Alignment Fixes) --- */
+  .rating-labels,
+  .rating-help-row {
+    padding: 5px 0;
     font-size: 0.7rem;
-    padding: 2px 4px;
-    height: 28px;
-    line-height: 1.2;
-    width: 80%;
-    margin-right: 10px;
+  }
+
+  /* Ensure all text in the rating columns is centered */
+  .rating-labels > *,
+  .rating-help-row > * {
+    text-align: center;
+    /* IMPORTANT: The first element in the grid is usually the wider one,
+       but the remaining 4 are the rating headers/help text.
+       You must ensure text nodes or inner divs are aligned if the parent isn't. */
   }
 
   .activity-row {
-    padding: 0 !important;
-    margin: 0 !important;
-    height: 30px; /* shrink entire row */
+    min-height: 40px;
+    height: auto;
+    padding: 5px 0; /* Add some vertical padding */
   }
 
-  .activity-row input,
-  .activity-row select {
-    height: 28px;
-    padding: 2px 4px;
-    font-size: 0.65rem;
-    line-height: 1.1;
-    margin-right: 30px;
+  /* 1. Activity Input (First column) */
+  .activity-row input:first-child {
+    width: 100%;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 5px;
   }
-  .rating-labels,
-  .rating-help-row {
-    padding: 2px 0;
-    font-size: 0.6rem;
+
+  /* 2. Rating Dropdowns (Columns 2, 3, 4, 5) */
+  .activity-row select {
+    height: 35px;
+    padding: 2px 4px;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    margin: 0;
+    justify-self: center;
+    width: 80%;
   }
 }
 
@@ -2399,5 +2415,92 @@ blockquote {
     width: 50px;
     height: 50px;
     font-size: 2rem;
+  }
+}
+
+/* Existing styles (Default - applied to all sizes, optimized for desktop) */
+.top-utility-nav {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.top-utility-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.top-utility-link:hover {
+  color: var(--color-secondary);
+}
+
+.top-utility-link.top-utility-button {
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  padding: 6px 15px;
+  border-radius: var(--border-radius-sm);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  color: var(--color-accent) !important;
+}
+
+.top-utility-link.top-utility-button:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* --- MOBILE RESPONSIVENESS (Max width 768px) --- */
+@media (max-width: 768px) {
+
+  /* Reduce gap slightly */
+  .top-utility-nav {
+    gap: 10px; /* Reduced from var(--spacing-md) */
+    /* Ensure the entire nav bar fits by potentially shrinking it */
+    flex-shrink: 1;
+  }
+
+  /* Make non-button links icon-only */
+  .top-utility-link {
+    font-size: 0; /* Hide text to save space */
+    padding: 5px; /* Minimal padding */
+  }
+
+  /* Ensure the icon is visible and a good tap target */
+  .top-utility-link i,
+  .top-utility-link svg {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  /* Compact the main CTA button */
+  .top-utility-link.top-utility-button {
+    /* Reduce padding to make the button narrower */
+    padding: 6px 8px;
+    /* Reduce font size */
+    font-size: 0.7rem;
+    /* Ensure the button shrinks if needed */
+    flex-shrink: 1;
+  }
+}
+
+/* --- SMALLER SCREENS (Max width 480px for extra small devices) --- */
+@media (max-width: 480px) {
+
+  /* Make the entire button as small as possible */
+  .top-utility-link.top-utility-button {
+    padding: 5px 6px; /* Minimal padding */
+    font-size: 0.65rem; /* Smallest readable font */
+    letter-spacing: 0;
+    margin-left: 50px/* Remove letter spacing */
   }
 }
