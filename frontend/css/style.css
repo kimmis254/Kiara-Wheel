@@ -539,7 +539,7 @@ section[id] {
   position: absolute;
 
   /* ADJUSTMENT 1: Make it lower (increase bottom value) */
-  bottom: -20px;
+  bottom: -100px;
 
   /* ADJUSTMENT 2: Set a reduced width and center it horizontally */
   width: 80%;           /* Set to 80% of the container width */
@@ -551,12 +551,12 @@ section[id] {
 
   /* STYLING ADJUSTMENTS: Use website colors for background and text */
   font-size: 1.1rem;
-  color: var(--color-primary); /* White text for contrast */
+  color: var(--color-background); /* White text for contrast */
   font-style: italic;
   font-weight: 500;
 
   /* Use a subtle background color that matches the website's dark/primary tone */
-  background-color: rgba(11, 15, 75, 0.9); /* Using --color-background with opacity */
+  background-color: var(--color-primary); /* Using --color-background with opacity */
   /* OR use the primary color with less opacity for emphasis: */
   /* background-color: rgba(255, 106, 61, 0.8); */
 
@@ -594,7 +594,7 @@ section[id] {
 
     /* Ensure it doesn't get cut off on tiny screens */
     width: 95%;
-    bottom: -25px;
+    bottom: -60px;
   }
 }
 
