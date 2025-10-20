@@ -39,26 +39,74 @@
   <meta name="twitter:description" content="Discover the power of mindset with Francis Njiraini K’s transformative book.">
   <meta name="twitter:image" content="https://www.the7pricelessgifts.com/assets1/og-image.jpg">
 
+  <meta property="og:site_name" content="The Mindset to Overcome">
+  <meta name="application-name" content="The Mindset to Overcome">
+  <meta itemprop="name" content="The Mindset to Overcome">
+
   <!-- Structured Data (Book Schema) -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Book",
-      "name": "The Mindset to Overcome",
-      "author": {
-        "@type": "Person",
-        "name": "Francis Njiraini K",
-        "url": "https://www.the7pricelessgifts.com/about-author"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "The 7 Priceless Gifts"
-      },
-      "description": "An empowering guide by Francis Njiraini K that inspires readers to develop resilience and faith to overcome challenges.",
-      "image": "https://www.the7pricelessgifts.com/assets1/og-image.jpg",
-      "url": "https://www.the7pricelessgifts.com/",
-      "inLanguage": "en",
-      "genre": "Self-help"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.the7pricelessgifts.com/#website",
+          "url": "https://www.the7pricelessgifts.com/",
+          "name": "The Mindset to Overcome",
+          "alternateName": "The 7 Priceless Gifts",
+          "publisher": {
+            "@type": "Organization",
+            "name": "The 7 Priceless Gifts",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.the7pricelessgifts.com/assets/booklogo.png"
+            }
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.the7pricelessgifts.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Book",
+          "@id": "https://www.the7pricelessgifts.com/#book",
+          "url": "https://www.the7pricelessgifts.com/",
+          "name": "The Mindset to Overcome",
+          "alternateName": "The Mindset to Overcome Using The 7 Priceless Gifts™",
+          "image": "https://www.the7pricelessgifts.com/assets1/og-image.jpg",
+          "author": {
+            "@type": "Person",
+            "@id": "https://www.the7pricelessgifts.com/#author",
+            "name": "Francis Njiraini K",
+            "url": "https://www.the7pricelessgifts.com/about-author"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "The 7 Priceless Gifts Publishing"
+          },
+          "datePublished": "2025-10-20",
+          "inLanguage": "en",
+          "genre": "Self-help",
+          "description": "An inspiring book by Francis Njiraini K that empowers you to develop faith, resilience, and a mindset to overcome life's toughest challenges using The 7 Priceless Gifts™ framework."
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.the7pricelessgifts.com/#author",
+          "name": "Francis Njiraini K",
+          "url": "https://www.the7pricelessgifts.com/about-author",
+          "sameAs": [
+            "https://www.linkedin.com/in/francisnjirainik",
+            "https://www.facebook.com/the7pricelessgifts",
+            "https://www.instagram.com/the7pricelessgifts"
+          ],
+          "jobTitle": "Author",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "The 7 Priceless Gifts"
+          }
+        }
+      ]
     }
   </script>
 </head>
