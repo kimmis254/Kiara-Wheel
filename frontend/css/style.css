@@ -594,7 +594,7 @@ section[id] {
 
     /* Ensure it doesn't get cut off on tiny screens */
     width: 95%;
-    bottom: -60px;
+    bottom: -40px;
   }
 }
 
