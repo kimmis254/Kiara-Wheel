@@ -88,7 +88,7 @@ section[id] {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 110%;
   z-index: 1000;
   flex-wrap: nowrap;
 }
@@ -97,7 +97,7 @@ section[id] {
 .header-top-bar {
   background-color: var(--color-background);
   padding: 8px 0;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
 
 .header-top-bar-content {
@@ -203,11 +203,11 @@ section[id] {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: var(--spacing-md);
   margin: 0;
   padding: 0;
   flex-wrap: nowrap;
   flex-shrink: 1;
+  gap: clamp(4px, 1vw, 16px);
 }
 
 .nav-links li a.nav-link {
@@ -595,6 +595,9 @@ section[id] {
     /* Ensure it doesn't get cut off on tiny screens */
     width: 95%;
     bottom: -40px;
+  }
+  .main-header{
+    width: 100%;
   }
 }
 
