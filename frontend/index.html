@@ -775,97 +775,73 @@
     }
   });
   const API_BASE_URL = 'https://the-7-priceless-gifts.onrender.com';
-  document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.querySelector('.contact-form');
-
-    if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const formData = {
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          subject: document.getElementById('subject').value,
-          message: document.getElementById('message').value,
-        };
-
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton.textContent;
-
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
-
-        try {
-
-          const response = await fetch(`${API_BASE_URL}/api/contact`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            alert('Message sent successfully! We will get back to you soon.');
-            contactForm.reset();
-          } else {
-            alert(`Failed to send message: ${result.message || 'Unknown error occurred.'}`);
-          }
-        } catch (error) {
-
-          console.error('Error submitting form:', error);
-          alert('An error occurred while sending your message. Please try again later.');
-        } finally {
-          submitButton.textContent = originalButtonText;
-          submitButton.disabled = false;
-        }
-      });
-    }
-  });
   const GOOGLE_FORM_ACTION_URL =
     "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfzfPQM0NLKwlYDg98q8S_hlMJ8Zz7WtOcF4yBsbNtmA4JrVw/formResponse";
 
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');
 
-    if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    if (!contactForm) return;
 
-        const formData = new FormData();
-        formData.append("entry.1001484748", document.getElementById('name').value);
-        formData.append("entry.1075867030", document.getElementById('email').value);
-        formData.append("entry.916947727", document.getElementById('subject').value);
-        formData.append("entry.170665345", document.getElementById('message').value);
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton.textContent;
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.textContent;
+      submitButton.textContent = 'Sending...';
+      submitButton.disabled = true;
 
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
+      const formDataBackend = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+      };
 
+      const formDataGoogle = new FormData();
+      formDataGoogle.append("entry.1001484748", formDataBackend.name);
+      formDataGoogle.append("entry.1075867030", formDataBackend.email);
+      formDataGoogle.append("entry.916947727", formDataBackend.subject);
+      formDataGoogle.append("entry.170665345", formDataBackend.message);
+
+      try {
+        // Submit to backend
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formDataBackend),
+          });
+          // Optional: only log error, don't alert
+          if (!response.ok) {
+            console.warn('Backend submission failed:', response.statusText);
+          }
+        } catch (backendError) {
+          console.warn('Error sending to backend:', backendError);
+        }
+
+        // Submit to Google Forms
         try {
           await fetch(GOOGLE_FORM_ACTION_URL, {
             method: 'POST',
             mode: 'no-cors',
-            body: formData
+            body: formDataGoogle
           });
-
-          alert('Message sent successfully!');
-          contactForm.reset();
-
-        } catch (error) {
-          console.error('Error submitting to Google Forms:', error);
-          alert('Failed to send message.');
-        } finally {
-          submitButton.textContent = originalButtonText;
-          submitButton.disabled = false;
+        } catch (googleError) {
+          console.warn('Error sending to Google Forms:', googleError);
         }
-      });
-    }
+
+        // Notify user only once
+        alert('Message sent successfully! We will get back to you soon.');
+        contactForm.reset();
+
+      } finally {
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+      }
+    });
   });
+
 
 
   // Function to show the popup
