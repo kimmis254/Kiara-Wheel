@@ -824,6 +824,49 @@
       });
     }
   });
+  const GOOGLE_FORM_ACTION_URL =
+    "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfzfPQM0NLKwlYDg98q8S_hlMJ8Zz7WtOcF4yBsbNtmA4JrVw/formResponse";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.querySelector('.contact-form');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("entry.1001484748", document.getElementById('name').value);
+        formData.append("entry.1075867030", document.getElementById('email').value);
+        formData.append("entry.916947727", document.getElementById('subject').value);
+        formData.append("entry.170665345", document.getElementById('message').value);
+
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+
+        try {
+          await fetch(GOOGLE_FORM_ACTION_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          });
+
+          alert('Message sent successfully!');
+          contactForm.reset();
+
+        } catch (error) {
+          console.error('Error submitting to Google Forms:', error);
+          alert('Failed to send message.');
+        } finally {
+          submitButton.textContent = originalButtonText;
+          submitButton.disabled = false;
+        }
+      });
+    }
+  });
+
 
   // Function to show the popup
   function showPopup() {
