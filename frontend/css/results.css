@@ -132,10 +132,10 @@ p {
 
 .navbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) 5%;
+  padding: var(--spacing-md) 2%;
   background-color: transparent;
   position: relative;
   top: 0;
@@ -176,8 +176,8 @@ p {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .nav-links a {

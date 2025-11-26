@@ -2068,7 +2068,6 @@ footer {
   display: flex; /* This is the key line */
   justify-content: center;
   align-items: center;
-  overflow: auto;
   opacity: 0; /* Starts hidden */
   pointer-events: none; /* Prevents clicks when hidden */
   transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
@@ -2095,6 +2094,8 @@ footer {
   opacity: 0;
   transform: scale(0.95); /* Starts slightly smaller */
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 /* New class to show the popup content with a smooth animation */
@@ -2136,10 +2137,11 @@ footer {
 .popup-form label {
   display: block;
   text-align: left;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 10px;
+  margin-bottom: 5px;
   font-weight: 600;
   color: var(--color-text-light);
+  font-size: 0.9rem;
 }
 
 .popup-form input[type="text"],
@@ -2147,8 +2149,8 @@ footer {
 .popup-form input[type="tel"],
 .popup-form input[type="number"] {
   width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid var(--color-text-muted);
   border-radius: 6px;
   background-color: var(--color-input-bg);
