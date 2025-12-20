@@ -3,7 +3,7 @@
 :root {
   --color-primary: #FF6A3D;
   --color-secondary: #FFC857;
-  --color-accent: #ffffff;
+  --color-accent: #fceeb5;
   --color-background: #0B0F4B;
   --color-text-light: #f0f0f0;
   --color-text-muted: #aaa;
@@ -446,6 +446,9 @@ section[id] {
 }
 
 
+/* =========================================
+   1. HERO SECTION LAYOUT
+   ========================================= */
 .hero-section {
   position: relative;
   min-height: calc(100vh - 120px);
@@ -460,17 +463,21 @@ section[id] {
 
 .hero-content-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Spreads text and image apart */
   align-items: center;
   gap: var(--spacing-xxl);
-  flex-wrap: wrap;
   max-width: 1300px;
+  width: 100%;
   position: relative;
   z-index: 1;
+  padding: 0 20px; /* Prevents content touching edges on small screens */
 }
 
+/* =========================================
+   2. TEXT CONTENT
+   ========================================= */
 .hero-text-content {
-  flex: 1;
+  flex: 1; /* Takes up 50% space */
   max-width: 600px;
   text-align: left;
 }
@@ -480,6 +487,11 @@ section[id] {
   color: var(--color-primary);
   margin-bottom: var(--spacing-sm);
   line-height: 1.1;
+  font-family: 'Times New Roman', serif; /* Matches book style */
+}
+
+.hero-text-content h1 span {
+  display: block; /* Puts "beat cancer" on its own line */
 }
 
 .hero-text-content h2 {
@@ -496,109 +508,58 @@ section[id] {
   margin-bottom: var(--spacing-xl);
 }
 
-.hero-action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
-}
-
+/* =========================================
+   3. BOOK SHOWCASE & IMAGE
+   ========================================= */
 .hero-book-showcase {
-  flex: 1;
+  flex: 1; /* Takes up 50% space */
   max-width: 500px;
-  display: flex; /* Keep flex for potential centering of the overall block */
+  display: flex;
   justify-content: center;
   align-items: center;
-
-  /* CRITICAL CHANGE: This makes it a positioning context for children */
   position: relative;
-
-  /* Ensure text isn't directly stacking with flex, as it will be absolute */
-  flex-direction: column; /* Can keep this, but the absolute text won't be affected */
 }
 
-/* Existing styles for the image (keep them) */
 .book-cover-main {
   width: 100%;
   height: auto;
   display: block;
   border-radius: var(--border-radius-md);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
-  0 0 0 10px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 10px rgba(255, 255, 255, 0.05);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .book-cover-main:hover {
   transform: scale(1.03) rotateY(3deg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
-  0 0 0 10px rgba(255, 106, 61, 0.2);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 10px rgba(255, 106, 61, 0.2);
 }
 
-/* NEW STYLES FOR THE OVERLAY CAPTION TEXT */
+/* Overlay Caption (If used) */
 .book-caption-overlay {
   position: absolute;
-
-  /* ADJUSTMENT 1: Make it lower (increase bottom value) */
-  bottom: -100px;
-
-  /* ADJUSTMENT 2: Set a reduced width and center it horizontally */
-  width: 80%;           /* Set to 80% of the container width */
-  left: 50%;            /* Start at the center */
-  transform: translateX(-50%); /* Shift back by half its own width to truly center */
-  right: auto;          /* Reset the right property */
-
+  bottom: -60px; /* Adjusted to sit nicely below book */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
   text-align: center;
-
-  /* STYLING ADJUSTMENTS: Use website colors for background and text */
   font-size: 1.1rem;
-  color: var(--color-background); /* White text for contrast */
+  color: var(--color-background);
   font-style: italic;
   font-weight: 500;
-
-  /* Use a subtle background color that matches the website's dark/primary tone */
-  background-color: var(--color-primary); /* Using --color-background with opacity */
-  /* OR use the primary color with less opacity for emphasis: */
-  /* background-color: rgba(255, 106, 61, 0.8); */
-
-  padding: 8px 15px; /* Increase padding for a bolder look */
-
-  /* Optional: Add slight rounded corners to the overlay box */
+  background-color: var(--color-primary);
+  padding: 8px 15px;
   border-radius: var(--border-radius-sm);
-
   pointer-events: none;
 }
 
-@media (max-width: 768px) {
-  .book-caption-overlay {
-
-    /* 1. Reduce Font Size */
-    font-size: 0.9rem; /* Smaller, but still readable */
-
-    /* 2. Slightly increase the width to use more available space on narrow screens */
-    width: 90%;
-
-    /* 3. Adjust vertical spacing if needed for mobile layout */
-    bottom: -15px; /* Pull it slightly closer to the image on mobile */
-
-    /* 4. Reduce Padding */
-    padding: 6px 10px;
-  }
-}
-
-/* --- SMALLER PHONES (Screens 480px and below) --- */
-@media (max-width: 480px) {
-  .book-caption-overlay {
-
-    /* Further reduction for small phones */
-    font-size: 0.7rem;
-
-    /* Ensure it doesn't get cut off on tiny screens */
-    width: 95%;
-    bottom: -40px;
-  }
-  .main-header{
-    width: 100%;
-  }
+/* =========================================
+   4. BUTTONS
+   ========================================= */
+.hero-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
 }
 
 .button {
@@ -611,44 +572,38 @@ section[id] {
   cursor: pointer;
 }
 
+.button--large {
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+}
+
+/* Primary Button */
 .button--primary {
   background-color: var(--color-primary);
   color: var(--color-accent);
 }
-
 .button--primary:hover {
   background-color: color-mix(in srgb, var(--color-primary) 85%, black);
   transform: translateY(-2px);
 }
 
+/* Secondary Button */
 .button--secondary {
   background-color: transparent;
   color: var(--color-secondary);
   border: 2px solid var(--color-secondary);
 }
-
 .button--secondary:hover {
   background-color: var(--color-secondary);
   color: var(--color-background);
   transform: translateY(-2px);
 }
 
-.button--large {
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
-}
-
-.button--small {
-  padding: 0.7rem 1.5rem;
-  font-size: 0.9rem;
-}
-
-
+/* Button Animations */
 .button--wobble {
   animation: wobble 2s ease-in-out infinite;
   animation-delay: 1s;
 }
-
 @keyframes wobble {
   0%, 100% { transform: rotate(0deg) scale(1); }
   15% { transform: rotate(-2deg) scale(1.02); }
@@ -658,7 +613,6 @@ section[id] {
   75% { transform: rotate(0deg) scale(1); }
 }
 
-
 .button--grow {
   transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -667,92 +621,70 @@ section[id] {
   box-shadow: 0 8px 20px rgba(255, 106, 61, 0.4);
 }
 
+/* =========================================
+   5. RESPONSIVE MEDIA QUERIES
+   ========================================= */
 
+/* Tablets and Mobile (Stacks vertical) */
+@media (max-width: 992px) {
+  .hero-content-wrapper {
+    flex-direction: column; /* Stacks text on top of image */
+    text-align: center;
+    gap: var(--spacing-xl);
+  }
 
-.hero-section {
-  position: relative;
-  min-height: calc(100vh - 120px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xl) 0;
-  background-color: var(--color-background);
-  color: var(--color-text-light);
-  overflow: hidden;
+  .hero-text-content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .hero-action-buttons {
+    justify-content: center;
+  }
+
+  .hero-text-content h1 {
+    font-size: 3.5rem; /* Smaller font for tablet */
+  }
+
+  .hero-text-content h2 {
+    font-size: 2.2rem;
+  }
 }
 
-.hero-content-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-xxl);
-  flex-wrap: wrap;
-  max-width: 1300px;
-  position: relative;
-  z-index: 1;
+/* Mobile Phones */
+@media (max-width: 768px) {
+  .hero-text-content h1 {
+    font-size: 2.8rem; /* Even smaller for phones */
+  }
+
+  .book-caption-overlay {
+    font-size: 0.9rem;
+    width: 90%;
+    bottom: -40px;
+    padding: 6px 10px;
+  }
 }
 
-.hero-text-content {
-  flex: 1;
-  max-width: 600px;
-  text-align: left;
+/* Small Phones */
+@media (max-width: 480px) {
+  .hero-text-content h1 {
+    font-size: 2.2rem;
+  }
 
-}
+  .hero-description {
+    font-size: 1rem;
+  }
 
-.main-text-area {
+  .button--large {
+    width: 100%; /* Full width buttons on tiny screens */
+    padding: 1rem;
+  }
 
-}
-
-.hero-text-content h1 {
-  font-size: 5rem;
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.1;
-}
-
-.hero-text-content h2 {
-  font-size: 3.2rem;
-  color: var(--color-secondary);
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.2;
-}
-
-.hero-description {
-  font-size: 1.4rem;
-  line-height: 1.6;
-  color: var(--color-text-light);
-  margin-bottom: var(--spacing-xl);
-}
-
-.hero-action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
-}
-
-.hero-book-showcase {
-  flex: 1;
-  max-width: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.book-cover-main {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
-  0 0 0 10px rgba(255, 255, 255, 0.05);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.book-cover-main:hover {
-  transform: scale(1.03) rotateY(3deg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
-  0 0 0 10px rgba(255, 106, 61, 0.2);
+  .book-caption-overlay {
+    font-size: 0.7rem;
+    width: 95%;
+    bottom: -30px;
+  }
 }
 
 
