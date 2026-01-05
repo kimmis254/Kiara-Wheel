@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 :root {
-  --color-primary: #FF6A3D;       /* Original Orange */
+  --color-primary: #687F95;       /* Original Orange */
   --color-secondary: #FFC857;     /* Original Yellow */
   --color-accent: #FFF4D6;        /* Much lighter yellow for subtle highlights */
 
@@ -73,6 +73,7 @@ h1, h2, h3 {
 p {
   text-align: left;
   margin-bottom: 1.5rem;
+  font-weight: 500;
 }
 
 a {
@@ -871,6 +872,7 @@ section[id] {
   height: 4px;
   background-color: var(--color-primary);
   border-radius: 2px;
+  align-content: center;
 }
 
 
