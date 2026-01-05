@@ -1,15 +1,37 @@
 
 :root {
 
+  /* Brand Colors */
   --color-primary: #FF6A3D;
+  --color-primary-rgb: 255, 106, 61;
+
   --color-secondary: #FFC857;
-  --color-accent: #ffffff;
-  --color-background: #0B0F4B;
-  --color-text-light: #f0f0f0;
-  --color-text-muted: #aaa;
+  --color-secondary-rgb: 255, 200, 87;
+
+  /* Accent (Darkened to be visible on white) */
+  --color-accent: #0B0F4B;
+  --color-accent-rgb: 11, 15, 75;
+
+  /* Backgrounds (Now White) */
+  --color-background: #FFFFFF;
+  --color-background-rgb: 255, 255, 255;
+
+  /* Typography (Inverted: "Text Light" is now Dark Navy) */
+  --color-text-light: #0B0F4B;
+  --color-text-light-rgb: 11, 15, 75;
+
+  --color-text-muted: #575A7B;
+  --color-text-muted-rgb: 87, 90, 123;
+
   --color-text-dark: #000000;
-  --color-form-bg: #101973;
-  --color-input-bg: #F5F5F5;
+  --color-text-dark-rgb: 0, 0, 0;
+
+  /* Forms & Inputs */
+  --color-form-bg: #F0F2F5;     /* Light grey-blue */
+  --color-form-bg-rgb: 240, 242, 245;
+
+  --color-input-bg: #FFFFFF;    /* White inputs */
+  --color-input-bg-rgb: 255, 255, 255;
 
 
   --font-family-base: 'Inter', sans-serif;
@@ -48,8 +70,8 @@ html{
 }
 body {
   margin: 0;
-  font-family: var(--font-family-base);
-  background-color: var(--color-background);
+  font-family: var(--font-family-base), serif;
+  background-color: white;
   color: var(--color-accent);
   overflow-x: hidden;
   line-height: 1.6;

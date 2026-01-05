@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 :root {
-  --color-primary: #FF6A3D;
-  --color-secondary: #FFC857;
-  --color-accent: #fceeb5;
-  --color-background: #0B0F4B;
-  --color-text-light: #f0f0f0;
-  --color-text-muted: #aaa;
-  --color-text-dark: #000000;
-  --color-form-bg: #101973;
-  --color-input-bg: #F5F5F5;
+  --color-primary: #FF6A3D;       /* Original Orange */
+  --color-secondary: #FFC857;     /* Original Yellow */
+  --color-accent: #FFF4D6;        /* Much lighter yellow for subtle highlights */
+
+  /* Backgrounds */
+  --color-background: #FFFFFF;    /* Pure White */
+  --color-form-bg: #F4F5F7;       /* Very light grey-blue (cool tone) */
+  --color-input-bg: #FFFFFF;      /* White input on top of grey form */
+  --color-input-border: #D1D5DB;  /* Light border for visibility */
+
+  /* Text Colors (Inverted for readability) */
+  --color-text-main: #0B0F4B;     /* Old BG is now your Main Heading/Body text */
+  --color-text-muted: #575A7B;    /* Desaturated Navy for subtitles */
+  --color-text-on-primary: #FFF;
 
 
   --spacing-xs: 10px;
@@ -23,7 +28,8 @@
 
   --border-radius-sm: 10px;
   --border-radius-md: 15px;
-  --font-family-primary: 'Arial', sans-serif;
+  --font-family-primary: 'EB Garamond', serif;
+  --font-heading: 'Playfair Display', serif;
   --font-size-base: 1rem;
   --line-height-base: 1.6;
   --max-width-container: 1000px;
@@ -40,7 +46,7 @@ html {
 }
 
 body {
-  font-family: 'Lora', serif;
+  font-family: var(--font-family-primary), serif;
   background-color: var(--color-background);
   color: var(--color-text-light);
   line-height: 1.8;
@@ -117,7 +123,7 @@ section[id] {
   color: var(--color-text-muted);
   text-decoration: none;
   transition: color 0.3s ease;
-  display: flex;
+  display: inline-block;
   align-items: center;
   gap: 5px;
   white-space: nowrap;
@@ -139,7 +145,8 @@ section[id] {
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-
+  flex-shrink: 0;
+  display: inline-block;
   color: var(--color-accent) !important;
 }
 
@@ -161,11 +168,11 @@ section[id] {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-secondary);
   text-decoration: none;
   flex-shrink: 0;
   margin-right: var(--spacing-md);
@@ -174,7 +181,7 @@ section[id] {
 }
 
 .logo:hover {
-  color: var(--color-secondary);
+  color: var(--color-primary);
 }
 
 .header-logo-image {
@@ -194,7 +201,7 @@ section[id] {
 .nav-links-and-cta {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: 5px;
   flex-grow: 1;
   justify-content: flex-end;
 }
@@ -207,20 +214,22 @@ section[id] {
   padding: 0;
   flex-wrap: nowrap;
   flex-shrink: 1;
-  gap: clamp(4px, 1vw, 16px);
+  gap: 7px;
 }
 
 .nav-links li a.nav-link {
   font-family: 'Montserrat', sans-serif;
-  color: var(--color-text-light);
+  color: var(--color-secondary);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 8px 0;
+  letter-spacing: 0.5px;
+  padding: 6px 0;
   position: relative;
   transition: color 0.3s ease, transform 0.2s ease;
   white-space: nowrap;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .nav-links li a.nav-link::after {
@@ -241,14 +250,14 @@ section[id] {
 }
 
 .nav-links li a.nav-link:hover {
-  color: var(--color-secondary);
+  color: var(--color-primary);
   transform: translateY(-2px);
 }
 
 
 .header-cta-button {
   padding: 8px 15px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-primary);
   color: var(--color-accent);
@@ -259,7 +268,8 @@ section[id] {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-right: 20px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .header-cta-button:hover {
@@ -825,8 +835,9 @@ section[id] {
 
 
 .section-title {
+  font: var(--font-heading);
   font-size: 2.8rem;
-  color: var(--color-secondary);
+  color: var(--color-primary);
   margin-bottom: 2.5rem;
   position: relative;
   padding-bottom: 1rem;
@@ -1025,9 +1036,15 @@ section[id] {
   padding: var(--spacing-sm);
   background-color: var(--color-background);
   border-radius: 50%;
-  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1),
-  0 0 0 20px rgba(255, 255, 255, 0.05),
-  0 15px 30px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    /* Inner ring (10px) using primary color at 10% opacity */
+    0 0 0 10px rgba(var(--color-primary-rgb), 0.1),
+
+      /* Outer ring (20px) using primary color at 5% opacity */
+    0 0 0 20px rgba(var(--color-primary-rgb), 0.05),
+
+      /* Drop shadow/glow below using primary color at 40% opacity */
+    0 15px 30px rgba(var(--color-primary-rgb), 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1062,7 +1079,7 @@ section[id] {
   font-size: 1.25rem;
   line-height: 1.8;
   margin-bottom: 2.5rem;
-  color: var(--color-text-light);
+  color: black;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -1188,10 +1205,19 @@ section[id] {
   max-width: 350px;
   position: relative;
   padding: var(--spacing-sm);
+
+  /* Matches your new light grey form background */
   background-color: var(--color-form-bg);
+
   border-radius: var(--border-radius-md);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  /* The updated Primary Color shadow */
+  box-shadow: 0 10px 30px rgba(var(--color-primary-rgb), 0.3);
+
   text-align: center;
+
+  /* Optional: Smooth transition if you add hover effects later */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .author-profile-img {
@@ -1422,7 +1448,7 @@ section[id] {
 .review-container .section-title {
   font-size: 3.2rem;
   margin-bottom: var(--spacing-md);
-  color: var(--color-secondary);
+  color: var(--color-primary);
 }
 
 .review-container .section-title::after {
@@ -1783,7 +1809,7 @@ footer {
 .form-group textarea {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid var(--color-background);
+  border: 1px solid var(--color-secondary);
   border-radius: var(--border-radius-sm);
   background-color: var(--color-input-bg);
   color: var(--color-text-dark);

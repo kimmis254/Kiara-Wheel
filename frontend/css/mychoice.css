@@ -1,21 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 :root {
+  /* Brand Colors (Unchanged - they pop nicely on white) */
   --color-primary: #FF6A3D;
   --color-primary-rgb: 255, 106, 61;
   --color-secondary: #FFC857;
   --color-secondary-rgb: 255, 200, 87;
-  --color-accent: #ffffff;
-  --color-accent-rgb: 255, 255, 255;
-  --color-background: #0B0F4B;
-  --color-background-rgb: 11, 15, 75;
-  --color-text-light: #f0f0f0;
-  --color-text-muted: #aaa;
-  --color-text-dark: #000000;
+
+  /* Accent (Swapped to Dark Navy so it's visible on White) */
+  --color-accent: #0B0F4B;
+  --color-accent-rgb: 11, 15, 75;
+
+  /* Backgrounds (Now White) */
+  --color-background: #FFFFFF;
+  --color-background-rgb: 255, 255, 255;
+
+  /* Typography (Inverted for readability) */
+  --color-text-light: #0B0F4B;       /* Main text is now Dark Navy */
+  --color-text-muted: #575A7B;       /* Subtitles are desaturated Navy */
+  --color-text-dark: #000000;        /* Absolute black stays black */
   --color-text-dark-rgb: 0, 0, 0;
-  --color-form-bg: #101973;
-  --color-form-bg-rgb: 16, 25, 115;
-  --color-input-bg: #F5F5F5;
+
+  /* Forms & Inputs */
+  --color-form-bg: #F0F2F5;          /* Very light grey-blue for form containers */
+  --color-form-bg-rgb: 240, 242, 245;
+  --color-input-bg: #FFFFFF;         /* White inputs sit well on grey forms */
+
+  /* Highlights & Status */
   --color-highlight-blue: #36A2EB;
   --color-highlight-blue-rgb: 54, 162, 235;
   --color-flicker: #34D399;
@@ -280,21 +291,7 @@ section[id] {
 }
 
 
-.header-cta-button {
-  padding: 8px 15px;
-  font-size: 0.8rem;
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-primary);
-  color: var(--color-accent);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0;
-  text-decoration: none;
-  text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  margin-right: 20px;
-}
+
 
 .header-cta-button:hover {
   background-color: color-mix(in srgb, var(--color-primary) 85%, black);
@@ -593,7 +590,7 @@ section[id] {
   padding: var(--spacing-md);
   font-style: italic;
   font-size: 1.05rem;
-  color: var(--color-accent);
+  color: var(--color-text-light);
   border-radius: var(--border-radius-md);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
