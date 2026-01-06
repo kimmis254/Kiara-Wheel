@@ -176,7 +176,7 @@ section[id] {
   color: var(--color-secondary);
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: var(--spacing-md);
+  margin-right: 12px;
   white-space: nowrap;
   transition: color 0.3s ease;
 }
@@ -221,7 +221,7 @@ section[id] {
 .nav-links li a.nav-link {
   font-family: 'Montserrat', sans-serif;
   color: var(--color-secondary);
-  font-weight: 500;
+  font-weight: 700;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -512,9 +512,10 @@ section[id] {
 .hero-text-content h1 {
   font-size: 5rem;
   color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 6px;
   line-height: 1.1;
   font-family: 'Times New Roman', serif; /* Matches book style */
+  font-weight: 700;
 }
 
 .hero-text-content h1 span {
@@ -522,9 +523,9 @@ section[id] {
 }
 
 .hero-text-content h2 {
-  font-size: 3.2rem;
+  font-size: 2.5rem;
   color: var(--color-secondary);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 15px;
   line-height: 1.2;
 }
 
@@ -860,6 +861,7 @@ section[id] {
   margin-bottom: 2.5rem;
   position: relative;
   padding-bottom: 1rem;
+  font-weight: 700;
 }
 
 .section-title::after {
@@ -877,12 +879,13 @@ section[id] {
 
 
 .summary-content p {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   margin-bottom: 1.5rem;
   color: var(--color-text-light);
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 500;
 }
 
 .summary-content strong {
@@ -1096,13 +1099,14 @@ section[id] {
 }
 
 .free-gift-content p {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   line-height: 1.8;
   margin-bottom: 2.5rem;
   color: black;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 500;
 }
 
 
@@ -1298,7 +1302,7 @@ section[id] {
 }
 
 .author-text p {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
   color: var(--color-text-light);
@@ -1306,6 +1310,7 @@ section[id] {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  font-weight: 500;
 }
 
 .author-text p strong {
@@ -1469,6 +1474,7 @@ section[id] {
   font-size: 3.2rem;
   margin-bottom: var(--spacing-md);
   color: var(--color-primary);
+  font-weight: 700;
 }
 
 .review-container .section-title::after {
@@ -1476,11 +1482,12 @@ section[id] {
 }
 
 .lead-paragraph {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-xl);
   max-width: 800px;
   line-height: 1.8;
+  font-weight: 500;
 }
 
 .review-call-to-action {
@@ -1495,13 +1502,14 @@ section[id] {
 }
 
 .review-call-to-action p {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   line-height: 1.7;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 500;
 }
 
 
@@ -1795,7 +1803,7 @@ footer {
 }
 
 .section-description {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
   max-width: 700px;
@@ -1834,7 +1842,7 @@ footer {
   border-radius: var(--border-radius-sm);
   background-color: var(--color-input-bg);
   color: var(--color-text-dark);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-family: 'Lora', serif;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -2306,19 +2314,19 @@ footer {
 
 
 blockquote {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   line-height: 1.6;
-  font-style: italic;
   color: var(--color-text-light);
   margin: 0; /* Remove default blockquote margin */
   padding: 0;
   text-align: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  font-weight: 500;
 }
 
 .testimonial-author {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text-muted);
   margin-top: auto; /* Pushes author and button to bottom when space allows */
   text-transform: uppercase;
@@ -2382,9 +2390,9 @@ blockquote {
 .modal-review-text {
   display: block;
   line-height: 1.6;
-  font-style: italic;
   text-align: left; /* <-- This ensures left alignment */
   color: var(--color-text-light);
+  font-weight: 500;
 }
 /* Add this new CSS class for the scrollable area */
 .modal-body {
@@ -2504,5 +2512,13 @@ blockquote {
 
   .right-button {
     right: 10px;
+  }
+}
+.brand-name1{
+  font-size: 3.2rem;
+}
+@media (max-width: 768px) {
+  .brand-name1{
+    font-size: 2rem;
   }
 }
