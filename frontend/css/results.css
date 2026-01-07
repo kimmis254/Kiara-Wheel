@@ -799,7 +799,7 @@ p {
   font-size: clamp(1.1rem, 1.8vw, 1.25rem);
   margin-bottom: var(--spacing-sm);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-accent);
+  color: var(--color-secondary);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
@@ -807,7 +807,7 @@ p {
 .activity-card p {
   margin: var(--spacing-xs) 0;
   font-size: clamp(0.9rem, 1.5vw, 1rem);
-  color: var(--color-secondary);
+  color: var(--color-primary);
   text-align: left;
   line-height: 1.4;
 }
@@ -816,6 +816,7 @@ p {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
+  color: var(--color-primary);
 }
 
 .category-subinfo {
