@@ -1,25 +1,27 @@
 
 :root {
 
-  /* Brand Colors */
-  --color-primary: #FF6A3D;
-  --color-primary-rgb: 255, 106, 61;
+  --color-primary: #687F95;
+  --color-primary-rgb: 104, 127, 149;
 
+  /* Original Yellow Secondary */
   --color-secondary: #FFC857;
   --color-secondary-rgb: 255, 200, 87;
 
-  /* Accent (Darkened to be visible on white) */
-  --color-accent: #0B0F4B;
-  --color-accent-rgb: 11, 15, 75;
+  /* Accent: Now a very pale yellow (perfect for highlights on white) */
+  --color-accent: #FFF4D6;
+  --color-accent-rgb: 255, 244, 214;
 
-  /* Backgrounds (Now White) */
+  /* Backgrounds */
   --color-background: #FFFFFF;
   --color-background-rgb: 255, 255, 255;
 
-  /* Typography (Inverted: "Text Light" is now Dark Navy) */
+  /* Typography */
+  /* Main text is Dark Navy (High Contrast) */
   --color-text-light: #0B0F4B;
   --color-text-light-rgb: 11, 15, 75;
 
+  /* Muted text is a Desaturated Navy */
   --color-text-muted: #575A7B;
   --color-text-muted-rgb: 87, 90, 123;
 
@@ -27,17 +29,25 @@
   --color-text-dark-rgb: 0, 0, 0;
 
   /* Forms & Inputs */
-  --color-form-bg: #F0F2F5;     /* Light grey-blue */
-  --color-form-bg-rgb: 240, 242, 245;
+  /* Very light cool grey for form backgrounds */
+  --color-form-bg: #F4F5F7;
+  --color-form-bg-rgb: 244, 245, 247;
 
-  --color-input-bg: #FFFFFF;    /* White inputs */
+  /* White inputs */
+  --color-input-bg: #FFFFFF;
   --color-input-bg-rgb: 255, 255, 255;
+
+  /* Highlights & Status (Kept distinct for functionality) */
+  --color-highlight-blue: #36A2EB;
+  --color-highlight-blue-rgb: 54, 162, 235;
+  --color-flicker: #34D399;
 
 
   --font-family-base: 'Inter', sans-serif;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-heading: 'Playfair Display', serif;
 
 
   --spacing-xs: 4px;
@@ -109,10 +119,7 @@ p {
 }
 
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+
 
 @keyframes subtleBounce {
   0%, 100% { transform: translateY(0); }
@@ -160,18 +167,33 @@ p {
 }
 
 .logo-circle {
-  /* Kept your animation code, just ensured size doesn't break layout */
-  width: 60px; /* Reduced from 100px to save space */
-  height: 60px; /* Reduced from 100px */
+  width: 100px;
+  height: 100px;
   background: radial-gradient(circle, rgba(255, 200, 87, 0.2) 0%, rgba(255, 200, 87, 0) 70%);
   border-radius: var(--border-radius-full);
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid rgba(255, 200, 87, 0.4);
   box-shadow: 0 0 20px rgba(255, 200, 87, 0.6);
   animation: spin 25s linear infinite;
-  flex-shrink: 0; /* Prevents logo from getting squished */
+  will-change: transform;
+}
+
+.logo-circle img {
+  display: block;
+  max-width: 120%;
+  max-height: 120%;
+  object-fit: cover;
+  animation: spin 25s linear infinite reverse;
+}
+.spin {
+  animation: spin 25s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .nav-links {
@@ -182,10 +204,11 @@ p {
 }
 
 .nav-links a {
-  color: var(--color-accent);
+  color: var(--color-secondary);
   font-weight: var(--font-weight-semibold);
   font-size: 0.95rem; /* Slightly smaller text to fit everything */
   text-decoration: none;
+  text-transform: uppercase;
   white-space: nowrap; /* CRITICAL: Prevents text from wrapping to next line */
   position: relative;
   transition: color var(--transition-speed-normal) var(--transition-ease);
@@ -199,13 +222,13 @@ p {
   bottom: -6px;
   width: 0;
   height: 2px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
   transition: width var(--transition-speed-normal) var(--transition-ease);
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
-  color: var(--color-secondary);
+  color: var(--color-primary);
 }
 
 .nav-links a:hover::after {
@@ -228,7 +251,7 @@ p {
 }
 
 .nav-cta:hover {
-  background: #ff8a58;
+  background: var(--color-primary);
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(255, 126, 88, 0.7);
 }
@@ -376,8 +399,8 @@ p {
     height: 80px;
   }
   .navbar .logo-circle img {
-    max-width: 85%;
-    max-height: 85%;
+    max-width: 100%;
+    max-height: 100%;
   }
 }
 
@@ -387,11 +410,11 @@ p {
   justify-content: center;
   align-items: center;
   padding: var(--spacing-xl) 5%;
-  background: radial-gradient(circle at top center, rgba(11, 15, 75, 0.8) 0%, var(--color-background) 70%);
+  background: var(--color-background);
   gap: var(--spacing-lg);
   min-height: 80vh;
   position: relative;
-  margin-top: -50px;
+
 }
 
 @media (min-width: 768px) {
@@ -546,7 +569,7 @@ p {
 
 .hero-heading {
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-  color: var(--color-accent);
+  color: var(--color-primary);
   margin-bottom: var(--spacing-sm);
   line-height: 1.15;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 200, 87, 0.2);
@@ -602,9 +625,9 @@ p {
 }
 
 .btn.primary:hover {
-  background: #ff7e58;
+  background: var(--color-secondary);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 126, 88, 0.7);
+  box-shadow: 0 8px 20px rgba(255, 200, 87, 0.7);
 }
 
 .btn.primary:focus-visible {
@@ -693,7 +716,7 @@ p {
 }
 
 .step {
-  background: rgba(11, 15, 75, 0.6);
+  background: rgba(104, 127, 149, 0.6);
   border-radius: var(--border-radius-md);
   padding: var(--spacing-lg);
   box-shadow: 0 8px 30px rgba(0,0,0,0.3),
@@ -707,7 +730,7 @@ p {
 
 .step:hover {
   transform: translateY(-15px) scale(1.03);
-  background: rgba(11, 15, 75, 0.9);
+  background: rgba(255, 200, 87, 0.9);
   box-shadow: 0 15px 45px rgba(0,0,0,0.5),
   0 0 30px rgba(255, 106, 61, 0.3);
 }
@@ -750,7 +773,7 @@ p {
 
 .desc-card {
   font-size: 0.95rem;
-  color: var(--color-text-light);
+  color: black;
   line-height: 1.6;
   margin-top: var(--spacing-sm);
 }
@@ -867,7 +890,7 @@ p {
   left: 50%;
   transform: translateX(-50%) translateY(20px);
   opacity: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(104, 127, 149, 0.85);
   color: var(--color-accent);
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--border-radius-md);
@@ -902,7 +925,7 @@ p {
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   line-height: 1.6;
   margin: 0;
-  color: var(--color-text-light);
+  color: white;
 }
 
 .carousel-indicators {
@@ -1503,8 +1526,7 @@ p {
 blockquote {
   font-size: 1.1rem;
   line-height: 1.6;
-  font-style: italic;
-  color: var(--color-text-light);
+  color: black;
   margin: 0; /* Remove default blockquote margin */
   padding: 0;
   text-align: center;
@@ -1514,7 +1536,7 @@ blockquote {
 
 .testimonial-author {
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--color-secondary);
   margin-top: auto; /* Pushes author and button to bottom when space allows */
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1561,7 +1583,7 @@ blockquote {
 
 .modal-content {
   background-color: var(--color-form-bg);
-  color: var(--color-text-light);
+  color: black;
   padding: 2.5rem 2rem;
   border-radius: 12px;
   max-width: 600px;
@@ -1577,9 +1599,8 @@ blockquote {
 .modal-review-text {
   display: block;
   line-height: 1.6;
-  font-style: italic;
   text-align: left; /* <-- This ensures left alignment */
-  color: var(--color-text-light);
+  color: black;
 }
 /* Add this new CSS class for the scrollable area */
 .modal-body {
@@ -1859,7 +1880,7 @@ blockquote {
 .activity-row select {
   padding: var(--spacing-xxs);
   border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-input-bg);
+  border: 1px solid var(--color-secondary);
   font-size: 0.85rem;
   background: var(--color-accent);
   color: var(--color-text-dark);
@@ -1961,7 +1982,7 @@ blockquote {
 }
 
 #submit-form:hover {
-  background: #e65a2a;
+  background: var(--color-secondary);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(255, 92, 29, 0.7);
 }
@@ -2005,7 +2026,7 @@ blockquote {
   font-size: clamp(1rem, 1.8vw, 1.1rem);
   cursor: pointer;
   transition: all var(--transition-speed-normal) var(--transition-ease);
-  box-shadow: 0 6px 15px rgba(255, 92, 29, 0.5);
+  box-shadow: 0 6px 15px rgba(255, 200, 87, 0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2016,14 +2037,14 @@ blockquote {
 }
 
 .submit-btn:hover {
-  background-color: #e65a2a;
+  background-color: var(--color-secondary);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 92, 29, 0.7);
+  box-shadow: 0 8px 20px rgba(255, 200, 87, 0.7);
 }
 
 .submit-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(255, 92, 29, 0.2);
+  box-shadow: 0 2px 5px rgba(255, 200, 87, 0.2);
 }
 .rating-help-row {
   display: grid;
@@ -2064,6 +2085,7 @@ blockquote {
     flex: 1 1 100%;
     max-width: 100%;
     align-items: center;
+    border: var(--color-secondary);
   }
 
   .form-group label {
@@ -2509,7 +2531,7 @@ blockquote {
   background-color: var(--color-background);
   color: var(--color-text-light);
   padding: var(--spacing-xxl) var(--spacing-md);
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-base), serif;
 }
 
 .kiara-container {
@@ -2528,6 +2550,7 @@ blockquote {
   font-weight: var(--font-weight-bold);
   color: var(--color-primary); /* Orange Title */
   margin-bottom: var(--spacing-sm);
+
 }
 
 .title-underline {
@@ -2579,7 +2602,7 @@ blockquote {
 }
 
 .origin-card p {
-  color: var(--color-text-light);
+  color: black;
   line-height: 1.6;
   margin-bottom: var(--spacing-md);
   opacity: 0.9;

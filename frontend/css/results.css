@@ -1,20 +1,42 @@
 
 :root {
-  --color-primary: #FF6A3D;
-  --color-primary-rgb: 255, 106, 61;
+  --color-primary: #687F95;
+  --color-primary-rgb: 104, 127, 149;
+
+  /* Original Yellow Secondary */
   --color-secondary: #FFC857;
   --color-secondary-rgb: 255, 200, 87;
-  --color-accent: #ffffff;
-  --color-accent-rgb: 255, 255, 255;
-  --color-background: #0B0F4B;
-  --color-background-rgb: 11, 15, 75;
-  --color-text-light: #f0f0f0;
-  --color-text-muted: #aaa;
+
+  /* Accent: Now a very pale yellow (perfect for highlights on white) */
+  --color-accent: #FFF4D6;
+  --color-accent-rgb: 255, 244, 214;
+
+  /* Backgrounds */
+  --color-background: #FFFFFF;
+  --color-background-rgb: 255, 255, 255;
+
+  /* Typography */
+  /* Main text is Dark Navy (High Contrast) */
+  --color-text-light: #0B0F4B;
+  --color-text-light-rgb: 11, 15, 75;
+
+  /* Muted text is a Desaturated Navy */
+  --color-text-muted: #575A7B;
+  --color-text-muted-rgb: 87, 90, 123;
+
   --color-text-dark: #000000;
   --color-text-dark-rgb: 0, 0, 0;
-  --color-form-bg: #101973;
-  --color-form-bg-rgb: 16, 25, 115;
-  --color-input-bg: #F5F5F5;
+
+  /* Forms & Inputs */
+  /* Very light cool grey for form backgrounds */
+  --color-form-bg: #F4F5F7;
+  --color-form-bg-rgb: 244, 245, 247;
+
+  /* White inputs */
+  --color-input-bg: #FFFFFF;
+  --color-input-bg-rgb: 255, 255, 255;
+
+  /* Highlights & Status (Kept distinct for functionality) */
   --color-highlight-blue: #36A2EB;
   --color-highlight-blue-rgb: 54, 162, 235;
   --color-flicker: #34D399;
@@ -24,6 +46,7 @@
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-heading: 'Playfair Display', serif;
 
 
   --spacing-xs: 4px;
@@ -168,7 +191,7 @@ p {
   display: block;
   max-width: 120%;
   max-height: 120%;
-  object-fit: contain;
+  object-fit: cover;
   animation: spin 25s linear infinite reverse;
 }
 
@@ -181,13 +204,17 @@ p {
 }
 
 .nav-links a {
-  color: var(--color-accent);
+  color: var(--color-secondary);
   font-weight: var(--font-weight-semibold);
-  font-size: 1rem;
+  font-size: 0.95rem; /* Slightly smaller text to fit everything */
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap; /* CRITICAL: Prevents text from wrapping to next line */
   position: relative;
   transition: color var(--transition-speed-normal) var(--transition-ease);
 }
 
+/* Hover Effect (Kept yours) */
 .nav-links a::after {
   content: '';
   position: absolute;
@@ -195,35 +222,36 @@ p {
   bottom: -6px;
   width: 0;
   height: 2px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
   transition: width var(--transition-speed-normal) var(--transition-ease);
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
-  color: var(--color-secondary);
+  color: var(--color-primary);
 }
 
-.nav-links a:hover::after,
-.nav-links a:focus-visible::after {
+.nav-links a:hover::after {
   width: 100%;
 }
 
 .nav-cta {
-  padding: var(--spacing-sm) var(--spacing-lg);
+  /* Kept your original styling */
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-primary);
   color: var(--color-accent);
   border-radius: var(--border-radius-md);
   font-weight: var(--font-weight-bold);
-  letter-spacing: 0.05em;
   text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap; /* Ensures button text doesn't break */
   box-shadow: 0 6px 20px rgba(255, 106, 61, 0.5);
-  transition: background var(--transition-speed-normal) var(--transition-ease),
-  transform var(--transition-speed-normal) var(--transition-ease),
-  box-shadow var(--transition-speed-normal) var(--transition-ease);
+  transition: all var(--transition-speed-normal) var(--transition-ease);
+  font-size: 0.9rem;
 }
+
 .nav-cta:hover {
-  background: #ff8a58;
+  background: var(--color-secondary);
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(255, 126, 88, 0.7);
 }
@@ -394,13 +422,13 @@ p {
 }
 
 .results-card {
-  background: #111155;
+  background: var(--color-primary);
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.3);
   padding: 40px;
   max-width: 1200px;
   width: 100%;
-  color: var(--color-text-light);
+  color: black;
   text-align: center;
 }
 .results-card p{
@@ -430,8 +458,11 @@ p {
 .details-container {
   padding: 20px;
   border-radius: 12px;
-  background: #1a1a40;
-  color: #f0f0f0;
+  background: var(--color-secondary);
+  color: black;
+}
+.details-container p{
+  color: black;
 }
 .bliss-intro, .no-bliss {
   font-style: italic;
@@ -484,7 +515,7 @@ p {
 
 .site-footer {
   background: var(--color-background);
-  color: var(--color-text-light);
+  color: var(--color-secondary);
   padding: var(--spacing-xl) 5% var(--spacing-md);
   font-size: clamp(0.95rem, 1.6vw, 1.1rem);
   position: relative;
@@ -544,7 +575,7 @@ p {
 .footer-contact p a,
 .footer-links a {
   display: block;
-  color: var(--color-text-light);
+  color: var(--color-primary);
   margin-bottom: var(--spacing-xs);
   text-decoration: none;
   font-size: clamp(0.95rem, 1.6vw, 1.1rem);
@@ -580,7 +611,8 @@ p {
 }
 
 .footer-social a:hover {
-  background: var(--color-primary);
+  background: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
   color: var(--color-accent);
   transform: translateY(-4px) scale(1.15);
   box-shadow: 0 6px 20px rgba(255, 92, 29, 0.7);
@@ -929,7 +961,7 @@ button.cancel-btn {
 
 button#submitReview {
   background: var(--color-background);
-  color: var(--color-accent);
+  color: var(--color-secondary);
   box-shadow: 0 4px 10px rgba(var(--color-background-rgb), 0.4);
 }
 
@@ -941,7 +973,7 @@ button#submitReview:hover {
 
 button.cancel-btn {
   background: var(--color-primary);
-  color: var(--color-accent);
+  color: var(--color-secondary);
   box-shadow: 0 4px 10px rgba(var(--color-primary-rgb), 0.4);
 }
 
