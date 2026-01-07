@@ -167,30 +167,54 @@ p {
 }
 
 .logo-circle {
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, rgba(255, 200, 87, 0.2) 0%, rgba(255, 200, 87, 0) 70%);
-  border-radius: var(--border-radius-full);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid var(--color-secondary);
+
+  /* CRITICAL: Forces the circle shape */
   overflow: hidden;
+
+  /* CRITICAL: Forces mobile browsers to respect the clipping mask */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+
+  /* Helps with 3D glitches during spin */
+  isolation: isolate;
+  transform: translateZ(0);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid rgba(255, 200, 87, 0.4);
-  box-shadow: 0 0 20px rgba(255, 200, 87, 0.6);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+
+  /* The animation belongs here */
   animation: spin 25s linear infinite;
-  will-change: transform;
 }
 
+/* 2. The Image Inside */
 .logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures it fills the circle */
   display: block;
-  max-width: 120%;
-  max-height: 120%;
-  object-fit: cover;
-  animation: spin 25s linear infinite reverse;
+  border-radius: 50%; /* Double-ensure the image itself thinks it's round */
 }
-.spin {
-  animation: spin 25s linear infinite;
+
+/* 3. Mobile Specific Override */
+@media (max-width: 768px) {
+  .navbar .logo-circle {
+    width: 60px;   /* Smaller size for mobile */
+    height: 60px;
+
+    /* RE-APPLY the clipping fix just in case */
+    overflow: hidden;
+    border-radius: 50%;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
 }
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -394,14 +418,6 @@ p {
     display: none;
   }
 
-  .navbar .logo-circle {
-    width: 80px;
-    height: 80px;
-  }
-  .navbar .logo-circle img {
-    max-width: 100%;
-    max-height: 100%;
-  }
 }
 
 .hero {
