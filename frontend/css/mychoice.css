@@ -668,7 +668,7 @@ section[id] {
 }
 
 .contact-btn:hover {
-  background: #e65a2a;
+  background: var(--color-secondary);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(var(--color-primary-rgb), 0.6);
 }
@@ -806,6 +806,6 @@ section[id] {
 }
 
 .submit-btn:hover {
-  background-color: #e65a2a;
+  background-color: var(--color-secondary);
 }
 
