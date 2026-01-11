@@ -176,7 +176,7 @@ section[id] {
   color: var(--color-secondary);
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: 12px;
+  margin-right: 5px;
   white-space: nowrap;
   transition: color 0.3s ease;
 }
@@ -259,7 +259,7 @@ section[id] {
 
 .header-cta-button {
   padding: 8px 15px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-primary);
   color: var(--color-accent);
@@ -272,13 +272,36 @@ section[id] {
   overflow: hidden;
   margin-left: 0 !important;
   margin-right: 0 !important;
+  display: inline-flex; !important;
 }
 
 .header-cta-button:hover {
   background-color: color-mix(in srgb, var(--color-primary) 85%, black);
   transform: translateY(-2px);
 }
-
+.btn{
+  font-size: 0.8rem;
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  display: inline-block;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover{
+  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+  transform: translateY(-2px);
+}
 
 .hamburger {
   display: none;
@@ -846,6 +869,7 @@ section[id] {
   font-family: var(--font-family-primary);
   line-height: var(--line-height-base);
   text-align: center;
+  margin-bottom: -50px;
 }
 
 .content-section .container {
@@ -857,7 +881,7 @@ section[id] {
 
 .section-title {
   font: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 3.5rem;
   color: var(--color-primary);
   margin-bottom: 2rem;
   position: relative;
@@ -2233,6 +2257,11 @@ footer {
   color: var(--color-text-light);
   padding: 6rem 1rem;
   text-align: center;
+  margin-bottom: -80px;
+}
+.testimonial-section .section-title{
+  font-size: 3.5rem;
+
 }
 
 .testimonial-title {
@@ -2484,7 +2513,7 @@ blockquote {
   transform: translateY(-50%);
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
-  color: var(--color-accent);
+  color: var(--color-secondary);
   font-size: 2.5rem;
   cursor: pointer;
   z-index: 10;
