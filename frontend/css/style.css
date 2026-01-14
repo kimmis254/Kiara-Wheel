@@ -905,10 +905,14 @@ section[id] {
   font-size: 1.8rem;
   color: var(--color-primary);
 }
-
+.summary-content{
+  text-align: left;
+  max-width: 800px; /* Keeps line length readable like a book */
+  margin: 0 auto;
+}
 .summary-content p {
   font-size: 1.4rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
   color: var(--color-text-light);
   max-width: 800px;
   margin-left: auto;
@@ -919,8 +923,21 @@ section[id] {
 .summary-content strong {
   color: var(--color-primary);
 }
-
-
+.summary-content em{
+  font-style: italic;
+  color: black;
+  font-weight: 600;
+}
+.summary-content ul{
+  list-style-type: disc;
+  padding-left: 2rem; /* Make space for the bullets */
+  margin-bottom: 1.5rem;
+}
+.summary-content li{
+  margin-bottom: 0.8rem;
+  padding-left: 5px;
+  font-weight: 600;
+}
 .read-more-button {
   display: inline-block;
   background-color: var(--color-primary);
