@@ -389,6 +389,7 @@ section[id] {
 @media (max-width: 768px) { /* Adjust 768px to whatever your mobile breakpoint is */
   .nav-action-buttons {
     align-items: flex-start;
+    flex-direction: column;
   }
 
   /* Your existing mobile dropdown CSS */
@@ -578,6 +579,7 @@ section[id] {
   .nav-links li a.nav-link {
     font-size: 0.95rem;
     padding: 10px 15px;
+    align-items: center;
   }
 
   .header-cta-button {
