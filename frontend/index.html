@@ -683,7 +683,35 @@
     </div>
   </div>
 </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Select ALL dropdown triggers on the page
+    const dropdownContainers = document.querySelectorAll('.dropdown-container');
 
+    dropdownContainers.forEach(container => {
+      const trigger = container.querySelector('.dropdown-trigger');
+      const menu = container.querySelector('.dropdown-menu');
+
+      if (trigger && menu) {
+        trigger.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Toggle this specific menu
+          menu.classList.toggle('show-mobile');
+        });
+      }
+    });
+
+    // Close all dropdowns if tapping outside
+    document.addEventListener('click', function(event) {
+      dropdownContainers.forEach(container => {
+        const menu = container.querySelector('.dropdown-menu');
+        if (!container.contains(event.target) && menu.classList.contains('show-mobile')) {
+          menu.classList.remove('show-mobile');
+        }
+      });
+    });
+  });
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
 
@@ -1040,5 +1068,6 @@
 
   document.getElementById("year").textContent = currentYear;
 </script>
+
 </body>
 </html>

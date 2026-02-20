@@ -380,6 +380,30 @@ section[id] {
   z-index: 1000; /* Ensures it stays on top of other content */
   margin-top: 5px; /* Tiny gap between button and menu */
 }
+/* Standard class toggled by JS */
+.dropdown-menu.show-mobile {
+  display: block;
+}
+
+/* On mobile screens, change how the dropdown positions itself */
+@media (max-width: 768px) { /* Adjust 768px to whatever your mobile breakpoint is */
+  .nav-action-buttons {
+    align-items: flex-start;
+  }
+
+  /* Your existing mobile dropdown CSS */
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    background-color: transparent;
+    padding-top: 10px;
+  }
+
+  .dropdown-menu a {
+    justify-content: center;
+  }
+}
 
 /* The links inside the menu */
 .dropdown-menu a {
