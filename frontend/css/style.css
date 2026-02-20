@@ -258,7 +258,7 @@ section[id] {
 
 
 .header-cta-button1 {
-  padding: 8px 15px;
+  padding: 10px 22px;
   font-size: 0.8rem;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-primary);
@@ -272,7 +272,11 @@ section[id] {
   overflow: hidden;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  display: inline-flex; !important;
+  display: inline-flex !important;
+  gap: 8px;/* Fixed the rogue semicolon here */
+  align-items: center; /* Centers items vertically inside the flex button */
+  justify-content: center; /* Centers items horizontally */
+  vertical-align: center; /* Fixed from 'center' to 'middle' */
 }
 
 .header-cta-button:hover {
@@ -337,7 +341,69 @@ section[id] {
 .hamburger.is-active .bar:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
 }
+.nav-action-buttons {
+  display: flex;
+  align-items: center; /* This is the magic line that forces them to the exact same level */
+  gap: 15px; /* Adjust this to add more or less space between the two buttons */
+}
 
+/* Make sure the dropdown container itself doesn't have any weird margins pushing it down */
+.dropdown-container {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure the trigger button looks like your other nav buttons */
+.dropdown-trigger {
+  padding: 12px 25px; /* Matches the contact button exactly */
+  font-size: 0.8rem; /* Matches the contact button exactly */
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  box-sizing: border-box; /* Ensures padding doesn't add to the total height */
+  /* Keep your background and text colors for this button here */
+}
+
+/* The hidden menu */
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%; /* Positions it directly below the button */
+  left: 0;
+  background-color: #ffffff;
+  min-width: 100%; /* Matches the button width, or set a fixed width like 180px */
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1000; /* Ensures it stays on top of other content */
+  margin-top: 5px; /* Tiny gap between button and menu */
+}
+
+/* The links inside the menu */
+.dropdown-menu a {
+  color: #5d7582; /* Matches your navbar's aesthetic */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect for the links */
+.dropdown-menu a:hover {
+  background-color: #f1f5f8; /* Very light bluish-gray hover state */
+  color: #3b4e58;
+}
+
+/* Show the menu when hovering over the container */
+.dropdown-container:hover .dropdown-menu {
+  display: block;
+}
 
 
 
