@@ -2665,3 +2665,175 @@ blockquote {
     font-size: 2rem;
   }
 }
+
+.timeline-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.timeline-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 20px 10px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.timeline-slider::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Individual Slide (eFlyer Card Look) */
+.timeline-slide {
+  flex: 0 0 300px; /* Fixed width for cards */
+  scroll-snap-align: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid var(--color-primary); /* Uses your existing yellow/gold variable */
+}
+
+.timeline-slide:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Highlighted slide for the #1 Bestseller */
+.highlight-slide {
+  border-top: 5px solid #2e4356; /* Uses your dark blue */
+  background: #f8fbff;
+}
+
+.slide-date {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7b8b9a;
+  margin-bottom: 15px;
+}
+
+.slide-icon {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+}
+
+.highlight-slide .slide-icon {
+  color: #2e4356;
+}
+
+.slide-title {
+  font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
+  color: #2e4356;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.slide-desc {
+  font-size: 0.95rem;
+  color: #555;
+  flex-grow: 1; /* Pushes links to the bottom */
+  margin-bottom: 20px;
+}
+
+.slide-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.slide-list li {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.slide-list i {
+  color: var(--color-primary);
+  margin-right: 8px;
+}
+
+.slide-link {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2e4356;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  margin-top: auto;
+}
+
+.slide-link:hover {
+  color: var(--color-primary);
+}
+
+.slide-link i {
+  margin-left: 5px;
+  transition: transform 0.2s ease;
+}
+
+.slide-link:hover i {
+  transform: translateX(4px);
+}
+
+.slide-multi-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* Position the scroll buttons specifically for the timeline */
+.timeline-left-button {
+  left: -20px;
+  z-index: 10;
+}
+
+.timeline-right-button {
+  right: -20px;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .timeline-slide {
+    flex: 0 0 85%; /* Shows a peek of the next card on mobile to imply swiping */
+  }
+  .timeline-left-button, .timeline-right-button {
+    display: none; /* Hide arrows on mobile to favor native swiping */
+  }
+}
+
+.slide-img-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #eaeaea; /* Subtle border to separate flyer from white background */
+}
+
+.slide-image {
+  width: 100%;
+  height: 180px; /* Keeps all cards uniform in height */
+  object-fit: cover;
+  object-position: top; /* Ensures the top text of the flyer isn't cut off */
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.slide-img-link:hover .slide-image {
+  transform: scale(1.05); /* Smooth zoom effect on hover */
+}

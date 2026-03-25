@@ -315,6 +315,89 @@
   </div>
 </section>
 
+<section id="milestones" class="content-section accent-bg animate-section" aria-labelledby="milestones-heading">
+  <div class="container">
+    <h2 id="milestones-heading" class="section-title">JOURNEY & MILESTONES</h2>
+    <p style="text-align: center; margin-bottom: 30px; color: var(--color-text-light);">Swipe or click to follow the incredible journey of <em>The 7 Priceless Gifts</em>.</p>
+
+    <div class="timeline-carousel-container">
+      <button class="scroll-button timeline-left-button" aria-label="Scroll left">&#10094;</button>
+
+      <div class="timeline-slider" id="timeline-slider">
+
+        <div class="timeline-slide">
+          <div class="slide-date">8th Jan 2026</div>
+          <div class="slide-icon"><i class="fa-solid fa-book"></i></div>
+          <h3 class="slide-title">Amazon Paperback Launch</h3>
+          <p class="slide-desc">The physical copy officially launched worldwide.</p>
+          <a href="https://www.amazon.com/dp/B0GG5J2171" target="_blank" class="slide-link">View on Amazon <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="timeline-slide">
+          <div class="slide-date">15th Jan 2026</div>
+          <div class="slide-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+          <h3 class="slide-title">Amazon Kindle eBook Launch</h3>
+          <p class="slide-desc">The digital Kindle edition became available globally.</p>
+          <a href="https://www.amazon.com/dp/B0GGZWTH1P" target="_blank" class="slide-link">Get Kindle Edition <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="timeline-slide highlight-slide">
+          <div class="slide-date">3rd - 7th Feb 2026</div>
+          <div class="slide-icon"><i class="fa-solid fa-trophy"></i></div>
+          <h3 class="slide-title">Amazon #1 Bestseller</h3>
+          <p class="slide-desc">Hit #1 Bestseller in 4 major categories during the KDP Global Promotion:</p>
+          <ul class="slide-list">
+            <li><i class="fa-solid fa-check"></i> Men’s Health</li>
+            <li><i class="fa-solid fa-check"></i> Men’s Christian Living</li>
+            <li><i class="fa-solid fa-check"></i> Cancer</li>
+            <li><i class="fa-solid fa-check"></i> Black & African American Memoirs</li>
+          </ul>
+        </div>
+
+        <div class="timeline-slide">
+          <div class="slide-date">4th Feb 2026</div>
+          <div class="slide-icon"><i class="fa-regular fa-newspaper"></i></div>
+          <h3 class="slide-title">Capital FM Feature</h3>
+          <p class="slide-desc">"From Finance to Tech to Bestseller: Kenyan Executive's Memoir Hits #1 on Amazon"</p>
+          <a href="https://www.capitalfm.co.ke/business/2026/02/from-finance-to-tech-to-bestseller-kenyan-executives-memoir-hits-1-on-amazon/" target="_blank" class="slide-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="timeline-slide">
+          <a href="assets/launch-flyer.jpg" target="_blank" class="slide-img-link" title="Click to view full flyer">
+            <img src="assets/launch-flyer.jpg" alt="KE Book Launch Flyer" class="slide-image" loading="lazy">
+          </a>
+          <div class="slide-date">6th Feb 2026</div>
+          <h3 class="slide-title">KE Book Launch</h3>
+          <p class="slide-desc">The official Kenya Book Launch took place at the beautiful Karen Country Club.</p>
+        </div>
+
+        <div class="timeline-slide">
+          <div class="slide-date">9th Feb 2026</div>
+          <div class="slide-icon"><i class="fa-solid fa-newspaper"></i></div>
+          <h3 class="slide-title">Parents Africa Article</h3>
+          <p class="slide-desc">Coverage of the exclusive Karen Country Club Launch & Amazon #1 Bestseller milestone.</p>
+          <a href="https://parentsafrica.com/kenyan-tech-executive-francis-njirainis-cancer-memoir-hits-1-bestseller-on-amazon/" target="_blank" class="slide-link">Read Article <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="timeline-slide">
+          <a href="assets/radio-flyer.jpg" target="_blank" class="slide-img-link" title="Click to view full flyer">
+            <img src="assets/radio-flyer.jpg" alt="Radio Gen Interview Flyer" class="slide-image" loading="lazy">
+          </a>
+          <div class="slide-date">27th Feb 2026</div>
+          <h3 class="slide-title">Interview on Radio Gen</h3>
+          <p class="slide-desc">Deep dive into the 7 Priceless Gifts framework and the journey to remission.</p>
+          <div class="slide-multi-links">
+            <a href="https://youtu.be/LDfXm05XGu4" target="_blank" class="slide-link"><i class="fa-brands fa-youtube" style="color:red"></i> Full Interview (52m)</a>
+            <a href="https://lnkd.in/d5jCjay5" target="_blank" class="slide-link"><i class="fa-brands fa-youtube" style="color:red"></i> The 7 Gifts (2m)</a>
+          </div>
+        </div>
+
+      </div>
+      <button class="scroll-button timeline-right-button" aria-label="Scroll right">&#10095;</button>
+    </div>
+  </div>
+</section>
+
 <section id="reviews" class="testimonial-section">
   <h2 class="section-title">WHAT PEOPLE ARE SAYING</h2>
   <div>
@@ -1067,6 +1150,27 @@
   const currentYear = new Date().getFullYear();
 
   document.getElementById("year").textContent = currentYear;
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Timeline Slider Logic
+    const timelineSlider = document.getElementById('timeline-slider');
+    const timelineLeftBtn = document.querySelector('.timeline-left-button');
+    const timelineRightBtn = document.querySelector('.timeline-right-button');
+
+    // Width of one slide + gap
+    const slideScrollAmount = 320;
+
+    if (timelineLeftBtn && timelineRightBtn && timelineSlider) {
+      timelineLeftBtn.addEventListener('click', () => {
+        timelineSlider.scrollBy({left: -slideScrollAmount, behavior: 'smooth'});
+      });
+
+      timelineRightBtn.addEventListener('click', () => {
+        timelineSlider.scrollBy({left: slideScrollAmount, behavior: 'smooth'});
+      });
+    }
+  });
 </script>
 
 </body>
