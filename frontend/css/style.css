@@ -2837,3 +2837,35 @@ blockquote {
 .slide-img-link:hover .slide-image {
   transform: scale(1.05); /* Smooth zoom effect on hover */
 }
+
+.slide-brand-logo {
+  height: 35px; /* Keeps the logos uniformly sized */
+  width: auto;
+  margin-bottom: 15px;
+  object-fit: contain;
+  object-position: center; /* Aligns the logo to the left edge of the card */
+  display: block;
+}
+
+/* Specific styling for the Bestseller slide header */
+.bestseller-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+/* Your Book/Brand Logo */
+.slide-custom-logo {
+  height: 60px; /* Makes your cover/logo slightly larger and prominent */
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* The Gold Trophy */
+.gold-trophy {
+  font-size: 2.2rem;
+  color: #FFD700; /* Vibrant Gold */
+  text-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Gives the trophy a glowing effect */
+}
