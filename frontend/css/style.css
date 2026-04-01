@@ -2863,9 +2863,188 @@ blockquote {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* The Gold Trophy */
-.gold-trophy {
-  font-size: 2.2rem;
-  color: #FFD700; /* Vibrant Gold */
-  text-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Gives the trophy a glowing effect */
+.book-mockup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 160px; /* Uniform height so slides stay even */
+}
+
+.slide-book-image {
+  max-height: 100%;
+  width: auto;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.timeline-slide:hover .slide-book-image {
+  transform: scale(1.05); /* Zoom in slightly when hovering over the card */
+}
+
+/* Gives the physical book a 3D shadow on the right side */
+.shadow-right {
+  box-shadow: 6px 4px 12px rgba(0,0,0,0.15);
+  border-left: 2px solid rgba(255,255,255,0.3); /* Simulates the spine */
+}
+
+/* Gives the Kindle a flat, digital bezel shadow */
+.kindle-device-shadow {
+  box-shadow: 0px 0px 0px 8px #333333, 0px 8px 20px rgba(0,0,0,0.3); /* Simulates a dark tablet bezel */
+  border-radius: 2px;
+}
+
+/* --- THEME DIFFERENTIATION --- */
+.paperback-theme {
+  border-top: 5px solid #2e4356; /* Physical book uses dark blue */
+}
+
+.kindle-theme {
+  border-top: 5px solid #00a8e1; /* Kindle uses Amazon digital blue */
+  background: linear-gradient(180deg, #ffffff 0%, #f4fbff 100%); /* Slight digital glow background */
+}
+
+/* --- 5-STAR RATING LINK --- */
+.slide-rating {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eaeaea; /* Separator line from the View on Amazon button */
+}
+
+.slide-rating a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  gap: 5px;
+}
+
+.slide-rating .stars {
+  color: #FF9900; /* Amazon Star Gold */
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.slide-rating .review-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7b8b9a;
+  transition: color 0.2s ease;
+}
+
+.slide-rating a:hover .review-text {
+  color: var(--color-primary); /* Turns your brand color on hover */
+  text-decoration: underline;
+}
+
+/* --- STRICT LEFT-ALIGNED LIST FOR BESTSELLER --- */
+.slide-list.aligned-left {
+  text-align: left; /* Forces text to the left */
+  padding-left: 0;
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Forces items to stack on the left edge */
+  gap: 8px; /* Adds breathing room between bullet points */
+}
+
+.slide-list.aligned-left li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.slide-list.aligned-left i {
+  color: #FF9900 !important; /* Forces the checkmarks to be Amazon Gold */
+  font-size: 1rem;
+  flex-shrink: 0; /* Prevents the checkmark from squishing if text wraps */
+}
+
+/* -- 1. Distinguishing Badges for Book Types -- */
+.book-mockup-container {
+  position: relative; /* Allows the badge to float over the image */
+}
+.edition-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #2e4356;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 5;
+}
+.edition-badge.kindle {
+  background: #00a8e1; /* Amazon Kindle Blue */
+}
+
+/* -- 2. Centering the Reviews -- */
+.slide-rating {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+}
+.slide-rating a {
+  align-items: center; /* Centers the stars and text stack */
+  text-align: center;
+}
+
+/* -- 3. Larger Brand Logos -- */
+.slide-brand-logo.large-logo {
+  height: 55px; /* Increased from 35px */
+  margin-bottom: 20px;
+}
+
+/* -- 4. Better Bestseller List Styling -- */
+.bestseller-rank-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bestseller-rank-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #444;
+}
+.rank-badge {
+  background: #FF9900; /* Amazon Gold */
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* -- 5. Dual Images for Karen Country Club -- */
+.dual-image-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  height: 160px; /* Keeps it strictly uniform with the other cards */
+}
+.dual-image-wrapper .slide-img-link {
+  flex: 1; /* Makes them share the space 50/50 */
+  margin-bottom: 0;
+  height: 100%;
+}
+.dual-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
 }
