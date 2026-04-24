@@ -3122,9 +3122,21 @@ blockquote {
 
 @media (max-width: 768px) {
 
-  /* Hide the desktop arrows on mobile (users will swipe instead) */
   .scroll-button {
-    display: none !important;
+    display: flex !important;
+    width: 35px; /* Slightly smaller for mobile */
+    height: 35px;
+    font-size: 1rem;
+    background-color: rgba(46, 67, 86, 0.85); /* Slightly transparent so text behind it is visible */
+  }
+
+  /* Pull the arrows slightly inside the screen so they aren't cut off */
+  .timeline-left-button {
+    left: 5px !important;
+  }
+
+  .timeline-right-button {
+    right: 5px !important;
   }
 
   /* Shrink the gap slightly for smaller screens */
