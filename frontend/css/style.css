@@ -3119,3 +3119,56 @@ blockquote {
   70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
+
+@media (max-width: 768px) {
+
+  /* Hide the desktop arrows on mobile (users will swipe instead) */
+  .scroll-button {
+    display: none !important;
+  }
+
+  /* Shrink the gap slightly for smaller screens */
+  .timeline-slider {
+    gap: 15px;
+    padding: 0 10px 20px 10px;
+  }
+
+  /* Make cards take up 85% of the mobile screen so the next card peeks out */
+  .timeline-slide {
+    flex: 0 0 85vw;
+  }
+
+  /* FIX: Shrink those massive space-filling inline margins on mobile */
+  .timeline-slide > div[style*="margin-bottom: 60px"],
+  .timeline-slide > div[style*="margin-bottom: 70px"],
+  .timeline-slide > blockquote[style*="margin: 0 0 50px"] {
+    margin-bottom: 50px !important;
+  }
+
+  /* FIX: Stack the Radio Gen "Watch Now" box vertically on very small screens */
+  .timeline-slide > div[style*="height: 90px"] {
+    height: auto !important;
+    flex-direction: column !important;
+    gap: 15px;
+    padding: 15px !important;
+    text-align: center;
+  }
+
+  /* Center the Radio link inside the stacked box */
+  .timeline-slide > div[style*="height: 90px"] a {
+    justify-content: center;
+    width: 100%;
+    text-align: center !important;
+  }
+
+  /* Make sure the 3-icon stats boxes (Print/Kindle) don't get squished */
+  .timeline-slide > div[style*="justify-content: space-around"] {
+    padding: 10px 5px !important;
+    gap: 5px;
+  }
+
+  /* Slightly shrink text on mobile to prevent overflow */
+  .slide-title {
+    font-size: 1.25rem !important;
+  }
+}
