@@ -2717,11 +2717,12 @@ blockquote {
 }
 
 .slide-date {
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #7b8b9a;
+  font-size: 1.3rem; /* Matches the slide-title size */
+  font-family: 'Playfair Display', serif; /* Matches the slide-title font */
+  color: #2e4356; /* Matches the slide-title dark blue color */
+  font-weight: 700; /* Keeps it bold and prominent */
+  text-transform: none; /* Removes the all-caps look */
+  letter-spacing: normal; /* Removes the extra spacing from the old design */
   margin-bottom: 15px;
 }
 
@@ -3047,4 +3048,74 @@ blockquote {
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
+}
+.media-feature-box {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2e4356 100%); /* Sleek dark blue gradient */
+  height: 160px; /* Matches the exact height of your book mockups! */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  overflow: hidden; /* Keeps the giant icon from spilling out */
+}
+
+/* Faint background microphone */
+.media-icon {
+  font-size: 6rem;
+  color: rgba(255, 255, 255, 0.05); /* Barely visible watermark effect */
+  position: absolute;
+  right: -15px;
+  bottom: -20px;
+  transform: rotate(-15deg);
+  z-index: 1;
+}
+
+/* The actual Capital FM Logo */
+.media-overlay-logo {
+  height: 55px; /* Ensures the logo is large and readable */
+  z-index: 2;
+  background: white; /* Adds a white box in case the logo is dark text */
+  padding: 8px 15px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  object-fit: contain;
+}
+
+/* --- PULSING "FEATURED" BADGE --- */
+.live-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #E63946; /* Vibrant red */
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: pulse-animation 1.5s infinite;
+}
+
+/* The actual animation logic for the pulsing dot */
+@keyframes pulse-animation {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
