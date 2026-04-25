@@ -44,6 +44,11 @@
 html {
   scroll-behavior: smooth;
 }
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
 
 body {
   font-family: var(--font-family-primary), serif;
@@ -98,7 +103,7 @@ section[id] {
   position: fixed;
   top: 0;
   left: 0;
-  width: 95%; /* FIX: Was 110% which shoved everything right! */
+  width: 100%; /* FIX: Was 110% which shoved everything right! */
   z-index: 1000;
 }
 
