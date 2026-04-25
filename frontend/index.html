@@ -1236,40 +1236,38 @@
   document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navLinksAndCta = document.querySelector('.nav-links-and-cta');
-    const navLinks = document.querySelectorAll('.nav-link');
 
     if (hamburger && navLinksAndCta) {
+      // 1. Open/Close the main mobile menu when hamburger is clicked
       hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinksAndCta.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
-      });
-
-
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          navLinksAndCta.classList.remove('active');
-          document.body.classList.remove('no-scroll');
-        });
-      });
-    }
-  });
-  document.addEventListener('DOMContentLoaded', () => {
-
-    const hamburger = document.querySelector('.hamburger');
-    const navLinksAndCta = document.querySelector('.nav-links-and-cta');
-
-    if (hamburger && navLinksAndCta) {
-      hamburger.addEventListener('click', () => {
-        navLinksAndCta.classList.toggle('is-open');
         hamburger.classList.toggle('is-active');
+        navLinksAndCta.classList.toggle('is-open');
+        document.body.classList.toggle('no-scroll'); // Prevents background scrolling
       });
 
-      navLinksAndCta.querySelectorAll('a.nav-link, .header-cta-button').forEach(link => {
-        link.addEventListener('click', () => {
+      // 2. Handle clicks on all links and buttons inside the menu
+      navLinksAndCta.querySelectorAll('a.nav-link, .header-cta-button, .btn').forEach(link => {
+        link.addEventListener('click', (event) => {
+
+          // --- THE FIX ---
+          // Is this a dropdown trigger? (Like "Explore" or "Order Now")
+          if (link.classList.contains('dropdown-trigger')) {
+            event.preventDefault(); // Stops the page from jumping
+            const container = link.closest('.dropdown-container');
+            container.classList.toggle('mobile-open'); // Drops down the sub-menu
+            return; // VERY IMPORTANT: Stops the script here so the menu stays open!
+          }
+
+          // --- NORMAL LINKS ---
+          // If it is a normal link, close the whole mobile menu
           navLinksAndCta.classList.remove('is-open');
           hamburger.classList.remove('is-active');
+          document.body.classList.remove('no-scroll');
+
+          // Clean up: Close any open dropdowns so they are reset for next time
+          document.querySelectorAll('.dropdown-container').forEach(container => {
+            container.classList.remove('mobile-open');
+          });
         });
       });
     }
@@ -1553,6 +1551,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>

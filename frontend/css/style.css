@@ -90,80 +90,25 @@ section[id] {
   scroll-margin-top: 100px;
 }
 
+/* =========================================
+   HEADER BASE STYLES
+   ========================================= */
 .main-header {
   background-color: var(--color-background);
   position: fixed;
   top: 0;
   left: 0;
-  width: 110%;
+  width: 100%; /* FIX: Was 110% which shoved everything right! */
   z-index: 1000;
-  flex-wrap: nowrap;
 }
-
-
-.header-top-bar {
-  background-color: var(--color-background);
-  padding: 8px 0;
-  font-size: 0.7rem;
-}
-
-.header-top-bar-content {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 var(--spacing-md);
-}
-
-.top-utility-nav {
-  display: flex;
-  gap: var(--spacing-md);
-  align-items: center;
-}
-
-.top-utility-link {
-  color: var(--color-text-muted);
-  text-decoration: none;
-  transition: color 0.3s ease;
-  display: inline-block;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-}
-
-.top-utility-link:hover {
-  color: var(--color-secondary);
-}
-
-
-.top-utility-link.top-utility-button {
-  background-color: var(--color-primary);
-  color: var(--color-accent);
-  padding: 6px 15px;
-  border-radius: var(--border-radius-sm);
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  flex-shrink: 0;
-  display: inline-block;
-  color: var(--color-accent) !important;
-}
-
-.top-utility-link.top-utility-button:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
 
 .main-nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  margin-left: 30px;
+  max-width: 1200px;
+  margin: 0 auto; /* FIX: Centers the header perfectly */
 }
 
 .logo {
@@ -208,14 +153,12 @@ section[id] {
   justify-content: flex-end;
 }
 
-
 .nav-links {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
   flex-wrap: nowrap;
-  flex-shrink: 1;
   gap: 20px;
 }
 
@@ -230,8 +173,9 @@ section[id] {
   position: relative;
   transition: color 0.3s ease, transform 0.2s ease;
   white-space: nowrap;
-  justify-content: flex-end;
-  gap: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .nav-links li a.nav-link::after {
@@ -255,178 +199,35 @@ section[id] {
   color: var(--color-primary);
   transform: translateY(-2px);
 }
-.nav-links .dropdown-container {
-  position: relative;
-}
 
-.nav-links .dropdown-menu {
-  top: 100%; /* Pushes the menu directly below the word Explore */
-  left: 50%;
-  transform: translateX(-50%); /* Perfectly centers the dropdown menu under the link */
-  min-width: 180px; /* Gives the dropdown enough breathing room */
-}
-
-/* Ensure the links inside the new dropdown look like normal text, not button text */
-.nav-links .dropdown-menu a {
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-
-.header-cta-button1 {
-  padding: 10px 22px;
-  font-size: 0.8rem;
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-primary);
-  color: var(--color-accent);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0;
-  text-decoration: none;
-  text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  display: inline-flex !important;
-  gap: 8px;/* Fixed the rogue semicolon here */
-  align-items: center; /* Centers items vertically inside the flex button */
-  justify-content: center; /* Centers items horizontally */
-  vertical-align: center; /* Fixed from 'center' to 'middle' */
-}
-
-.header-cta-button:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-  transform: translateY(-2px);
-}
-.btn{
-  font-size: 0.8rem;
-  background-color: var(--color-primary);
-  color: var(--color-accent);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0;
-  text-decoration: none;
-  text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  display: inline-block;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.btn:hover{
-  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-  transform: translateY(-2px);
-}
-
-.hamburger {
-  display: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 1001;
-  background: none;
-  border: none;
-  position: relative;
-  outline: none;
-}
-
-.hamburger .bar {
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px auto;
-
-  background-color: var(--color-secondary);
-  transition: all 0.3s ease-in-out;
-  border-radius: 2px;
-}
-
-
-.hamburger.is-active .bar:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
-}
-
-.hamburger.is-active .bar:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.is-active .bar:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-.nav-action-buttons {
-  display: flex;
-  align-items: center; /* This is the magic line that forces them to the exact same level */
-  gap: 15px;
-  margin-left: 20px/* Adjust this to add more or less space between the two buttons */
-}
-
-/* Make sure the dropdown container itself doesn't have any weird margins pushing it down */
+/* Dropdowns */
 .dropdown-container {
   position: relative;
   margin: 0;
   padding: 0;
 }
 
-/* Ensure the trigger button looks like your other nav buttons */
-.dropdown-trigger {
-  padding: 12px 25px; /* Matches the contact button exactly */
-  font-size: 0.8rem; /* Matches the contact button exactly */
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  box-sizing: border-box; /* Ensures padding doesn't add to the total height */
-  /* Keep your background and text colors for this button here */
-}
-
-/* The hidden menu */
 .dropdown-menu {
-  display: none; /* Hidden by default */
+  display: none;
   position: absolute;
-  top: 100%; /* Positions it directly below the button */
-  left: 0;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 180px;
   background-color: #ffffff;
-  min-width: 100%; /* Matches the button width, or set a fixed width like 180px */
   border-radius: 4px;
-  overflow: hidden;
-  z-index: 1000; /* Ensures it stays on top of other content */
-  margin-top: 5px; /* Tiny gap between button and menu */
-}
-/* Standard class toggled by JS */
-.dropdown-menu.show-mobile {
-  display: block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  padding: 10px 0;
+  flex-direction: column;
 }
 
-/* On mobile screens, change how the dropdown positions itself */
-@media (max-width: 768px) { /* Adjust 768px to whatever your mobile breakpoint is */
-  .nav-action-buttons {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  /* Your existing mobile dropdown CSS */
-  .dropdown-menu {
-    position: static;
-    width: 100%;
-    box-shadow: none;
-    background-color: transparent;
-    padding-top: 10px;
-  }
-
-  .dropdown-menu a {
-    justify-content: center;
-  }
+.dropdown-container:hover .dropdown-menu {
+  display: flex;
 }
 
-/* The links inside the menu */
 .dropdown-menu a {
-  color: #5d7582; /* Matches your navbar's aesthetic */
+  color: #5d7582;
   padding: 12px 16px;
   text-decoration: none;
   display: flex;
@@ -437,62 +238,79 @@ section[id] {
   transition: background-color 0.2s ease;
 }
 
-/* Hover effect for the links */
 .dropdown-menu a:hover {
-  background-color: #f1f5f8; /* Very light bluish-gray hover state */
+  background-color: #f1f5f8;
   color: #3b4e58;
 }
 
-/* Show the menu when hovering over the container */
-.dropdown-container:hover .dropdown-menu {
-  display: block;
+/* Buttons */
+.nav-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;
 }
 
+.btn, .header-cta-button1, .dropdown-trigger {
+  font-size: 0.8rem;
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
 
+.btn:hover, .header-cta-button1:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+  transform: translateY(-2px);
+}
 
+/* Hamburger */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+  background: none;
+  border: none;
+  outline: none;
+}
 
+.hamburger .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: var(--color-secondary);
+  transition: all 0.3s ease-in-out;
+  border-radius: 2px;
+}
 
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
 @media (max-width: 992px) {
-
-  .header-top-bar-content {
-    justify-content: center;
-    padding: 0 var(--spacing-sm);
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
-  .top-utility-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--spacing-sm);
-  }
-
-  .top-utility-link, .top-utility-link.top-utility-button {
-    font-size: 0.8rem;
-    padding: 4px 8px;
-  }
-
-  .main-nav-container {
-    padding: 10px 15px;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-    gap: 8px;
-  }
-
-  .header-logo-image {
-    width: 60px;
-    height: 60px;
-  }
-
+  .hamburger.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .hamburger.is-active .bar:nth-child(2) { opacity: 0; }
+  .hamburger.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
   .nav-links-and-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0;
-
-
     position: absolute;
     top: 100%;
     left: 0;
@@ -504,70 +322,48 @@ section[id] {
     transform: translateX(100%);
     transition: transform 0.4s ease-out;
     overflow-y: auto;
-    max-height: calc(100vh - 120px);
+    max-height: calc(100vh - 80px);
     z-index: 999;
+
+    /* FOOLPROOF CENTERING */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start;
+  }
+
+  .nav-links-and-cta.is-open {
+    transform: translateX(0);
   }
 
   .nav-links {
-    flex-direction: column;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
   }
 
   .nav-links li {
-    width: 100%;
-    text-align: center;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .nav-links li a.nav-link {
-    padding: 15px 20px;
-    display: block;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
+    padding: 15px 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    text-align: center !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .nav-links li:last-child a.nav-link {
-    border-bottom: none;
-  }
-
-  .nav-links li a.nav-link::after {
-    height: 2px;
-    bottom: 5px;
-  }
-
-  .nav-links li a.nav-link:hover,
-  .nav-links li a.nav-link.active {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: var(--color-primary);
-    transform: none;
-  }
-
-  .header-cta-button {
-
-    margin: 20px auto;
-    width: calc(100% - 40px);
-    max-width: 250px;
-    text-align: center;
-    padding: 12px 20px;
-    font-size: 1.0rem;
-  }
-  .nav-links li.dropdown-container {
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100%;
-  }
-
-  /* 2. Center the "Explore" trigger text and arrow */
-  .nav-links li.dropdown-container > a.dropdown-trigger {
-    justify-content: center !important;
-    width: 100%;
-  }
-
-  /* 3. Fix the dropdown menu so it sits neatly below "Explore" */
+  /* Dropdowns on Mobile */
   .dropdown-menu {
-    display: none !important; /* FIX: Hides the menu initially! */
+    display: none !important;
     position: static !important;
     flex-direction: column !important;
     width: 100% !important;
@@ -576,71 +372,43 @@ section[id] {
     padding-left: 0 !important;
     border-left: none !important;
     align-items: center !important;
-    gap: 15px;
-    margin-top: 15px;
-    padding-bottom: 15px;
+    gap: 15px !important;
+    margin-top: 15px !important;
+    padding-bottom: 15px !important;
+    transform: none !important;
   }
 
-  /* NEW: Only show the dropdown when the user taps/hovers "Explore" or "Order Now" */
-  .dropdown-container:hover .dropdown-menu,
-  .dropdown-container:active .dropdown-menu,
-  .dropdown-container:focus-within .dropdown-menu {
+  .dropdown-container.mobile-open .dropdown-menu {
     display: flex !important;
   }
 
-  /* 4. Style the links inside the dropdown so they match the mobile theme */
   .dropdown-menu a {
-    display: flex;
-    align-items: center;
-    justify-content: center !important; /* Centers the icon and text */
-    gap: 10px;
-    width: 100%;
-    font-size: 1.05rem;
-    color: var(--color-text); /* Ensures the text color is correct */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    padding: 10px !important;
   }
 
-  /* =========================================
-     FIX: ACTION BUTTONS (Order Now & Contact)
-     ========================================= */
+  /* Action Buttons */
   .nav-action-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    margin-top: 10px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 15px !important;
+    margin-left: 0 !important;
+    gap: 15px !important;
   }
 
-  /* Make sure the buttons are a consistent width */
-  .nav-action-buttons .btn,
-  .header-cta-button1 {
-    width: 80% !important; /* Keeps them from stretching edge-to-edge */
+  .btn, .header-cta-button1, .dropdown-trigger {
+    width: 80% !important;
     max-width: 300px;
     justify-content: center !important;
-    text-align: center;
-  }
-
-
-  .nav-links-and-cta.is-open {
-    transform: translateX(0);
-  }
-
-  .hamburger {
-    display: block;        /* Show it on mobile */
-    position: absolute;    /* Take it out of flow to position it precisely */
-    right: 60px;           /* Pin it 20px from the right edge */
-    top: 50%;              /* Center it vertically */
-    transform: translateY(-50%); /* Perfect vertical centering */
-  }
-
-  /* Ensure the lines inside are visible */
-  .hamburger .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: var(--color-primary); /* Uses your Orange color */
-    transition: all 0.3s ease-in-out;
+    text-align: center !important;
+    margin: 0 auto !important;
   }
 }
 
