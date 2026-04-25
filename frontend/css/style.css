@@ -98,7 +98,7 @@ section[id] {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* FIX: Was 110% which shoved everything right! */
+  width: 95%; /* FIX: Was 110% which shoved everything right! */
   z-index: 1000;
 }
 
@@ -251,7 +251,7 @@ section[id] {
   margin-left: 20px;
 }
 
-.btn, .header-cta-button1, .dropdown-trigger {
+.btn, .header-cta-button1 {
   font-size: 0.8rem;
   background-color: var(--color-primary);
   color: var(--color-accent);
