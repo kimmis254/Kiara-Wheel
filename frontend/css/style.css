@@ -176,7 +176,7 @@ section[id] {
   color: var(--color-secondary);
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: 5px;
+  margin-right: 20px;
   white-space: nowrap;
   transition: color 0.3s ease;
 }
@@ -216,7 +216,7 @@ section[id] {
   padding: 0;
   flex-wrap: nowrap;
   flex-shrink: 1;
-  gap: 7px;
+  gap: 20px;
 }
 
 .nav-links li a.nav-link {
@@ -231,7 +231,7 @@ section[id] {
   transition: color 0.3s ease, transform 0.2s ease;
   white-space: nowrap;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 30px;
 }
 
 .nav-links li a.nav-link::after {
@@ -254,6 +254,23 @@ section[id] {
 .nav-links li a.nav-link:hover {
   color: var(--color-primary);
   transform: translateY(-2px);
+}
+.nav-links .dropdown-container {
+  position: relative;
+}
+
+.nav-links .dropdown-menu {
+  top: 100%; /* Pushes the menu directly below the word Explore */
+  left: 50%;
+  transform: translateX(-50%); /* Perfectly centers the dropdown menu under the link */
+  min-width: 180px; /* Gives the dropdown enough breathing room */
+}
+
+/* Ensure the links inside the new dropdown look like normal text, not button text */
+.nav-links .dropdown-menu a {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 
 
@@ -320,9 +337,9 @@ section[id] {
 
 .hamburger .bar {
   display: block;
-  width: 28px;
+  width: 25px;
   height: 3px;
-  margin: 6px auto;
+  margin: 5px auto;
 
   background-color: var(--color-secondary);
   transition: all 0.3s ease-in-out;
@@ -344,7 +361,8 @@ section[id] {
 .nav-action-buttons {
   display: flex;
   align-items: center; /* This is the magic line that forces them to the exact same level */
-  gap: 15px; /* Adjust this to add more or less space between the two buttons */
+  gap: 15px;
+  margin-left: 20px/* Adjust this to add more or less space between the two buttons */
 }
 
 /* Make sure the dropdown container itself doesn't have any weird margins pushing it down */
@@ -534,6 +552,72 @@ section[id] {
     text-align: center;
     padding: 12px 20px;
     font-size: 1.0rem;
+  }
+  .nav-links li.dropdown-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+  }
+
+  /* 2. Center the "Explore" trigger text and arrow */
+  .nav-links li.dropdown-container > a.dropdown-trigger {
+    justify-content: center !important;
+    width: 100%;
+  }
+
+  /* 3. Fix the dropdown menu so it sits neatly below "Explore" */
+  .dropdown-menu {
+    display: none !important; /* FIX: Hides the menu initially! */
+    position: static !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+    align-items: center !important;
+    gap: 15px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  /* NEW: Only show the dropdown when the user taps/hovers "Explore" or "Order Now" */
+  .dropdown-container:hover .dropdown-menu,
+  .dropdown-container:active .dropdown-menu,
+  .dropdown-container:focus-within .dropdown-menu {
+    display: flex !important;
+  }
+
+  /* 4. Style the links inside the dropdown so they match the mobile theme */
+  .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: center !important; /* Centers the icon and text */
+    gap: 10px;
+    width: 100%;
+    font-size: 1.05rem;
+    color: var(--color-text); /* Ensures the text color is correct */
+  }
+
+  /* =========================================
+     FIX: ACTION BUTTONS (Order Now & Contact)
+     ========================================= */
+  .nav-action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* Make sure the buttons are a consistent width */
+  .nav-action-buttons .btn,
+  .header-cta-button1 {
+    width: 80% !important; /* Keeps them from stretching edge-to-edge */
+    max-width: 300px;
+    justify-content: center !important;
+    text-align: center;
   }
 
 
@@ -2712,7 +2796,6 @@ blockquote {
 
 /* Highlighted slide for the #1 Bestseller */
 .highlight-slide {
-  border-top: 5px solid #2e4356; /* Uses your dark blue */
   background: #f8fbff;
 }
 
@@ -2895,13 +2978,8 @@ blockquote {
   border-radius: 2px;
 }
 
-/* --- THEME DIFFERENTIATION --- */
-.paperback-theme {
-  border-top: 5px solid #2e4356; /* Physical book uses dark blue */
-}
 
 .kindle-theme {
-  border-top: 5px solid #00a8e1; /* Kindle uses Amazon digital blue */
   background: linear-gradient(180deg, #ffffff 0%, #f4fbff 100%); /* Slight digital glow background */
 }
 
